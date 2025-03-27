@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 43198636b2253c64193600acbfef76f8, type: 3}
-  m_Name: GreenBody
+  m_Name: Red
   m_EditorClassIdentifier: 
-  <SpriteImage>k__BackingField: {fileID: 21300000, guid: 8eff1aa65f761fe47b82f0e28d256ed1, type: 3}
+  <SpriteImage>k__BackingField: {fileID: 21300000, guid: b1c3407e17d88e9419187167a390c5f6, type: 3}
   <Attack>k__BackingField: 1
   <DotDamage>k__BackingField: 1
   <Flinch>k__BackingField: 1

@@ -47,7 +47,7 @@ public class ItemFactory : FactoryBase
     }*/
 
     // 매개변수로 받는 오브젝트가 있으면 그걸 씌우기
-    public override GameObject CreateObject(GameObject obj = null)
+    public override GameObject CreateObject(GameObject obj = null, int enumType = -1)
     {
         /*EquipData newData;
         Type type;
