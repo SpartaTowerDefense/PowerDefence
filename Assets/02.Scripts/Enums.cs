@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class Eums
+public static class Enums
 {
     public enum TurretType
     {

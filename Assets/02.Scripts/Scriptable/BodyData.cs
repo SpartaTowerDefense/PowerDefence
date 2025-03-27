@@ -6,8 +6,13 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "BodyData", menuName = "CreateData/New Body Data")]
 public class BodyData : ScriptableObject
 {
+    // 터렛 타입
+    [field: SerializeField] public Enums.TurretType Type { get; private set; }
+
     // 스프라이트
     [field:SerializeField] public Sprite SpriteImage { get; private set; }
+
+    // 가격
     [field:SerializeField] public int Price { get; private set; }
 
 

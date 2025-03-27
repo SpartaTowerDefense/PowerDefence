@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43198636b2253c64193600acbfef76f8, type: 3}
   m_Name: Red
   m_EditorClassIdentifier: 
+  <Type>k__BackingField: 2
   <SpriteImage>k__BackingField: {fileID: 21300000, guid: b1c3407e17d88e9419187167a390c5f6, type: 3}
+  <Price>k__BackingField: 0
   <Attack>k__BackingField: 1
   <DotDamage>k__BackingField: 1
   <Flinch>k__BackingField: 1

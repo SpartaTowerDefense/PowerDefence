@@ -19,10 +19,10 @@ public class TurretFactory : FactoryBase
 
     private void Awake()
     {
-        bodyList.Add(ResourceManager.Instance.LoadResource<BodyData>($"{PATH}{BodySO}{Black}"));
-        bodyList.Add(ResourceManager.Instance.LoadResource<BodyData>($"{PATH}{BodySO}{Blue}"));
-        bodyList.Add(ResourceManager.Instance.LoadResource<BodyData>($"{PATH}{BodySO}{Green}"));
-        bodyList.Add(ResourceManager.Instance.LoadResource<BodyData>($"{PATH}{BodySO}{White}"));
+        bodyList.Add(ResourceManager.Instance.LoadResource<BodyData>(Black, $"{PATH}{BodySO}{Black}"));
+        bodyList.Add(ResourceManager.Instance.LoadResource<BodyData>(Blue, $"{PATH}{BodySO}{Blue}"));
+        bodyList.Add(ResourceManager.Instance.LoadResource<BodyData>(Green, $"{PATH}{BodySO}{Green}"));
+        bodyList.Add(ResourceManager.Instance.LoadResource<BodyData>(White, $"{PATH}{BodySO}{White}"));
 
         headList.Add(ResourceManager.Instance.LoadResource<HeadData>($"{PATH}{HeadSO}{Black}"));
         headList.Add(ResourceManager.Instance.LoadResource<HeadData>($"{PATH}{HeadSO}{Blue}"));
@@ -50,8 +50,7 @@ public class TurretFactory : FactoryBase
         Turret turret = GetComponent<Turret>();
 
         // 오브젝트 데이터에 덮어씌우기
-        turret.BodyData = bodyData;
-        turret.HeadData = headData;
+        turret.Initinalize(bodyData, headData);
 
         return obj;
     }

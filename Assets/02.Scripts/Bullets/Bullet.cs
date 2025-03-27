@@ -42,7 +42,7 @@ public class Bullet : MonoBehaviour
             //적 정보를 가져온다
             //적 정보를 가져와서 turret에 잇는 body head에 따른 데미지를 준다
             
-            if (!turret.HeadData.CanPenetration) // 만약 관통속성이 false라면
+            if (!turret.CanPenetration) // 만약 관통속성이 false라면
             {
                 //오브젝트풀에 반납한다.
             }
