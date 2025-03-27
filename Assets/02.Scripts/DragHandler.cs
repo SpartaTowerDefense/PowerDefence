@@ -36,6 +36,8 @@ public class DragHandler : MonoBehaviour
         if(isDrag)
         {
             Vector2 mouseScreenPos = inputActions.PlayerActions.MousePosition.ReadValue<Vector2>();
+
+            rectTransform.anchoredPosition = mouseScreenPos / canvas.scaleFactor;
         }
         
     }
@@ -64,14 +66,21 @@ public class DragHandler : MonoBehaviour
             
         isDrag = false;
 
+        BodyData selectedData = UIManager.Instance.Shop.curData;
+
+        if(selectedData == null)
+        {
+            rectTransform.anchoredPosition = originalPosition;
+        }
+
         Vector2 mouseScreenPos = inputActions.PlayerActions.MousePosition.ReadValue<Vector2>();
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(
             new Vector3(mouseScreenPos.x, mouseScreenPos.y, 0f)
         ); 
         worldPos.z = 0f; //z축은 고정
 
-        bool isSuccess = placement.TryPlaceTank(worldPos, bodySprite, turretSprite);
-        if(isSuccess)
+        bool isSuccess = placement.TryPlaceTank(worldPos, bodyData);
+        if (isSuccess)
         {
             isPlace = true;
             gameObject.SetActive(true);
