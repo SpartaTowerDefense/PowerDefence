@@ -157,7 +157,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 150, y: 0}
+  m_AnchoredPosition: {x: 200, y: 0}
   m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &69311441
@@ -1467,7 +1467,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 485.90002, y: 0}
+  m_AnchoredPosition: {x: 600, y: 0}
   m_SizeDelta: {x: 100, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &393587066
@@ -2214,6 +2214,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uIDataBinder: {fileID: 2062370883}
+  shop: {fileID: 1678959532}
+  uiButtonHandler: {fileID: 0}
 --- !u!1 &1448334124
 GameObject:
   m_ObjectHideFlags: 0
@@ -2223,7 +2225,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1448334125}
-  - component: {fileID: 1448334126}
   m_Layer: 5
   m_Name: ChangeSpeedBtn
   m_TagString: Untagged
@@ -2252,21 +2253,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -30}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 1, y: 1}
---- !u!114 &1448334126
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1448334124}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a679fb6aa0ecf747954ba012bc21cdd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pauseBtn: {fileID: 977018549}
-  speedBtn: {fileID: 86109115}
-  maxSpeed: 4
 --- !u!1 &1555748696
 GameObject:
   m_ObjectHideFlags: 0
@@ -2301,7 +2287,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 250, y: 0}
+  m_AnchoredPosition: {x: 300, y: 0}
   m_SizeDelta: {x: 100, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1555748698
@@ -2452,29 +2438,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 204f4e1e607a6e148a9db8385ed646e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotInfo:
-  - name: "\uAC80\uC815 \uB300\uD3EC"
-    description: "\uAC80\uC815 \uB300\uD3EC"
-    price: 0
-    icon: {fileID: 21300000, guid: 9d6577854f9a7d64e93c294b9896ecc6, type: 3}
-  - name: "\uD30C\uB791 \uB300\uD3EC"
-    description: "\uD30C\uB791 \uB300\uD3EC"
-    price: 0
-    icon: {fileID: 21300000, guid: b67bffc150fd9af47abd3b31bdfaf73c, type: 3}
-  - name: "\uBE68\uAC15 \uB300\uD3EC"
-    description: "\uBE68\uAC15 \uB300\uD3EC"
-    price: 0
-    icon: {fileID: 21300000, guid: bd98820ef0f54b948935935d1b239136, type: 3}
-  - name: "\uCD08\uB85D \uB300\uD3EC"
-    description: "\uCD08\uB85D \uB300\uD3EC"
-    price: 0
-    icon: {fileID: 21300000, guid: 445427ca3175a10409708f48871c6768, type: 3}
-  - name: "\uD770\uC0C9 \uB300\uD3EC"
-    description: "\uD770\uC0C9 \uB300\uD3EC"
-    price: 0
-    icon: {fileID: 21300000, guid: f8cd368e99bdb2a4f89a252fe87cead1, type: 3}
+  bodySo:
+  - {fileID: 11400000, guid: cbdd028d158850146b4d6b14de9f2cb2, type: 2}
+  - {fileID: 11400000, guid: 1aae8fb25ee3191409bf75f6e78deeb2, type: 2}
+  - {fileID: 11400000, guid: c976f98759fcda443a378381c676f4cb, type: 2}
+  - {fileID: 11400000, guid: 6129bb6cf8d5496429ef333cd75cdfe9, type: 2}
+  - {fileID: 11400000, guid: d1fdc35df9582be418b194d10114a343, type: 2}
   slotTransform: {fileID: 150822745}
   slot: {fileID: 2477639005887596335, guid: 102d965c31c090c4fab96eee5e8cceb0, type: 3}
+  curData: {fileID: 0}
 --- !u!114 &1678959533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2547,7 +2519,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 380, y: 0}
+  m_AnchoredPosition: {x: 500, y: 0}
   m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1697616465
@@ -4210,7 +4182,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 320, y: 0}
+  m_AnchoredPosition: {x: 400, y: 0}
   m_SizeDelta: {x: 100, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1823962451
@@ -4388,6 +4360,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2062370882}
   - component: {fileID: 2062370883}
+  - component: {fileID: 2062370884}
   m_Layer: 5
   m_Name: CommanderInfo
   m_TagString: Untagged
@@ -4437,6 +4410,21 @@ MonoBehaviour:
   goldValue: {fileID: 1555748699}
   waveNum: {fileID: 1823962452}
   enemyCount: {fileID: 226329184}
+--- !u!114 &2062370884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2062370881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a679fb6aa0ecf747954ba012bc21cdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pauseBtn: {fileID: 977018549}
+  speedBtn: {fileID: 86109115}
+  maxSpeed: 4
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

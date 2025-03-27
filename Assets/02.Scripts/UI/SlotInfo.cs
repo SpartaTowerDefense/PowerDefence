@@ -9,7 +9,7 @@ public class SlotInfo
     [SerializeField] string name;
     [SerializeField] string description;
     [SerializeField] int price;
-    [SerializeField] public Sprite icon { get; private set; }
+    [field : SerializeField] public Sprite icon { get; private set; }
 
     //public SlotInfo(string name, string description, int price, Image icon)
     //{ 

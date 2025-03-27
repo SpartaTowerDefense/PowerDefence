@@ -4,19 +4,24 @@ using UnityEngine;
 
 public class Shop : MonoBehaviour
 {
-    [SerializeField] private SlotInfo[] slotInfo;
+    [SerializeField] private BodyData[] bodySo;
     [SerializeField] private Transform slotTransform;
     [SerializeField] private GameObject slot;
 
+    public BodyData curData;
 
     private void Start()
     {
-        for(int i = 0; i < slotInfo.Length; i++)
+        for(int i = 0; i < bodySo.Length; i++)
         {
             Slot obj = Instantiate(slot, slotTransform).GetComponent<Slot>();
-            obj.SlotInfo = slotInfo[i];
-            obj.SetData();
+            obj.SetData(bodySo[i]);
         }
     }
 
+    void BuyTank()
+    {
+        if (!curData) return;
+
+    }
 }

@@ -8,6 +8,10 @@ public class UIManager : Singleton<UIManager>
     public Commander Commander { get { return commander; } }
     [SerializeField] private UIDataBinder uIDataBinder;
     public UIDataBinder UIDataBinder { get { return uIDataBinder; } }
+    [SerializeField] private Shop shop;
+    public Shop Shop { get => shop; set => shop = value; }
+    [SerializeField] private UIButtonHandler uiButtonHandler;
+    public UIButtonHandler UIButtonHandler { get { return uiButtonHandler; } }
 
     private void Start()
     {

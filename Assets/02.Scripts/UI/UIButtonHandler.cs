@@ -7,7 +7,7 @@ public class UIButtonHandler : MonoBehaviour
 {
     [SerializeField] private Button pauseBtn;
     [SerializeField] private Button speedBtn;
-
+    
     [SerializeField] private int maxSpeed = 3;
     private int speedCount = 1;
     private bool onPause = false;
