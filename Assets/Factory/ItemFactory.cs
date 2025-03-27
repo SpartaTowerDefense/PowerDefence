@@ -2,10 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class ItemFactory : FactoryBase
 {
-    // 데이터 프리펩
+    /*// 데이터 프리펩
     private List<EquipData> dataList = new();
 
     private const string path = "Scriptable\\Item";
@@ -30,22 +31,6 @@ public class ItemFactory : FactoryBase
         FactoryManager.Instance.path[typeof(ItemFactory).Name] = this;
     }
 
-    // 매개변수로 받는 오브젝트가 있으면 그걸 씌우기
-    public override GameObject CreateObject(GameObject obj = null)
-    {
-        EquipData newData;
-        Type type;
-        if ((newData = GetRandomItemData(out type)) == null)
-            return null;
-
-
-        if(obj == null)
-            obj = Instantiate(Prefab, this.transform);
-
-        obj.GetComponent<Item>().itemData = newData;
-
-        return obj;
-    }
 
     private EquipData GetRandomItemData(out Type type)
     {
@@ -59,5 +44,24 @@ public class ItemFactory : FactoryBase
 
         type = null;
         return null;
+    }*/
+
+    // 매개변수로 받는 오브젝트가 있으면 그걸 씌우기
+    public override GameObject CreateObject(GameObject obj = null)
+    {
+        /*EquipData newData;
+        Type type;
+        if ((newData = GetRandomItemData(out type)) == null)
+            return null;
+
+
+        if (obj == null)
+            obj = Instantiate(Prefab, this.transform);
+
+        obj.GetComponent<Item>().itemData = newData;
+
+        return obj;*/
+        return null;
     }
+
 }
