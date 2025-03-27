@@ -8,11 +8,13 @@ public class Shop : MonoBehaviour
     [SerializeField] private Transform slotTransform;
     [SerializeField] private GameObject slot;
 
+    private UIManager uiManager;
     public BodyData curData;
 
     private void Start()
     {
-        for(int i = 0; i < bodySo.Length; i++)
+        uiManager = UIManager.Instance;
+        for (int i = 0; i < bodySo.Length; i++)
         {
             Slot obj = Instantiate(slot, slotTransform).GetComponent<Slot>();
             obj.SetData(bodySo[i]);
@@ -22,6 +24,7 @@ public class Shop : MonoBehaviour
     void BuyTurret()
     {
         if (!curData) return;
-        if (curData.Price > UIManager.Instance.Commander.gold) return;
+        if (curData.Price > uiManager.Commander.gold) return;
+        uiManager.Commander.SubtractGold(curData.Price);
     }
 }

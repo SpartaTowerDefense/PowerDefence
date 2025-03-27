@@ -16,6 +16,7 @@ public class UIManager : Singleton<UIManager>
     private void Start()
     {
         commander = new Commander(20, 0);
+        uIDataBinder.Init();
         uIDataBinder.SetUIText();
     }
 }

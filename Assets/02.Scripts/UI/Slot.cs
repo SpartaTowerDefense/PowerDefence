@@ -32,4 +32,5 @@ public class Slot : MonoBehaviour
     {
         uiManager.Shop.curData = bodyData;
     }
+
 }
