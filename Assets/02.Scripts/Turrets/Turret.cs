@@ -11,7 +11,10 @@ public class Turret : MonoBehaviour
     private SpriteRenderer headSpr { get; set; }
     public HeadData HeadData { get; set; }
 
-
+    private void Awake()
+    {
+        
+    }
 
 
 }
