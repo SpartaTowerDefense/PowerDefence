@@ -11,7 +11,12 @@ public class Turret : MonoBehaviour
     private SpriteRenderer headSpr { get; set; }
     public HeadData HeadData { get; set; }
 
+    public DetectEnemy detectEnemy;
 
+    private void Awake()
+    {
+        detectEnemy = GetComponent<DetectEnemy>();
+    }
 
 
 }
