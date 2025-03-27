@@ -7,7 +7,7 @@ public class DetectEnemy : MonoBehaviour
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private float range;
     private Quaternion tankRotation;
-    [SerializeField] private GameObject seletedEnemy;
+    public GameObject seletedEnemy;
 
     public Collider2D[] enemyColliders;
 
@@ -19,7 +19,8 @@ public class DetectEnemy : MonoBehaviour
 
     private void Update()
     {
-        if(Physics2D.OverlapCircle(transform.position, range,enemyLayer))
+        //범위 내에 적이 진입했는지 체크
+        if(Physics2D.OverlapCircle(transform.position, range, enemyLayer))
         {
             //한놈을 선택하기
             if (seletedEnemy == null)
@@ -52,9 +53,12 @@ public class DetectEnemy : MonoBehaviour
     void SelectEnemy()
     {
         enemyColliders = Physics2D.OverlapCircleAll(transform.position, range, enemyLayer);
-        seletedEnemy = enemyColliders[enemyColliders.Length-1].gameObject;
-        if(enemyColliders.Length > 0) 
+        if (enemyColliders.Length > 0)
+        {
+            seletedEnemy = enemyColliders[enemyColliders.Length - 1].gameObject;
             Debug.Log(seletedEnemy);
+        }
+            
     }
 
     // 적 바라보기
@@ -69,6 +73,7 @@ public class DetectEnemy : MonoBehaviour
         
     }
 
+    //적 범위 벗어나는거 체크
     void RemoveSeletedEnemy()
     {
         if (Mathf.Floor(Vector2.Distance(seletedEnemy.transform.position, transform.position) * 10000f) / 10000f >= 3f)
