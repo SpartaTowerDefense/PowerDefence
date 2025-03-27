@@ -25,7 +25,7 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager>
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="key"></param>
-    /// <returns></returns>
+    /// <<turns></returns>
     public GameObject GetObject<T>() where T : FactoryBase
     {
         GameObject poolGo = null;
