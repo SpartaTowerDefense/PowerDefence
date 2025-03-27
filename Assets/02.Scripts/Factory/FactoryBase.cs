@@ -9,5 +9,5 @@ public abstract class FactoryBase : MonoBehaviour
     public GameObject Prefab;
     protected ResourceManager resourceManager;
 
-    public abstract GameObject CreateObject(GameObject obj = null);
+    public abstract GameObject CreateObject(GameObject obj = null, int enumType = -1);
 }
