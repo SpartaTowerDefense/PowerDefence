@@ -19,9 +19,9 @@ public class Shop : MonoBehaviour
         }
     }
 
-    void BuyTank()
+    void BuyTurret()
     {
         if (!curData) return;
-
+        if (curData.Price > UIManager.Instance.Commander.gold) return;
     }
 }
