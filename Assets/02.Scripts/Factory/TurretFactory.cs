@@ -53,9 +53,6 @@ public class TurretFactory : FactoryBase
         turret.BodyData = bodyData;
         turret.HeadData = headData;
 
-        // 정보를 넘겨주었으면 활성화
-        obj.SetActive(true);
-
         return obj;
     }
 }
