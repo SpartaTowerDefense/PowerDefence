@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class TurretFactory : FactoryBase
 {
-    private readonly string PATH = $"Scriptable\\BodyDatas\\";
-    private readonly string BodySO = $"{nameof(BodySO)}\\";
-    private readonly string HeadSO = $"{nameof(HeadSO)}\\";
+    private readonly string PATH = $"Scriptable\\TurretSo\\";
 
 
     private const string Black = nameof(Black);
@@ -14,20 +12,14 @@ public class TurretFactory : FactoryBase
     private const string Green = nameof(Green);
     private const string White = nameof(White);
 
-    private List<BodyData> bodyList = new();
-    private List<HeadData> headList = new();
+    private List<TurretData> bodyList = new();
 
     private void Awake()
     {
-        bodyList.Add(ResourceManager.Instance.LoadResource<BodyData>($"{PATH}{BodySO}{Black}"));
-        bodyList.Add(ResourceManager.Instance.LoadResource<BodyData>($"{PATH}{BodySO}{Blue}"));
-        bodyList.Add(ResourceManager.Instance.LoadResource<BodyData>($"{PATH}{BodySO}{Green}"));
-        bodyList.Add(ResourceManager.Instance.LoadResource<BodyData>($"{PATH}{BodySO}{White}"));
-
-        headList.Add(ResourceManager.Instance.LoadResource<HeadData>($"{PATH}{HeadSO}{Black}"));
-        headList.Add(ResourceManager.Instance.LoadResource<HeadData>($"{PATH}{HeadSO}{Blue}"));
-        headList.Add(ResourceManager.Instance.LoadResource<HeadData>($"{PATH}{HeadSO}{Green}"));
-        headList.Add(ResourceManager.Instance.LoadResource<HeadData>($"{PATH}{HeadSO}{White}"));
+        bodyList.Add(ResourceManager.Instance.LoadResource<TurretData>(Black, $"{PATH}{Black}"));
+        bodyList.Add(ResourceManager.Instance.LoadResource<TurretData>(Blue, $"{PATH}{Blue}"));
+        bodyList.Add(ResourceManager.Instance.LoadResource<TurretData>(Green, $"{PATH}{Green}"));
+        bodyList.Add(ResourceManager.Instance.LoadResource<TurretData>(White, $"{PATH}{White}"));
     }
 
     // 외부에서 클릭시 매개변수를 받아야되는데?
@@ -40,8 +32,7 @@ public class TurretFactory : FactoryBase
         }
 
         // 바디 데이터를 받는다, 헤드 데이터를 받는다.
-        BodyData bodyData = bodyList[enumType];
-        HeadData headData = headList[enumType];
+        TurretData bodyData = bodyList[enumType];
 
         // 매개변수로 받은 오브젝트 체킹
         if(obj == null)
@@ -50,8 +41,7 @@ public class TurretFactory : FactoryBase
         Turret turret = GetComponent<Turret>();
 
         // 오브젝트 데이터에 덮어씌우기
-        turret.BodyData = bodyData;
-        turret.HeadData = headData;
+        turret.Initinalize(bodyData);
 
         return obj;
     }
