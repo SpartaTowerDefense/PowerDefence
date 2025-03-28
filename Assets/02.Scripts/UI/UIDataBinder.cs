@@ -15,6 +15,7 @@ public class UIDataBinder : MonoBehaviour
     public void Init()
     {
         commander = UIManager.Instance.Commander;
+        SetUIText();
     }
     public void SetUIText()
     {
