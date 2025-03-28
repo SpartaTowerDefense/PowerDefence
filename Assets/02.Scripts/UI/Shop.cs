@@ -6,6 +6,7 @@ public class Shop : MonoBehaviour
     [SerializeField] private Canvas mainCanvas;
     [SerializeField] private Camera mainCam;
     [SerializeField] private Tilemap roadTile;
+    [SerializeField] private Tilemap groundTile;
     [SerializeField] GameObject previewPrefab;
     [SerializeField] private TurretData[] bodySo;
     [SerializeField] private Transform slotTransform;
@@ -24,7 +25,7 @@ public class Shop : MonoBehaviour
             Slot slotComponent = obj.GetComponent<Slot>();
             DragHandler dragHandler = obj.GetComponent<DragHandler>();
 
-            dragHandler.Init(mainCanvas, mainCam, placement, roadTile,previewPrefab);
+            dragHandler.Init(mainCanvas, mainCam, placement, roadTile,groundTile,previewPrefab);
             slotComponent.SetData(bodySo[i], placement, dragHandler);
         }
     }

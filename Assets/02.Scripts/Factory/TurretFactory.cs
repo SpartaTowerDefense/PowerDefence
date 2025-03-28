@@ -10,9 +10,9 @@ public class TurretFactory : FactoryBase
 
     private const string Black = nameof(Black);
     private const string Blue = nameof(Blue);
+    private const string Red = nameof(Red);
     private const string Green = nameof(Green);
     private const string White = nameof(White);
-    private const string Red = nameof(Red);
 
     private List<TurretData> bodyList = new();
 
@@ -22,9 +22,9 @@ public class TurretFactory : FactoryBase
 
         bodyList.Add(ResourceManager.Instance.LoadResource<TurretData>(Black, $"{PATH}{Black}"));
         bodyList.Add(ResourceManager.Instance.LoadResource<TurretData>(Blue, $"{PATH}{Blue}"));
+        bodyList.Add(ResourceManager.Instance.LoadResource<TurretData>(Red, $"{PATH}{Red}"));
         bodyList.Add(ResourceManager.Instance.LoadResource<TurretData>(Green, $"{PATH}{Green}"));
         bodyList.Add(ResourceManager.Instance.LoadResource<TurretData>(White, $"{PATH}{White}"));
-        bodyList.Add(ResourceManager.Instance.LoadResource<TurretData>(Red, $"{PATH}{Red}"));
     }
 
     // 외부에서 클릭시 매개변수를 받아야되는데?
