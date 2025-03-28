@@ -28,19 +28,19 @@ public class AttackEnemy : MonoBehaviour
         {   // 공격 딜레이가 다 됐다면
             if (delayTimer > attackDelay)
             {
-                if (turret.HeadData.BulletCount > 1 && Continuous_delayTimer >= Continuous_Attack_Delay && continuosBulletCount <= turret.HeadData.BulletCount)//탄환수가 여러개고 연속발사 타이머가 0이라면
+                if (turret.BulletCount > 1 && Continuous_delayTimer >= Continuous_Attack_Delay && continuosBulletCount <= turret.BulletCount)//탄환수가 여러개고 연속발사 타이머가 0이라면
                 {
                     Lauch();
                     Continuous_delayTimer = 0f;
                     continuosBulletCount++;
                     return;
                 }
-                else if(turret.HeadData.BulletCount == 1)
+                else if(turret.BulletCount == 1)
                 {
                     // 아니면 한번만 발사
                     Lauch();
                 }
-                else if(turret.HeadData.BulletCount > 1 && Continuous_delayTimer < Continuous_Attack_Delay)
+                else if(turret.BulletCount > 1 && Continuous_delayTimer < Continuous_Attack_Delay)
                 {   // 불릿카운트가 1초과인데 연속공격 타이머가 안된경우 리턴
                     return;
                 }
