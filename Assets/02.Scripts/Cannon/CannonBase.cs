@@ -16,8 +16,8 @@ public struct CannonData
 public abstract class CannonBase
 {
     public CannonData data;
-    public Transform tip; // ÃÑ¾Ë ³ª°¡´Â À§Ä¡
-    // public AudioClip clip; ÃÑ¾Ë ¹ß»ç½Ã ¼Ò¸®
+    public Transform tip; // ì´ì•Œ ë‚˜ê°€ëŠ” ìœ„ì¹˜
+    // public AudioClip clip; ì´ì•Œ ë°œì‚¬ì‹œ ì†Œë¦¬
 
     protected float time = 0f;
     protected float fireColldown = 1f;
@@ -45,5 +45,5 @@ public abstract class CannonBase
         data.canPenetration = canPenetration;
     }
 
-    public abstract void Fire();
+    public abstract void Fire(Vector3 targetPos);
 }

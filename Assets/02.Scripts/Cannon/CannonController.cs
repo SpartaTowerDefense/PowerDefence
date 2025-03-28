@@ -6,18 +6,20 @@ public class CannonController : MonoBehaviour
 {
     public Transform tip;
     public SpriteRenderer spr;
+
+    private DetectEnemy detectEnemy;
     
     public CannonBase CurrentCannon { get; set; }
     private DefaultCannon DefaultCannon { get; set; }
-    private DefaultCannon TripleCannon { get; set; }
+    private TripleCannon TripleCannon { get; set; }
 
     // Cannon Sprites
     Sprite[] sprites = new Sprite[3];
 
-    //private void Awake()
-    //{
-    //    spr = GetComponent<SpriteRenderer>();
-    //}
+    private void Awake()
+    {
+        detectEnemy = GetComponent<DetectEnemy>();
+    }
 
     public void Initinalize(TurretData data)
     {
@@ -31,7 +33,7 @@ public class CannonController : MonoBehaviour
             DefaultCannon = new DefaultCannon(sprites[0], tip);
 
             // 두번재 캐논
-            TripleCannon = new DefaultCannon(sprites[1], tip);
+            TripleCannon = new TripleCannon(sprites[1], tip);
 
             // 세번째 캐논
         }
@@ -47,7 +49,10 @@ public class CannonController : MonoBehaviour
     public void Update()
     {
         if (CurrentCannon != null)
-            CurrentCannon.Update();
+        CurrentCannon.Update();
+
+        //if (detectEnemy.seletedEnemy != null)
+            //Fire();
     }
 
     public void ChangeCannon(CannonBase changeCannon)
@@ -59,6 +64,6 @@ public class CannonController : MonoBehaviour
     public void Fire()
     {
         if (CurrentCannon != null)
-            CurrentCannon.Fire();
+            CurrentCannon.Fire(detectEnemy.seletedEnemy.transform.position);
     }
 }

@@ -2,19 +2,24 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
+using System.Linq;
 
 public class DetectEnemy : MonoBehaviour
 {
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private float range;
     private Quaternion tankRotation;
-    public GameObject seletedEnemy;
+    public Collider2D seletedEnemy;
 
     public Collider2D[] enemyColliders;
+    public Collider2D[] sortedColiders;
+    private CannonController controller;
 
     private void Start()
     {
         tankRotation = transform.rotation;
+        controller = GetComponent<CannonController>();
         enemyColliders = new Collider2D[10];
     }
 
@@ -52,36 +57,42 @@ public class DetectEnemy : MonoBehaviour
     }
 
     // 공격할 적 선택
-    void SelectEnemy()
+    public void SelectEnemy()
     {
         enemyColliders = Physics2D.OverlapCircleAll(transform.position, range, enemyLayer);
+        sortedColiders = OverlapCircleAllSorted(enemyColliders);
+
         if (enemyColliders.Length > 0)
         {
-            seletedEnemy = enemyColliders[enemyColliders.Length - 1].gameObject;
+            seletedEnemy = sortedColiders[0];
             Debug.Log(seletedEnemy);
         }
-            
     }
-
     // 적 바라보기
     void ChasingEnemy()
     {
         if (seletedEnemy != null)
         {
-            Vector2 lookPos = seletedEnemy.transform.position - transform.position;
+            Vector2 lookPos = seletedEnemy.gameObject.transform.position - transform.position;
             float rotz = Mathf.Atan2(lookPos.y, lookPos.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0, 0, rotz + 90f);
         }
-        
     }
 
     //적 범위 벗어나는거 체크
     void RemoveSeletedEnemy()
     {
-        if (Mathf.Floor(Vector2.Distance(seletedEnemy.transform.position, transform.position) * 10000f) / 10000f >= 3f)
+        if (Mathf.Floor(Vector2.Distance(seletedEnemy.gameObject.transform.position, transform.position) * 10000f) / 10000f >= range)
         {
             seletedEnemy = null;
         }
         
+    }
+
+    public Collider2D[] OverlapCircleAllSorted(Collider2D[] colliders)
+    {
+        return colliders
+            .OrderBy(c => Vector2.SqrMagnitude((Vector2)c.transform.position - (Vector2)transform.position))
+            .ToArray();
     }
 }
