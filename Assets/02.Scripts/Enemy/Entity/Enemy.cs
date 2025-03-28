@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public enum EnemyState { Move, Knockback, Frozen, Burn, Dead }
@@ -5,14 +6,16 @@ public enum EnemyState { Move, Knockback, Frozen, Burn, Dead }
 public class Enemy : MonoBehaviour
 {
     // 에너미 스테이터스
-    public float Health; // 체력
-    public float MovementSpeed; // 이동속도
-    public float FrozeTime; // 얼려지는 시간 계수 - 1 이면 함수에서 호출된 시간만큼 얼어있음
-    public float KnockbackTime; // 뒤로 날아가는 시간
-    public float KnockbackResistance; // 뒤로 날아가는 거리 계수 - 1 이면 호출된 거리만큼 뒤로 날아감
-    public float BurningTime; // 타는 시간
-    public float Flammable; // 타고있을때 더 불이 적용되면 불 데미지가 얼마나 증가하는지 - 1 이면 불 데미지 그만큼 추가
-    public int Reward;
+    public EnemyData enemyData;
+    private SpriteRenderer spriteRenderer;
+    private float Health; // 체력
+    private float MovementSpeed; // 이동속도
+    private float FrozeTime; // 얼려지는 시간 계수 - 1 이면 함수에서 호출된 시간만큼 얼어있음
+    private float KnockbackTime; // 뒤로 날아가는 시간
+    private float KnockbackResistance; // 뒤로 날아가는 거리 계수 - 1 이면 호출된 거리만큼 뒤로 날아감
+    private float BurningTime; // 타는 시간
+    private float Flammable; // 타고있을때 더 불이 적용되면 불 데미지가 얼마나 증가하는지 - 1 이면 불 데미지 그만큼 추가
+    private int Reward;
 
     //다중 상태 병렬 처리
     private bool isFrozen = false;
@@ -27,6 +30,16 @@ public class Enemy : MonoBehaviour
     private float freezeTimer = 0f;
     private float knockbackTimer = 0f;
     private float burningTimer = 0f;
+
+    //피격 색상 변경
+    private Color originalColor;
+    private Coroutine colorChangeCoroutine;
+
+    //데이터 연결
+    void Start()
+    {
+        InitializeFromData();
+    }
 
     void FixedUpdate()
     {
@@ -83,6 +96,27 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public void InitializeFromData()
+    {
+        if (enemyData == null)
+        {
+            Debug.LogWarning("EnemyData가 할당되지 않았습니다.");
+            return;
+        }
+
+        Health = enemyData.Health;
+        MovementSpeed = enemyData.MovementSpeed;
+        FrozeTime = enemyData.FrozeTime;
+        KnockbackTime = enemyData.KnockbackTime;
+        KnockbackResistance = enemyData.knockbackDistance;
+        BurningTime = enemyData.BurningTime;
+        Flammable = enemyData.Flammable;
+        Reward = Mathf.RoundToInt(enemyData.RewardCoin);
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = enemyData.SpriteImage;
+        originalColor = spriteRenderer.color;
+    }
+
     private void Move()
     {
         transform.Translate(Vector2.right * MovementSpeed * Time.deltaTime);
@@ -104,7 +138,7 @@ public class Enemy : MonoBehaviour
     {
         isDead = true;
         Debug.Log("죽음");
-        Destroy(gameObject);
+        ObjectPoolManager.Instance.ReturnObject<EnemyFactory>(this.gameObject);
     }
 
     /// <summary>
@@ -153,5 +187,22 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(float amount)
     {
         Health -= amount;
+    }
+
+    //색상 변경 함수
+    private void ChangeColorTemporarily(Color newColor, float duration = 0.2f)
+    {
+        if (colorChangeCoroutine != null)
+            StopCoroutine(colorChangeCoroutine);
+
+        colorChangeCoroutine = StartCoroutine(ChangeColorRoutine(newColor, duration));
+    }
+
+    private IEnumerator ChangeColorRoutine(Color color, float duration)
+    {
+        spriteRenderer.color = color;
+        yield return new WaitForSeconds(duration);
+        spriteRenderer.color = originalColor;
+        colorChangeCoroutine = null;
     }
 }

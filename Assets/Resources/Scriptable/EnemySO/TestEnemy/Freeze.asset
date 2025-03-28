@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4d0bfdafcfd7bb4887a7f35f4e64bb3, type: 3}
+  m_Name: Freeze
+  m_EditorClassIdentifier: 
+  <SpriteImage>k__BackingField: {fileID: -411975948, guid: 7a174024bdb51eb4abcae19faa3681c2, type: 3}
+  <Health>k__BackingField: 20
+  <MovementSpeed>k__BackingField: 1
+  <FrozeTime>k__BackingField: 5
+  <KnockbackTime>k__BackingField: 0.3
+  <knockbackDistance>k__BackingField: 1
+  <BurningTime>k__BackingField: 1
+  <Flammable>k__BackingField: 0.5
+  <RewardCoin>k__BackingField: 5
