@@ -14,21 +14,24 @@ public class DragHandler : MonoBehaviour
     [SerializeField] private GameObject tankPreviewPrefab;
     [SerializeField] private Camera maincam;
     [SerializeField] private Tilemap roadTile;
-
+    [SerializeField] private Tilemap groundTile;
 
     private GameObject previewInstance;
     private SpriteRenderer previewRenderer;
+    private SpriteRenderer outlineRenderer;
+    private GameObject outlineInstance;
 
     private Coroutine dragCoroutine;
     private bool isDrag = false;
     private bool isPlace = false;
 
-    public void Init(Canvas canvas, Camera mainCam, Placement placement, Tilemap roadTile, GameObject previewPrefab)
+    public void Init(Canvas canvas, Camera mainCam, Placement placement, Tilemap roadTile, Tilemap groundTile, GameObject previewPrefab)
     {
         this.canvas = canvas;
         this.maincam = mainCam;
         this.placement = placement;
         this.roadTile = roadTile;
+        this.groundTile = groundTile;
         this.tankPreviewPrefab = previewPrefab;
     }
     public void OnBeginDrag(BaseEventData data)
@@ -38,7 +41,9 @@ public class DragHandler : MonoBehaviour
         isDrag = true; //드래그상태
         previewInstance = Instantiate(tankPreviewPrefab);
         previewRenderer = previewInstance.GetComponent<SpriteRenderer>();
+        //outlineRenderer = outlineInstance.GetComponentInChildren<SpriteRenderer>();   
         previewRenderer.sprite = UIManager.Instance.Shop.curData.BodyImage;
+        //outlineRenderer.sprite = UIManager.Instance.Shop.curData.BodyImage;
 
         dragCoroutine = StartCoroutine(HandleDragPreview());
     }
@@ -79,10 +84,11 @@ public class DragHandler : MonoBehaviour
             Vector3 worldPos = maincam.ScreenToWorldPoint(mousePos);
             worldPos.z = 0f;
 
-            Vector3Int cellPos = roadTile.WorldToCell(worldPos);
-            Vector3 snappedPos = roadTile.CellToWorld(cellPos);
+            Vector3Int cellPos = groundTile.WorldToCell(worldPos);
+            Vector3 snappedPos = groundTile.CellToWorld(cellPos);
+            snappedPos += new Vector3(0.5f, 0.5f, 0);
             previewInstance.transform.position = snappedPos;
-
+            
             bool canPlace = placement.CanPlaceTank(cellPos);
 
             if (canPlace)
