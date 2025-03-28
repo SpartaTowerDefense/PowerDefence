@@ -19,21 +19,28 @@ public class DefaultCannon : CannonBase
             return;
 
         GameObject bullet = null;
-        for (int i = 0; i < data.bulletCount; i++)
-        {
-            bullet = ObjectPoolManager.Instance.GetObject<BulletFactory>(1);
-            Bullet bul = bullet.GetComponent<Bullet>();
-            bul.controller = this.controller;
-            bullet.transform.position = tp.position;
 
-            Vector2 lookPos = targetPos - tp.position;
-            float rotz = Mathf.Atan2(lookPos.y, lookPos.x) * Mathf.Rad2Deg;
-            bullet.transform.rotation = Quaternion.Euler(0, 0, rotz + 90f);
+        //오브젝트 풀에서 객체 가져오기
+        bullet = ObjectPoolManager.Instance.GetObject<BulletFactory>(1);
+        // 객체에 잇는 스크립트 정보 가져오기
+        Bullet bul = bullet.GetComponent<Bullet>();
+        // 탄환에 현재 컨트롤러 정보 넘기기
+        bul.controller = this.controller;
+        // 포지션 동기화
+        bullet.transform.position = tp.position;
 
-            bul.rb.gravityScale = 0f;
-            bul.rb.AddForce((targetPos - bullet.transform.position).normalized * bul.bulletSpeed, ForceMode2D.Impulse);
-        }
+        //각도구하기
+        Vector2 lookPos = targetPos - tp.position;
+        float rotz = Mathf.Atan2(lookPos.y, lookPos.x) * Mathf.Rad2Deg;
+        bullet.transform.rotation = Quaternion.Euler(0, 0, rotz + 90f);
+
+        //발사
+        bul.rb.gravityScale = 0f;
+        bul.rb.AddForce((targetPos - bullet.transform.position).normalized * bul.bulletSpeed, ForceMode2D.Impulse);
+
+        //발사 쿨타임 추가
         time = fireColldown;
+        controller.DetectEnemy.SelectEnemy();
     }
 
     

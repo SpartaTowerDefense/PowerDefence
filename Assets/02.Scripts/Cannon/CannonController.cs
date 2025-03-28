@@ -7,7 +7,8 @@ public class CannonController : MonoBehaviour
     public Transform tip;
     public SpriteRenderer spr;
 
-    private DetectEnemy detectEnemy;
+    public DetectEnemy DetectEnemy { get; private set; }
+    public TurretData turretdata;
     
     public CannonBase CurrentCannon { get; set; }
     private DefaultCannon DefaultCannon { get; set; }
@@ -18,11 +19,12 @@ public class CannonController : MonoBehaviour
 
     private void Awake()
     {
-        detectEnemy = GetComponent<DetectEnemy>();
+        DetectEnemy = GetComponent<DetectEnemy>();
     }
 
     public void Initinalize(TurretData data)
     {
+        turretdata = data;
         sprites[0] = data.LEVEL0;
         sprites[1] = data.LEVEL1;
         sprites[2] = data.LEVEL2;
@@ -51,10 +53,9 @@ public class CannonController : MonoBehaviour
         if (CurrentCannon != null)
         CurrentCannon.Update();
 
-        if (detectEnemy.seletedEnemy != null)
+        if (DetectEnemy.seletedEnemy != null)
         {
             Fire();
-            detectEnemy.SelectEnemy();
         }
             
     }
@@ -68,6 +69,8 @@ public class CannonController : MonoBehaviour
     public void Fire()
     {
         if (CurrentCannon != null)
-            CurrentCannon.Fire(detectEnemy.seletedEnemy.transform.position);
+            CurrentCannon.Fire(DetectEnemy.seletedEnemy.transform.position);
+
+        
     }
 }

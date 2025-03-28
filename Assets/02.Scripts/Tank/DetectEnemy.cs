@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
 using System.Linq;
+using UnityEngine.UIElements;
 
 public class DetectEnemy : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class DetectEnemy : MonoBehaviour
     [SerializeField] private float range;
     private Quaternion tankRotation;
     public Collider2D seletedEnemy;
+    public Collider2D[] selectedEnemies;
 
     public Collider2D[] enemyColliders;
     private CannonController controller;
@@ -20,6 +22,7 @@ public class DetectEnemy : MonoBehaviour
         tankRotation = transform.rotation;
         controller = GetComponent<CannonController>();
         enemyColliders = new Collider2D[10];
+        selectedEnemies = new Collider2D[5];
     }
 
     private void Update()
@@ -44,6 +47,7 @@ public class DetectEnemy : MonoBehaviour
         {
             //범위내에 적이 없으면 회전값 원상복귀
             transform.rotation = tankRotation;
+            seletedEnemy = null;
             Array.Clear(enemyColliders, 0, enemyColliders.Length);
         }
     }
@@ -56,16 +60,31 @@ public class DetectEnemy : MonoBehaviour
     }
 
     // 공격할 적 선택
-    public void SelectEnemy()
+    public void SelectEnemy(int mode = 0, int count = 0)
     {
         enemyColliders = OverlapCircleAllSorted(transform.position, range, enemyLayer);
-
         if (enemyColliders.Length > 0)
         {
-            seletedEnemy = enemyColliders[0];
-            Debug.Log($"선택된 적 : {seletedEnemy}");
+            if (mode == 1)
+            {
+                //여러개 공격할때
+                for(int i = 0; i < count; i++)
+                {
+                    selectedEnemies[i] = enemyColliders[i];
+                }
+            }
+            else
+            {
+                seletedEnemy = enemyColliders[0];
+                Debug.Log($"선택된 적 : {seletedEnemy}");
+            }
             
         }
+        
+
+        
+
+        
     }
     // 적 바라보기
     void ChasingEnemy()

@@ -11,11 +11,6 @@ public class Bullet : MonoBehaviour
     public float bulletSpeed = 5f;
     public CannonController controller;
 
-    GameObject enemy;
-    Vector3 targetPos;
-    Vector2 lookPos;
-
-
     private void Awake()
     {
         if (rb == null) rb = GetComponent<Rigidbody2D>();
@@ -24,11 +19,15 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("충돌");
         if (collision.gameObject.tag.Equals("Enemy"))
         {
             //적 정보를 가져온다
-            //적 정보를 가져와서 turret에 잇는 body head에 따른 데미지를 준다
+            if (collision.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
+            {//적 정보를 가져와서 turret에 잇는 body head에 따른 데미지를 준다  
+                enemy.TakeDamage(controller.turretdata.Attack);
+                Debug.Log($"적 체력 : {enemy.Health}");
+            }
+            
 
             if (!controller.CurrentCannon.data.canPenetration) // 만약 관통속성이 false라면
             {
