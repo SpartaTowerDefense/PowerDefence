@@ -8,11 +8,6 @@ public class Placement : MonoBehaviour
     [SerializeField] private GameObject tankPrefab;
     [SerializeField] private TurretFactory turretFactory;
 
-    private void Start()
-    {
-        turretFactory = GetComponent<TurretFactory>();
-    }
-
     public bool TryPlaceTank(Vector3 worldPos, TurretData bodyData)
     {
         Vector3Int cellPos = roadtileMap.WorldToCell(worldPos); // 주어진 월드좌표가 TileMap의 셀좌표로 변환
@@ -23,7 +18,9 @@ public class Placement : MonoBehaviour
             return false;
         }
 
-        GameObject newTank = turretFactory.CreateObject(null, -1); //일단 회전은 0으로 고정
+        int enumType = (int)bodyData.Type;
+        Debug.Log(enumType);
+        GameObject newTank = ObjectPoolManager.Instance.GetObject<TurretFactory>(enumType); 
 
         if(newTank == null)
         {
@@ -34,7 +31,7 @@ public class Placement : MonoBehaviour
         return true;
     }
 
-    private bool CanPlaceTank(Vector3Int cellPos) //타일맵에서 셀좌표의 위치에 어떤 타일이 깔려있는지를 체크
+    public  bool CanPlaceTank(Vector3Int cellPos) //타일맵에서 셀좌표의 위치에 어떤 타일이 깔려있는지를 체크
     {
         TileBase road = roadtileMap.GetTile(cellPos); // 로드타일맵에 어떤 타일이 있는지 데이터를 가져오고 
                                                       // 추가적으로 장애물 설치시에도 가능함 조건을 추가
