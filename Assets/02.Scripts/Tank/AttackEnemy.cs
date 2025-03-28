@@ -8,6 +8,7 @@ public class AttackEnemy : MonoBehaviour
     Turret turret;
     Bullet buletScript;
     int continuosBulletCount = 0;
+    [SerializeField] private BulletFactory bulletFactory;
     [SerializeField] private GameObject bullet;
     [SerializeField] private float delayTimer = 0f;
     [SerializeField] private float Continuous_delayTimer = 0f;
@@ -54,11 +55,8 @@ public class AttackEnemy : MonoBehaviour
 
     void Lauch()
     {
-        //오브젝트 풀에서 포탄 가져와서 자식개체로 만든 후 발사
-        bullet = ObjectPoolManager.Instance.GetObject<BulletFactory>();
-        bullet.transform.SetParent(transform);
-        buletScript = bullet.GetComponent<Bullet>();
-        buletScript.LaunchBullet();
+        ObjectPoolManager.Instance.GetObject<BulletFactory>();
+        GameObject newBullet = bulletFactory.CreateObject(null, 1);
     }
 
     void Timer()

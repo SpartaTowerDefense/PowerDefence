@@ -247,7 +247,7 @@ Transform:
   m_GameObject: {fileID: 50460182}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.3, y: -0.64, z: 0}
+  m_LocalPosition: {x: 6.32, y: -0.92, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1210,6 +1210,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 340904161}
+  - component: {fileID: 340904162}
   m_Layer: 0
   m_Name: BulletFactory
   m_TagString: Untagged
@@ -1232,6 +1233,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &340904162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 340904160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c5521f1b8b719246991dbe7965e428f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Prefab: {fileID: 4545854559683015507, guid: b4342ef5453637d4fb52e6cc2ead75a2, type: 3}
 --- !u!1 &483694361
 GameObject:
   m_ObjectHideFlags: 0
@@ -1465,6 +1479,7 @@ GameObject:
   - component: {fileID: 702086994}
   - component: {fileID: 702086993}
   - component: {fileID: 702086995}
+  - component: {fileID: 702086996}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Enemy
@@ -1533,7 +1548,7 @@ Transform:
   m_GameObject: {fileID: 702086992}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.383, y: -1.164, z: 0}
+  m_LocalPosition: {x: 4.34, y: -1.29, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1568,7 +1583,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -1584,6 +1599,33 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.04, y: 1.04}
   m_EdgeRadius: 0
+--- !u!50 &702086996
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 702086992}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &888990566
 GameObject:
   m_ObjectHideFlags: 0
@@ -1595,6 +1637,8 @@ GameObject:
   - component: {fileID: 888990568}
   - component: {fileID: 888990567}
   - component: {fileID: 888990569}
+  - component: {fileID: 888990570}
+  - component: {fileID: 888990571}
   m_Layer: 0
   m_Name: Tank
   m_TagString: Untagged
@@ -1688,6 +1732,47 @@ MonoBehaviour:
   range: 3
   seletedEnemy: {fileID: 0}
   enemyColliders: []
+--- !u!114 &888990570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 888990566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0be0868739265a647a6bc649d98401a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectEnemy: {fileID: 0}
+  <DefaultStatus>k__BackingField:
+    attack: 5
+    dotDamage: 5
+    flinch: 5
+    knockback: 5
+    coin: 5
+    duration: 5
+    bulletCount: 1
+    splashRatio: 5
+    canPentration: 5
+--- !u!114 &888990571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 888990566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5ac732f0b1ca4543af012b20f72087e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletFactory: {fileID: 340904162}
+  bullet: {fileID: 4545854559683015507, guid: b4342ef5453637d4fb52e6cc2ead75a2, type: 3}
+  delayTimer: 0
+  Continuous_delayTimer: 0
+  attackDelay: 1
+  Continuous_Attack_Delay: 0.2
 --- !u!1 &1257178763
 GameObject:
   m_ObjectHideFlags: 0
@@ -1913,7 +1998,38 @@ Transform:
   m_GameObject: {fileID: 1353087508}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.3, y: -0.64, z: 0}
+  m_LocalPosition: {x: 3.88, y: -0.98, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1619295089
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1619295090}
+  m_Layer: 0
+  m_Name: Gruop
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1619295090
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1619295089}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.869339, y: -0.41572767, z: -0.02560306}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3588,3 +3704,4 @@ SceneRoots:
   - {fileID: 50460185}
   - {fileID: 1353087511}
   - {fileID: 340904161}
+  - {fileID: 1619295090}
