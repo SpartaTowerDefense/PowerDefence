@@ -9,15 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43198636b2253c64193600acbfef76f8, type: 3}
+  m_Script: {fileID: 11500000, guid: 9a9039fd1be605046be58129c8ce2e09, type: 3}
   m_Name: Blue
   m_EditorClassIdentifier: 
   <Type>k__BackingField: 1
   <SpriteImage>k__BackingField: {fileID: 21300000, guid: 1066da7d52475404bbdc3deb64e8e432, type: 3}
   <Price>k__BackingField: 0
   <Attack>k__BackingField: 1
-  <DotDamage>k__BackingField: 0
+  <DotDamage>k__BackingField: 1
   <Flinch>k__BackingField: 1
-  <Knockback>k__BackingField: 0
-  <Coin>k__BackingField: 0
+  <Knockback>k__BackingField: 1
+  <Coin>k__BackingField: 1
   <Duration>k__BackingField: 1
+  <BulletCount>k__BackingField: 1
+  <SplashRatio>k__BackingField: 0
+  <CanPenetration>k__BackingField: 0

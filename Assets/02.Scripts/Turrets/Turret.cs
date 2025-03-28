@@ -79,24 +79,23 @@ public class Turret : MonoBehaviour
     /// <summary>
     /// Factory에서 초기화 작업
     /// </summary>
-    /// <param name="body"></param>
-    /// <param name="head"></param>
-    public void Initinalize(BodyData body, HeadData head)
+    /// <param name="data"></param>
+    public void Initinalize(TurretData data)
     {
         // 디폴트 값 데이터
-        if (body == null && head == null)
+        if (data == null)
             return;
 
-        AttackRatio = body.Attack;
-        DotDamageRatio = body.DotDamage;
-        FlinchRatio = body.Flinch;
-        KnockbackRatio = body.Knockback;
-        CoinRatio = body.Coin;
-        AbilityDuration = body.Duration;
+        AttackRatio = data.Attack;
+        DotDamageRatio = data.DotDamage;
+        FlinchRatio = data.Flinch;
+        KnockbackRatio = data.Knockback;
+        CoinRatio = data.Coin;
+        AbilityDuration = data.Duration;
 
-        BulletCount = head.BulletCount;
-        SplashRatio = head.SplashRatio;
-        CanPenetration = head.CanPenetration;
+        BulletCount = data.BulletCount;
+        SplashRatio = data.SplashRatio;
+        CanPenetration = data.CanPenetration;
     }
     
 }

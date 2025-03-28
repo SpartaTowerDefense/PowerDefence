@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43198636b2253c64193600acbfef76f8, type: 3}
+  m_Script: {fileID: 11500000, guid: 9a9039fd1be605046be58129c8ce2e09, type: 3}
   m_Name: Green
   m_EditorClassIdentifier: 
   <Type>k__BackingField: 3
@@ -21,3 +21,6 @@ MonoBehaviour:
   <Knockback>k__BackingField: 1
   <Coin>k__BackingField: 1
   <Duration>k__BackingField: 1
+  <BulletCount>k__BackingField: 1
+  <SplashRatio>k__BackingField: 0
+  <CanPenetration>k__BackingField: 0

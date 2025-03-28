@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "BodyData", menuName = "CreateData/New Body Data")]
-public class BodyData : ScriptableObject
+[CreateAssetMenu(fileName = "TurretData", menuName = "CreateData/New Turret Data")]
+public class TurretData : ScriptableObject
 {
     // 터렛 타입
     [field: SerializeField] public Enums.TurretType Type { get; private set; }
@@ -26,5 +26,11 @@ public class BodyData : ScriptableObject
 
     [field: Header("AbilityTimeDuration")]
     [field:Range(0,5)][field: SerializeField] public float Duration { get; private set; } = 1f;
+
+    // 포씬 디폴트 값
+    [field:Header("Cannon Datas")]
+    [field: SerializeField] public int BulletCount { get; set; } = 1;
+    [field: Range(0, 5)][field: SerializeField] public float SplashRatio { get; set; } = 0f;
+    [field: SerializeField] public bool CanPenetration { get; set; } = false; // 관통할 수 있는지
 
 }
