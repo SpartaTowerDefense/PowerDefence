@@ -7,15 +7,19 @@ public class UIButtonHandler : MonoBehaviour
 {
     [SerializeField] private Button pauseBtn;
     [SerializeField] private Button speedBtn;
+    [SerializeField] private Button startBtn;
     
     [SerializeField] private int maxSpeed = 3;
     private int speedCount = 1;
     private bool onPause = false;
 
+    [SerializeField] private GameObject[] square = new GameObject[2];
+
     private void Start()
     {
         pauseBtn.onClick.AddListener(Pause);
         speedBtn.onClick.AddListener(ChangeSpeed);
+        startBtn.onClick.AddListener(UIManager.Instance.Title.OnStart);
     }
 
     void Pause()

@@ -6,34 +6,38 @@ public class CannonController : MonoBehaviour
 {
     public Transform tip;
     public SpriteRenderer spr;
+
+    public DetectEnemy DetectEnemy { get; private set; }
+    public TurretData turretdata;
     
     public CannonBase CurrentCannon { get; set; }
     private DefaultCannon DefaultCannon { get; set; }
-    private DefaultCannon TripleCannon { get; set; }
+    private TripleCannon TripleCannon { get; set; }
 
     // Cannon Sprites
     Sprite[] sprites = new Sprite[3];
 
     private void Awake()
     {
-        spr = GetComponent<SpriteRenderer>();
+        DetectEnemy = GetComponent<DetectEnemy>();
     }
 
     public void Initinalize(TurretData data)
     {
+        turretdata = data;
         sprites[0] = data.LEVEL0;
         sprites[1] = data.LEVEL1;
         sprites[2] = data.LEVEL2;
 
         if(DefaultCannon == null)
         {
-            // Ã¹¹øÂ° Ä³³í
-            DefaultCannon = new DefaultCannon(sprites[0], tip);
+            // ì²«ë²ˆì§¸ ìºë…¼
+            DefaultCannon = new DefaultCannon(sprites[0], tip, this);
 
-            // µÎ¹øÀç Ä³³í
-            TripleCannon = new DefaultCannon(sprites[1], tip);
+            // ë‘ë²ˆì¬ ìºë…¼
+            TripleCannon = new TripleCannon(sprites[1], tip, this);
 
-            // ¼¼¹øÂ° Ä³³í
+            // ì„¸ë²ˆì§¸ ìºë…¼
         }
         else
         {
@@ -42,12 +46,19 @@ public class CannonController : MonoBehaviour
         }
 
         ChangeCannon(DefaultCannon);
+        //ChangeCannon(TripleCannon);
     }
 
     public void Update()
     {
         if (CurrentCannon != null)
-            CurrentCannon.Update();
+        CurrentCannon.Update();
+
+        if (DetectEnemy.seletedEnemy != null)
+        {
+            Fire();
+        }
+            
     }
 
     /// <summary>
@@ -63,6 +74,8 @@ public class CannonController : MonoBehaviour
     public void Fire()
     {
         if (CurrentCannon != null)
-            CurrentCannon.Fire();
+            CurrentCannon.Fire(DetectEnemy.seletedEnemy.transform.position);
+
+        
     }
 }

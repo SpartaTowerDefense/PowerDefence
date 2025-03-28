@@ -27,19 +27,21 @@ public class CannonData
 
 public abstract class CannonBase
 {
-    public CannonData data = new(1,0f, false);
-    public Transform tip; // ÃÑ¾Ë ³ª°¡´Â À§Ä¡
-    // public AudioClip clip; ÃÑ¾Ë ¹ß»ç½Ã ¼Ò¸®
+    public CannonData data;
+    public Transform tip; // ì´ì•Œ ë‚˜ê°€ëŠ” ìœ„ì¹˜
+    public CannonController controller;
+    // public AudioClip clip; ì´ì•Œ ë°œì‚¬ì‹œ ì†Œë¦¬
 
     protected float time = 0f;
+    protected float continous_CoolDown = 0f;
+    protected float continous_Time = 0.2f;
     protected float fireColldown = 1f;
 
-
-
-    public CannonBase(Sprite sprite, Transform tip)
+    public CannonBase(Sprite sprite, Transform tip, CannonController controller)
     {
         ChangeSprite(sprite);
         data.tip = tip;
+        this.controller = controller;
     }
 
     public void ChangeSprite(Sprite cannonSprite)
@@ -50,6 +52,7 @@ public abstract class CannonBase
     public void Update()
     {
         time -= Time.deltaTime;
+        continous_CoolDown -= Time.deltaTime;
     }
 
     public CannonData GetData()
@@ -57,5 +60,5 @@ public abstract class CannonBase
         return data;
     }
 
-    public abstract void Fire();
+    public abstract void Fire(Vector3 targetPos);
 }

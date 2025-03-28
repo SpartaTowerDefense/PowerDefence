@@ -10,23 +10,24 @@ public class TurretFactory : FactoryBase
 
     private const string Black = nameof(Black);
     private const string Blue = nameof(Blue);
-    private const string Green = nameof(Green);
     private const string Red = nameof(Red);
+    private const string Green = nameof(Green);
     private const string White = nameof(White);
 
-    private TurretData[] bodyList = new TurretData[(int)Enums.TurretType.Count];
+    private List<TurretData> bodyList = new();
+
     private void Awake()
     {
         FactoryManager.Instance.path.Add(typeof(TurretFactory).Name, this);
 
-        bodyList[(int)Enums.TurretType.Black] = (ResourceManager.Instance.LoadResource<TurretData>(Black, $"{PATH}{Black}"));
-        bodyList[(int)Enums.TurretType.Blue] = (ResourceManager.Instance.LoadResource<TurretData>(Blue, $"{PATH}{Blue}"));
-        bodyList[(int)Enums.TurretType.Green] = (ResourceManager.Instance.LoadResource<TurretData>(Green, $"{PATH}{Green}"));
-        bodyList[(int)Enums.TurretType.Red] = (ResourceManager.Instance.LoadResource<TurretData>(Red, $"{PATH}{Red}"));
-        bodyList[(int)Enums.TurretType.White] = (ResourceManager.Instance.LoadResource<TurretData>(White, $"{PATH}{White}"));
+        bodyList.Add(ResourceManager.Instance.LoadResource<TurretData>(Black, $"{PATH}{Black}"));
+        bodyList.Add(ResourceManager.Instance.LoadResource<TurretData>(Blue, $"{PATH}{Blue}"));
+        bodyList.Add(ResourceManager.Instance.LoadResource<TurretData>(Red, $"{PATH}{Red}"));
+        bodyList.Add(ResourceManager.Instance.LoadResource<TurretData>(Green, $"{PATH}{Green}"));
+        bodyList.Add(ResourceManager.Instance.LoadResource<TurretData>(White, $"{PATH}{White}"));
     }
 
-    // ¿ÜºÎ¿¡¼­ Å¬¸¯½Ã ¸Å°³º¯¼ö¸¦ ¹Ş¾Æ¾ßµÇ´Âµ¥?
+    // ì™¸ë¶€ì—ì„œ í´ë¦­ì‹œ ë§¤ê°œë³€ìˆ˜ë¥¼ ë°›ì•„ì•¼ë˜ëŠ”ë°?
     public override GameObject CreateObject(GameObject obj = null, int enumType = -1)
     {
         if (enumType == -1)
@@ -35,17 +36,17 @@ public class TurretFactory : FactoryBase
             return null;
         }
 
-        // ¹Ùµğ µ¥ÀÌÅÍ¸¦ ¹Ş´Â´Ù, Çìµå µ¥ÀÌÅÍ¸¦ ¹Ş´Â´Ù.
+        // ë°”ë”” ë°ì´í„°ë¥¼ ë°›ëŠ”ë‹¤, í—¤ë“œ ë°ì´í„°ë¥¼ ë°›ëŠ”ë‹¤.
         TurretData bodyData = bodyList[enumType];
 
-        // ¸Å°³º¯¼ö·Î ¹ŞÀº ¿ÀºêÁ§Æ® Ã¼Å·
+        // ë§¤ê°œë³€ìˆ˜ë¡œ ë°›ì€ ì˜¤ë¸Œì íŠ¸ ì²´í‚¹
         if(obj == null)
-            obj = Instantiate(Prefab, transform);  // ¸Å°³º¯¼ö¸¦ ¸ø¹Ş¾ÒÀ»¶§ »õ·Î »ı¼º
+            obj = Instantiate(Prefab, transform);  // ë§¤ê°œë³€ìˆ˜ë¥¼ ëª»ë°›ì•˜ì„ë•Œ ìƒˆë¡œ ìƒì„±
 
         Turret turret = obj.GetComponent<Turret>();
         CannonController ctrl = obj.GetComponent<CannonController>();
 
-        // ¿ÀºêÁ§Æ® µ¥ÀÌÅÍ¿¡ µ¤¾î¾º¿ì±â
+        // ì˜¤ë¸Œì íŠ¸ ë°ì´í„°ì— ë®ì–´ì”Œìš°ê¸°
         turret.Initinalize(bodyData);
         ctrl.Initinalize(bodyData);
 

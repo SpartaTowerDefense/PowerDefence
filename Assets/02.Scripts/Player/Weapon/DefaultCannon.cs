@@ -1,25 +1,45 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DefaultCannon : CannonBase
 {
-    public DefaultCannon(Sprite sprite, Transform tip) : base(sprite, tip)
+    private Transform tp;
+    public DefaultCannon(Sprite sprite, Transform tip, CannonController controller) : base(sprite, tip, controller)
     {
-        // µğÆúÆ® ÃÑÀº ÃÑ¾Ë °³¼ö 1°³, ½ºÇÃ·¡½¬ ¹İÁö¸§ ¹üÀ§ 0, °üÅëx
-        data.Inintionalize(1, 0, false);
+        SetData(1, 0, false);
+        tp = tip;
+        
     }
 
-    public override void Fire()
+    public override void Fire(Vector3 targetPos)
     {
         if (time > 0f)
             return;
 
         GameObject bullet = null;
-        for (int i = 0; i < data.BulletCount; i++)
-        {
-            bullet = ObjectPoolManager.Instance.GetObject<BulletFactory>();
-            bullet.GetComponent<Bullet>().LaunchBullet();
-        }
+
+        //ì˜¤ë¸Œì íŠ¸ í’€ì—ì„œ ê°ì²´ ê°€ì ¸ì˜¤ê¸°
+        bullet = ObjectPoolManager.Instance.GetObject<BulletFactory>(1);
+        // ê°ì²´ì— ì‡ëŠ” ìŠ¤í¬ë¦½íŠ¸ ì •ë³´ ê°€ì ¸ì˜¤ê¸°
+        Bullet bul = bullet.GetComponent<Bullet>();
+        // íƒ„í™˜ì— í˜„ì¬ ì»¨íŠ¸ë¡¤ëŸ¬ ì •ë³´ ë„˜ê¸°ê¸°
+        bul.controller = this.controller;
+        // í¬ì§€ì…˜ ë™ê¸°í™”
+        bullet.transform.position = tp.position;
+
+        //ê°ë„êµ¬í•˜ê¸°
+        Vector2 lookPos = targetPos - tp.position;
+        float rotz = Mathf.Atan2(lookPos.y, lookPos.x) * Mathf.Rad2Deg;
+        bullet.transform.rotation = Quaternion.Euler(0, 0, rotz + 90f);
+
+        //ë°œì‚¬
+        bul.rb.gravityScale = 0f;
+        bul.rb.AddForce((targetPos - bullet.transform.position).normalized * bul.bulletSpeed, ForceMode2D.Impulse);
+
+        //ë°œì‚¬ ì¿¨íƒ€ì„ ì¶”ê°€
+        time = fireColldown;
+        controller.DetectEnemy.SelectEnemy();
     }
 }
