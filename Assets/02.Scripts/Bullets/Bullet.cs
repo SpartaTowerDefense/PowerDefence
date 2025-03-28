@@ -21,6 +21,7 @@ public class Bullet : MonoBehaviour
     {
         if (collision.gameObject.tag.Equals("Enemy"))
         {
+            CannonData currentData = controller.CurrentCannon.GetData();
             //적 정보를 가져온다
             if (collision.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
             {//적 정보를 가져와서 turret에 잇는 body head에 따른 데미지를 준다  
@@ -29,7 +30,7 @@ public class Bullet : MonoBehaviour
             }
             
 
-            if (!controller.CurrentCannon.data.canPenetration) // 만약 관통속성이 false라면
+            if (!currentData.CanPenetration) // 만약 관통속성이 false라면
             {
                 //오브젝트풀에 반납한다.
                 ObjectPoolManager.Instance.ReturnObject<BulletFactory>(this.gameObject);

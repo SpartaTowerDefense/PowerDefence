@@ -8,9 +8,7 @@ public class DefaultCannon : CannonBase
     private Transform tp;
     public DefaultCannon(Sprite sprite, Transform tip, CannonController controller) : base(sprite, tip, controller)
     {
-        SetData(1, 0, false);
-        tp = tip;
-        
+        data.Inintionalize(1, 0, false);
     }
 
     public override void Fire(Vector3 targetPos)

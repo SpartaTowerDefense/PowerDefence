@@ -31,13 +31,13 @@ public class CannonController : MonoBehaviour
 
         if(DefaultCannon == null)
         {
-            // 첫번째 캐논
+            // 첫번�?캐논
             DefaultCannon = new DefaultCannon(sprites[0], tip, this);
 
-            // 두번재 캐논
+            // ?�번??캐논
             TripleCannon = new TripleCannon(sprites[1], tip, this);
 
-            // 세번째 캐논
+            // ?�번�?캐논
         }
         else
         {

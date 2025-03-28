@@ -7,7 +7,7 @@ public class TripleCannon : CannonBase
     private int count = 0;
     public TripleCannon(Sprite sprite, Transform tip, CannonController controller) : base(sprite, tip, controller)
     {
-        SetData(3, 0, false);
+        data.Inintionalize(3, 0, false);
     }
 
     GameObject bullet = null;
@@ -27,7 +27,7 @@ public class TripleCannon : CannonBase
         bul.rb.gravityScale = 0f;
         bul.rb.AddForce((targetPos - bullet.transform.position).normalized * bul.bulletSpeed, ForceMode2D.Impulse);
 
-        if(count < data.bulletCount)
+        if(count < data.BulletCount)
         {
             count++;
             continous_Time = continous_CoolDown;
