@@ -42,6 +42,4 @@ public class DefaultCannon : CannonBase
         time = fireColldown;
         controller.DetectEnemy.SelectEnemy();
     }
-
-    
 }

@@ -46,6 +46,7 @@ public class CannonController : MonoBehaviour
         }
 
         ChangeCannon(DefaultCannon);
+        //ChangeCannon(TripleCannon);
     }
 
     public void Update()
