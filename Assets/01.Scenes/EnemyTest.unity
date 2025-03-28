@@ -1081,9 +1081,9 @@ GameObject:
   m_Component:
   - component: {fileID: 296687679}
   - component: {fileID: 296687678}
-  - component: {fileID: 296687680}
   - component: {fileID: 296687681}
   - component: {fileID: 296687682}
+  - component: {fileID: 296687680}
   m_Layer: 0
   m_Name: TestEnemy
   m_TagString: Enemy
@@ -1170,14 +1170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 620be4c31aa02ec48896f9c6c0aa81ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 10
-  MovementSpeed: 2
-  FrozeTime: 1
-  KnockbackTime: 0.3
-  KnockbackResistance: 1
-  BurningTime: 5
-  Flammable: 1
-  Reward: 5
+  enemyData: {fileID: 11400000, guid: 372e495c43c268c47a2a31c6814dcbd8, type: 2}
 --- !u!61 &296687681
 BoxCollider2D:
   m_ObjectHideFlags: 0
