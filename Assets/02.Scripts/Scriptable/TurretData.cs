@@ -33,4 +33,9 @@ public class TurretData : ScriptableObject
     [field: Range(0, 5)][field: SerializeField] public float SplashRatio { get; set; } = 0f;
     [field: SerializeField] public bool CanPenetration { get; set; } = false; // 관통할 수 있는지
 
+    [field:Header("CannonImg")]
+    [field: SerializeField] public Sprite LEVEL0 { get; set; }
+    [field: SerializeField] public Sprite LEVEL1 { get; set; }
+    [field: SerializeField] public Sprite LEVEL2 { get; set; }
+
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TurretFactory : FactoryBase
@@ -16,6 +17,8 @@ public class TurretFactory : FactoryBase
 
     private void Awake()
     {
+        FactoryManager.Instance.path.Add(typeof(TurretFactory).Name, this);
+
         bodyList.Add(ResourceManager.Instance.LoadResource<TurretData>(Black, $"{PATH}{Black}"));
         bodyList.Add(ResourceManager.Instance.LoadResource<TurretData>(Blue, $"{PATH}{Blue}"));
         bodyList.Add(ResourceManager.Instance.LoadResource<TurretData>(Green, $"{PATH}{Green}"));
@@ -36,12 +39,14 @@ public class TurretFactory : FactoryBase
 
         // 매개변수로 받은 오브젝트 체킹
         if(obj == null)
-            obj = Instantiate(Prefab);  // 매개변수를 못받았을때 새로 생성
+            obj = Instantiate(Prefab, transform);  // 매개변수를 못받았을때 새로 생성
 
-        Turret turret = GetComponent<Turret>();
+        Turret turret = obj.GetComponent<Turret>();
+        CannonController ctrl = obj.GetComponent<CannonController>();
 
         // 오브젝트 데이터에 덮어씌우기
         turret.Initinalize(bodyData);
+        ctrl.Initinalize(bodyData);
 
         return obj;
     }
