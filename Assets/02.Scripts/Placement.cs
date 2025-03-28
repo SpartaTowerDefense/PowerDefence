@@ -13,7 +13,7 @@ public class Placement : MonoBehaviour
         turretFactory = GetComponent<TurretFactory>();
     }
 
-    public bool TryPlaceTank(Vector3 worldPos, BodyData bodyData)
+    public bool TryPlaceTank(Vector3 worldPos, TurretData bodyData)
     {
         Vector3Int cellPos = roadtileMap.WorldToCell(worldPos); // 주어진 월드좌표가 TileMap의 셀좌표로 변환
         Vector3 capturedPos = roadtileMap.CellToWorld(cellPos); // 다시 받은 셀좌표를 통해 다시 월드좌표로 변환

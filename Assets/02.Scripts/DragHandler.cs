@@ -69,7 +69,7 @@ public class DragHandler : MonoBehaviour
             
         isDrag = false;
 
-        BodyData selectedData = UIManager.Instance.Shop.curData;
+        TurretData selectedData = UIManager.Instance.Shop.curData;
 
         if(selectedData == null)
         {

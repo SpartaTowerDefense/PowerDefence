@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class Slot : MonoBehaviour
 {
-    //[SerializeField] public BodyData bodyData { get; private set; }
+    [SerializeField] public TurretData TurretData { get; private set; }
     [SerializeField] public Button curButton;
     private UIManager uiManager;
     private Image image;
@@ -13,25 +13,24 @@ public class Slot : MonoBehaviour
     {
         uiManager = UIManager.Instance;
         curButton = GetComponent<Button>();
-        //curButton.onClick.AddListener(SetCurData);
     }
     private void OnEnable()
     {
         image = GetComponent<Image>();
     }
 
-    //public void SetData(BodyData data, Placement placement)
-    //{
-    //    bodyData = data;
-    //    this.placement = placement;
-    //    if (bodyData.SpriteImage)
-    //        image.sprite = bodyData.SpriteImage;
-    //}
+    public void SetData(TurretData data, Placement placement)
+    {
+        TurretData = data;
+        this.placement = placement;
+        if (TurretData.BodyImage)
+            image.sprite = TurretData.BodyImage;
+    }
 
-    //public void SetCurData()
-    //{
-    //    uiManager.Shop.curData = bodyData;
-    //}
+    public void SetCurData()
+    {
+        uiManager.Shop.curData = TurretData;
+    }
     public void GetMouseUp()
     {
         Debug.Log("Up");
