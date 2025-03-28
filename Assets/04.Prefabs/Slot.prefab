@@ -155,3 +155,5 @@ MonoBehaviour:
   tankPreviewPrefab: {fileID: 8710440442959217692, guid: dcd70ee573c0ac0419e4817f4b2c18b7, type: 3}
   maincam: {fileID: 0}
   roadTile: {fileID: 0}
+  groundTile: {fileID: 0}
+  outlinePrefab: {fileID: 7860531304406740113, guid: 4f5b8662f35458340a3e0e435d78a3f1, type: 3}

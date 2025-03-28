@@ -4,14 +4,16 @@ using UnityEngine.Tilemaps;
 
 public class Placement : MonoBehaviour
 {
-    [SerializeField] private Tilemap roadtileMap;
+    [SerializeField] private Tilemap roadTile;
+    [SerializeField] private Tilemap groundTile;
     [SerializeField] private GameObject tankPrefab;
     [SerializeField] private TurretFactory turretFactory;
 
     public bool TryPlaceTank(Vector3 worldPos, TurretData bodyData)
     {
-        Vector3Int cellPos = roadtileMap.WorldToCell(worldPos); // 주어진 월드좌표가 TileMap의 셀좌표로 변환
-        Vector3 capturedPos = roadtileMap.CellToWorld(cellPos); // 다시 받은 셀좌표를 통해 다시 월드좌표로 변환
+        Vector3Int cellPos = groundTile.WorldToCell(worldPos); // 주어진 월드좌표가 TileMap의 셀좌표로 변환
+        Vector3 capturedPos = groundTile.CellToWorld(cellPos); // 다시 받은 셀좌표를 통해 다시 월드좌표로 변환
+        capturedPos += new Vector3(0.5f, 0.5f, 0);
 
         if (!CanPlaceTank(cellPos)) //설치 못하는 타일이라면
         {
@@ -33,15 +35,20 @@ public class Placement : MonoBehaviour
 
     public  bool CanPlaceTank(Vector3Int cellPos) //타일맵에서 셀좌표의 위치에 어떤 타일이 깔려있는지를 체크
     {
-        TileBase road = roadtileMap.GetTile(cellPos); // 로드타일맵에 어떤 타일이 있는지 데이터를 가져오고 
-                                                      // 추가적으로 장애물 설치시에도 가능함 조건을 추가
-        if(road != null)
-        {
-            return false; //타일이 있다면 도로이기 때문에 설치 불가로 false를 반환
-        }
-        else
-        {
-            return true;
-        }
+        //TileBase road = roadTile.GetTile(cellPos); // 로드타일맵에 어떤 타일이 있는지 데이터를 가져오고 
+        //                                              // 추가적으로 장애물 설치시에도 가능함 조건을 추가
+
+        //if(road != null)
+        //{
+        //    return false; //타일이 있다면 도로이기 때문에 설치 불가로 false를 반환
+        //}
+        //else
+        //{
+        //    return true;
+        //}
+        bool isGround = groundTile.GetTile(cellPos) != null;
+        bool isRoad = roadTile.GetTile(cellPos) != null;
+
+        return isGround && !isRoad; //Ground이면서 도로가 아닌 곳에서만 설치가 가능하도록
     }
 }
