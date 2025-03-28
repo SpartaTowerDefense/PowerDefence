@@ -26,7 +26,7 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager>
     /// <typeparam name="T"></typeparam>
     /// <param name="key"></param>
     /// <<turns></returns>
-    public GameObject GetObject<T>() where T : FactoryBase
+    public GameObject GetObject<T>(int enumType = -1) where T : FactoryBase
     {
         GameObject poolGo = null;
         if(objectPool.TryGetValue(typeof(T).Name, out var queue))
@@ -40,7 +40,7 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager>
         }
 
         // 해당되는 팩토리 생성 및 추가
-        GameObject obj = factory.path[typeof(T).Name].CreateObject(poolGo);
+        GameObject obj = factory.path[typeof(T).Name].CreateObject(poolGo, enumType);
 
         // 해당되는 키가 없으면 새로 생성
         if (!objectPool.ContainsKey(typeof(T).Name))

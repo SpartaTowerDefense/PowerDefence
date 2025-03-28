@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-// ÀÓ½Ã¹æÆí
+// ì„ì‹œë°©í¸
 [System.Serializable]
 public class TurretStatus
 {
@@ -40,14 +40,17 @@ public class Turret : MonoBehaviour
     #region Componenets
     private SpriteRenderer bodySpr { get; set; }
     private SpriteRenderer headSpr { get; set; }
+
     public DetectEnemy detectEnemy;
+
     #endregion
 
     #region BodyDatas
     public Enums.TurretType Type { get; private set; } = Enums.TurretType.Black;
+    public int Level { get; set; } = 1;
     public int Price { get; private set; } = 1000;
 
-    // º¯ÇÒ ¼ö ÀÖ´Â ¹èÀ²
+    // ë³€í•  ìˆ˜ ìˆëŠ” ë°°ìœ¨
     public float AttackRatio { get; private set; } = 1f;
     public float DotDamageRatio { get; private set; } = 1f;
     public float FlinchRatio { get; private set; } = 1f;
@@ -57,10 +60,15 @@ public class Turret : MonoBehaviour
 
     #endregion
 
+
+    // HeadDataê²½ìš°ì—ëŠ” í•„ìš”ê°€ ì—†ì„êº¼ ê°™ì•„ì„œ ì´ê±´ ì‚­ì œë¥¼ í•´ì•¼ë¨
+    // HeadDataì˜ ì •ë³´ë“¤ì€ CannonControllerì˜ CurrentCannonì— ë‹´ê²¨ì ¸ ìˆìŠµë‹ˆë‹¤.
     #region HeadDatas
     public int BulletCount { get; private set; } =  1;
     public float SplashRatio { get; private set; } = 1f;
     public bool CanPenetration { get; private set; } = false;
+
+    private Sprite[] cannonArr = new Sprite[3];
 
     #endregion
 
@@ -70,19 +78,18 @@ public class Turret : MonoBehaviour
 
     private void Awake()
     {
-        // ÄÄÆ÷³ÍÆ® ÃÊ±âÈ­
+        // ì»´í¬ë„ŒíŠ¸ ì´ˆê¸°í™”
         detectEnemy = GetComponent<DetectEnemy>();
-        bodySpr = transform.GetComponentInChildren<SpriteRenderer>(Body);
-        headSpr = transform.GetComponentInChildren<SpriteRenderer>(Head);
+        bodySpr = transform.GetComponentInChildren<SpriteRenderer>(true);
     }
 
     /// <summary>
-    /// Factory¿¡¼­ ÃÊ±âÈ­ ÀÛ¾÷
+    /// [ì‚¬ìš©ì•ˆí•¨] BulletCount, SplashRatio, CanPenetration
     /// </summary>
     /// <param name="data"></param>
     public void Initinalize(TurretData data)
     {
-        // µğÆúÆ® °ª µ¥ÀÌÅÍ
+        // ë””í´íŠ¸ ê°’ ë°ì´í„°
         if (data == null)
             return;
 
@@ -93,9 +100,17 @@ public class Turret : MonoBehaviour
         CoinRatio = data.Coin;
         AbilityDuration = data.Duration;
 
+        // Cannon
         BulletCount = data.BulletCount;
         SplashRatio = data.SplashRatio;
         CanPenetration = data.CanPenetration;
+
+        cannonArr[0] = data.LEVEL0;
+        cannonArr[1] = data.LEVEL1;
+        cannonArr[2] = data.LEVEL2;
+
+        bodySpr.sprite = data.BodyImage;
     }
-    
+
+
 }
