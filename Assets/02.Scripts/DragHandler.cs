@@ -80,7 +80,7 @@ public class DragHandler : MonoBehaviour
         }
         else
         {
-            rectTransform.anchoredPosition = originalPosition; //드래그 종료후 오브젝트를 배치하지 못했다면
+            rectTransform.position = originalPosition; //드래그 종료후 오브젝트를 배치하지 못했다면
                                                                // UI의 최초 위치로 
         }
     }

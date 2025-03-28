@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-// ÀÓ½Ã¹æÆí
+// ì„ì‹œë°©í¸
 [System.Serializable]
 public class TurretStatus
 {
@@ -50,7 +50,7 @@ public class Turret : MonoBehaviour
     public int Level { get; set; } = 1;
     public int Price { get; private set; } = 1000;
 
-    // º¯ÇÒ ¼ö ÀÖ´Â ¹èÀ²
+    // ë³€í•  ìˆ˜ ìˆëŠ” ë°°ìœ¨
     public float AttackRatio { get; private set; } = 1f;
     public float DotDamageRatio { get; private set; } = 1f;
     public float FlinchRatio { get; private set; } = 1f;
@@ -61,8 +61,8 @@ public class Turret : MonoBehaviour
     #endregion
 
 
-    // HeadData°æ¿ì¿¡´Â ÇÊ¿ä°¡ ¾øÀ»²¨ °°¾Æ¼­ ÀÌ°Ç »èÁ¦¸¦ ÇØ¾ßµÊ
-    // HeadDataÀÇ Á¤º¸µéÀº CannonControllerÀÇ CurrentCannon¿¡ ´ã°ÜÁ® ÀÖ½À´Ï´Ù.
+    // HeadDataê²½ìš°ì—ëŠ” í•„ìš”ê°€ ì—†ì„êº¼ ê°™ì•„ì„œ ì´ê±´ ì‚­ì œë¥¼ í•´ì•¼ë¨
+    // HeadDataì˜ ì •ë³´ë“¤ì€ CannonControllerì˜ CurrentCannonì— ë‹´ê²¨ì ¸ ìˆìŠµë‹ˆë‹¤.
     #region HeadDatas
     public int BulletCount { get; private set; } =  1;
     public float SplashRatio { get; private set; } = 1f;
@@ -78,18 +78,18 @@ public class Turret : MonoBehaviour
 
     private void Awake()
     {
-        // ÄÄÆ÷³ÍÆ® ÃÊ±âÈ­
+        // ì»´í¬ë„ŒíŠ¸ ì´ˆê¸°í™”
         detectEnemy = GetComponent<DetectEnemy>();
         bodySpr = transform.GetComponentInChildren<SpriteRenderer>(true);
     }
 
     /// <summary>
-    /// [»ç¿ë¾ÈÇÔ] BulletCount, SplashRatio, CanPenetration
+    /// [ì‚¬ìš©ì•ˆí•¨] BulletCount, SplashRatio, CanPenetration
     /// </summary>
     /// <param name="data"></param>
     public void Initinalize(TurretData data)
     {
-        // µğÆúÆ® °ª µ¥ÀÌÅÍ
+        // ë””í´íŠ¸ ê°’ ë°ì´í„°
         if (data == null)
             return;
 
@@ -110,7 +110,6 @@ public class Turret : MonoBehaviour
         cannonArr[2] = data.LEVEL2;
 
         bodySpr.sprite = data.BodyImage;
-        headSpr.sprite = data.LEVEL0;
     }
 
 

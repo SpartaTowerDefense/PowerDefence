@@ -14,10 +14,10 @@ public class CannonController : MonoBehaviour
     // Cannon Sprites
     Sprite[] sprites = new Sprite[3];
 
-    private void Awake()
-    {
-        spr = GetComponent<SpriteRenderer>();
-    }
+    //private void Awake()
+    //{
+    //    spr = GetComponent<SpriteRenderer>();
+    //}
 
     public void Initinalize(TurretData data)
     {
@@ -27,13 +27,13 @@ public class CannonController : MonoBehaviour
 
         if(DefaultCannon == null)
         {
-            // Ã¹¹øÂ° Ä³³í
+            // ì²«ë²ˆì§¸ ìºë…¼
             DefaultCannon = new DefaultCannon(sprites[0], tip);
 
-            // µÎ¹øÀç Ä³³í
+            // ë‘ë²ˆì¬ ìºë…¼
             TripleCannon = new DefaultCannon(sprites[1], tip);
 
-            // ¼¼¹øÂ° Ä³³í
+            // ì„¸ë²ˆì§¸ ìºë…¼
         }
         else
         {

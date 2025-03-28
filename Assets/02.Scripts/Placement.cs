@@ -19,7 +19,8 @@ public class Placement : MonoBehaviour
         }
 
         int enumType = (int)bodyData.Type;
-        GameObject newTank = ObjectPoolManager.Instance.GetObject<TurretFactory>(enumType); //일단 회전은 0으로 고정
+        Debug.Log(enumType);
+        GameObject newTank = ObjectPoolManager.Instance.GetObject<TurretFactory>(enumType); 
 
         if(newTank == null)
         {
