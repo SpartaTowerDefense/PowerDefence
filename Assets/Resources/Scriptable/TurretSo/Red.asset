@@ -24,3 +24,6 @@ MonoBehaviour:
   <BulletCount>k__BackingField: 1
   <SplashRatio>k__BackingField: 0
   <CanPenetration>k__BackingField: 0
+  <LEVEL0>k__BackingField: {fileID: 21300000, guid: 5539142764009e042bc7d1886b4ef41e, type: 3}
+  <LEVEL1>k__BackingField: {fileID: 21300000, guid: d9991422b128c5542b6e6fb4d891681c, type: 3}
+  <LEVEL2>k__BackingField: {fileID: 21300000, guid: d9991422b128c5542b6e6fb4d891681c, type: 3}
