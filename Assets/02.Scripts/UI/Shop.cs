@@ -1,21 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Shop : MonoBehaviour
 {
-    [SerializeField] private BodyData[] bodySo;
+    [SerializeField] private TurretData[] bodySo;
     [SerializeField] private Transform slotTransform;
     [SerializeField] private GameObject slot;
 
-    public BodyData curData;
+    public TurretData curData;
 
+    [SerializeField] Placement placement;
     private void Start()
     {
-        for(int i = 0; i < bodySo.Length; i++)
+        for (int i = 0; i < bodySo.Length; i++)
         {
             Slot obj = Instantiate(slot, slotTransform).GetComponent<Slot>();
-            obj.SetData(bodySo[i]);
+            obj.SetData(bodySo[i], placement);
         }
     }
 
