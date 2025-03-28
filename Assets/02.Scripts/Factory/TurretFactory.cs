@@ -1,36 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 public class TurretFactory : FactoryBase
 {
-    private readonly string PATH = $"Scriptable\\BodyDatas\\";
-    private readonly string BodySO = $"{nameof(BodySO)}\\";
-    private readonly string HeadSO = $"{nameof(HeadSO)}\\";
+    private readonly string PATH = $"Scriptable\\TurretSo\\";
+
 
     private const string Black = nameof(Black);
     private const string Blue = nameof(Blue);
     private const string Green = nameof(Green);
     private const string White = nameof(White);
 
-    private List<BodyData> bodyList = new();
-    private List<HeadData> headList = new();
+    private List<TurretData> bodyList = new();
 
     private void Awake()
     {
-        bodyList.Add(ResourceManager.Instance.LoadResource<BodyData>($"{PATH}{BodySO}{Black}"));
-        bodyList.Add(ResourceManager.Instance.LoadResource<BodyData>($"{PATH}{BodySO}{Blue}"));
-        bodyList.Add(ResourceManager.Instance.LoadResource<BodyData>($"{PATH}{BodySO}{Green}"));
-        bodyList.Add(ResourceManager.Instance.LoadResource<BodyData>($"{PATH}{BodySO}{White}"));
-
-        headList.Add(ResourceManager.Instance.LoadResource<HeadData>($"{PATH}{HeadSO}{Black}"));
-        headList.Add(ResourceManager.Instance.LoadResource<HeadData>($"{PATH}{HeadSO}{Blue}"));
-        headList.Add(ResourceManager.Instance.LoadResource<HeadData>($"{PATH}{HeadSO}{Green}"));
-        headList.Add(ResourceManager.Instance.LoadResource<HeadData>($"{PATH}{HeadSO}{White}"));
+        bodyList.Add(ResourceManager.Instance.LoadResource<TurretData>(Black, $"{PATH}{Black}"));
+        bodyList.Add(ResourceManager.Instance.LoadResource<TurretData>(Blue, $"{PATH}{Blue}"));
+        bodyList.Add(ResourceManager.Instance.LoadResource<TurretData>(Green, $"{PATH}{Green}"));
+        bodyList.Add(ResourceManager.Instance.LoadResource<TurretData>(White, $"{PATH}{White}"));
     }
 
-    // ì™¸ë¶€ì—ì„œ í´ë¦­ì‹œ ë§¤ê°œë³€ìˆ˜ë¥¼ ë°›ì•„ì•¼ë˜ëŠ”ë°?
+    // ¿ÜºÎ¿¡¼­ Å¬¸¯½Ã ¸Å°³º¯¼ö¸¦ ¹Ş¾Æ¾ßµÇ´Âµ¥?
     public override GameObject CreateObject(GameObject obj = null, int enumType = -1)
     {
         if (enumType == -1)
@@ -39,19 +31,17 @@ public class TurretFactory : FactoryBase
             return null;
         }
 
-        // ë°”ë”” ë°ì´í„°ë¥¼ ë°›ëŠ”ë‹¤, í—¤ë“œ ë°ì´í„°ë¥¼ ë°›ëŠ”ë‹¤.
-        BodyData bodyData = bodyList[enumType];
-        HeadData headData = headList[enumType];
+        // ¹Ùµğ µ¥ÀÌÅÍ¸¦ ¹Ş´Â´Ù, Çìµå µ¥ÀÌÅÍ¸¦ ¹Ş´Â´Ù.
+        TurretData bodyData = bodyList[enumType];
 
-        // ë§¤ê°œë³€ìˆ˜ë¡œ ë°›ì€ ì˜¤ë¸Œì íŠ¸ ì²´í‚¹
+        // ¸Å°³º¯¼ö·Î ¹ŞÀº ¿ÀºêÁ§Æ® Ã¼Å·
         if(obj == null)
-            obj = Instantiate(Prefab);  // ë§¤ê°œë³€ìˆ˜ë¥¼ ëª»ë°›ì•˜ì„ë•Œ ìƒˆë¡œ ìƒì„±
+            obj = Instantiate(Prefab);  // ¸Å°³º¯¼ö¸¦ ¸ø¹Ş¾ÒÀ»¶§ »õ·Î »ı¼º
 
         Turret turret = GetComponent<Turret>();
 
-        // ì˜¤ë¸Œì íŠ¸ ë°ì´í„°ì— ë®ì–´ì”Œìš°ê¸°
-        turret.BodyData = bodyData;
-        turret.HeadData = headData;
+        // ¿ÀºêÁ§Æ® µ¥ÀÌÅÍ¿¡ µ¤¾î¾º¿ì±â
+        turret.Initinalize(bodyData);
 
         return obj;
     }
