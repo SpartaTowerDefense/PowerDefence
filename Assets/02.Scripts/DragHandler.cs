@@ -4,15 +4,15 @@ using UnityEngine.UI;
 public class DragHandler : MonoBehaviour
 {
     [Header("참조")]
-    [SerializeField] private Canvas canvas;
-    [SerializeField] private Placement placement;
+    [SerializeField] private Canvas canvas; // 마우스의 좌표를 UI로 변환할 때 필요한 변수
+    [SerializeField] private Placement placement; 
 
-    [Header("Tank Sprite")]
-    [SerializeField] private Sprite bodySprite;
-    [SerializeField] private Sprite turretSprite;
+    //[Header("Tank Sprite")]
+    //[SerializeField] private Sprite bodySprite;
+    //[SerializeField] private Sprite turretSprite;
 
-    private RectTransform rectTransform; 
-    private Vector2 originalPosition; //최초 위치
+    private RectTransform rectTransform; // UI 오브젝트를 마우스의 좌표로 움직이게 만들기 위한 변수
+    private Vector2 originalPosition; // UI상 초기 위치
     private bool isDrag = false;
     private bool isPlace = false;
 
@@ -26,7 +26,7 @@ public class DragHandler : MonoBehaviour
 
     private void Start()
     {
-        originalPosition = rectTransform.anchoredPosition; //UI 아이콘의 초기 위치를 저장
+        originalPosition = rectTransform.anchoredPosition; //UI 아이콘의 초기 위치를 기준 앵커포인트로부터의 상대 위치로 저장
     }
 
     private void Update()
@@ -48,6 +48,7 @@ public class DragHandler : MonoBehaviour
         inputActions.PlayerActions.Click.started += OnLeftClickStarted;  // Input로직 구독
         inputActions.PlayerActions.Click.started += OnLeftClickCanceled;
     }
+
     private void OnDisable()
     {
         inputActions.PlayerActions.Click.canceled -= OnLeftClickStarted; //구독 해제
@@ -55,11 +56,13 @@ public class DragHandler : MonoBehaviour
 
         inputActions.Disable(); //액션 비활성화
     }
+
     private void OnLeftClickStarted(InputAction.CallbackContext context) //드래그시작시
     {
         if (isPlace) return;
         isDrag = true;
     }
+
     private void OnLeftClickCanceled(InputAction.CallbackContext context) //드래그 종료시
     {
         if (!isDrag || isPlace) return; //
@@ -79,7 +82,7 @@ public class DragHandler : MonoBehaviour
         ); 
         worldPos.z = 0f; //z축은 고정
 
-        bool isSuccess = placement.TryPlaceTank(worldPos, bodyData);
+        bool isSuccess = placement.TryPlaceTank(worldPos, selectedData);
         if (isSuccess)
         {
             isPlace = true;
@@ -91,7 +94,5 @@ public class DragHandler : MonoBehaviour
                                                                // UI의 최초 위치로 
         }
     }
-
-
 
 }

@@ -8,6 +8,11 @@ public class Placement : MonoBehaviour
     [SerializeField] private GameObject tankPrefab;
     [SerializeField] private TurretFactory turretFactory;
 
+    private void Start()
+    {
+        turretFactory = GetComponent<TurretFactory>();
+    }
+
     public bool TryPlaceTank(Vector3 worldPos, BodyData bodyData)
     {
         Vector3Int cellPos = roadtileMap.WorldToCell(worldPos); // 주어진 월드좌표가 TileMap의 셀좌표로 변환
