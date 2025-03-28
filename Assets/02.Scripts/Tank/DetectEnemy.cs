@@ -13,7 +13,6 @@ public class DetectEnemy : MonoBehaviour
     public Collider2D seletedEnemy;
 
     public Collider2D[] enemyColliders;
-    public Collider2D[] sortedColiders;
     private CannonController controller;
 
     private void Start()
@@ -26,7 +25,7 @@ public class DetectEnemy : MonoBehaviour
     private void Update()
     {
         //범위 내에 적이 진입했는지 체크
-        if(Physics2D.OverlapCircle(transform.position, range, enemyLayer))
+        if (Physics2D.OverlapCircle(transform.position, range, enemyLayer))
         {
             //한놈을 선택하기
             if (seletedEnemy == null)
@@ -39,7 +38,7 @@ public class DetectEnemy : MonoBehaviour
                 //적을 바라보기
                 ChasingEnemy();
             }
-                
+
         }
         else
         {
@@ -59,13 +58,13 @@ public class DetectEnemy : MonoBehaviour
     // 공격할 적 선택
     public void SelectEnemy()
     {
-        enemyColliders = Physics2D.OverlapCircleAll(transform.position, range, enemyLayer);
-        sortedColiders = OverlapCircleAllSorted(enemyColliders);
+        enemyColliders = OverlapCircleAllSorted(transform.position, range, enemyLayer);
 
         if (enemyColliders.Length > 0)
         {
-            seletedEnemy = sortedColiders[0];
-            Debug.Log(seletedEnemy);
+            seletedEnemy = enemyColliders[0];
+            Debug.Log($"선택된 적 : {seletedEnemy}");
+            
         }
     }
     // 적 바라보기
@@ -86,11 +85,13 @@ public class DetectEnemy : MonoBehaviour
         {
             seletedEnemy = null;
         }
-        
+
     }
 
-    public Collider2D[] OverlapCircleAllSorted(Collider2D[] colliders)
+    public Collider2D[] OverlapCircleAllSorted(Vector2 center, float radius, int layerMask)
     {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(center, radius, layerMask);
+
         return colliders
             .OrderBy(c => Vector2.SqrMagnitude((Vector2)c.transform.position - (Vector2)transform.position))
             .ToArray();

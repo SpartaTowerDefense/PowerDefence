@@ -18,7 +18,7 @@ public class BulletFactory : FactoryBase
 
         // 매개변수로 받은 오브젝트 체킹
         if (obj == null)
-            obj = Instantiate(Prefab);
+            obj = Instantiate(Prefab, transform);
        
         return obj;
     }

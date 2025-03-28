@@ -291,4 +291,3 @@ MonoBehaviour:
   range: 3
   seletedEnemy: {fileID: 0}
   enemyColliders: []
-  sortedColiders: []

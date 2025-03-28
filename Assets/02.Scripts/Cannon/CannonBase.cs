@@ -17,15 +17,17 @@ public abstract class CannonBase
 {
     public CannonData data;
     public Transform tip; // 총알 나가는 위치
+    public CannonController controller;
     // public AudioClip clip; 총알 발사시 소리
 
     protected float time = 0f;
     protected float fireColldown = 1f;
 
-    public CannonBase(Sprite sprite, Transform tip)
+    public CannonBase(Sprite sprite, Transform tip, CannonController controller)
     {
         ChangeSprite(sprite);
         data.tip = tip;
+        this.controller = controller;
     }
 
     public void ChangeSprite(Sprite cannonSprite)

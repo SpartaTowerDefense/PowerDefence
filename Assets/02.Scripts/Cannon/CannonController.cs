@@ -30,10 +30,10 @@ public class CannonController : MonoBehaviour
         if(DefaultCannon == null)
         {
             // 첫번째 캐논
-            DefaultCannon = new DefaultCannon(sprites[0], tip);
+            DefaultCannon = new DefaultCannon(sprites[0], tip, this);
 
             // 두번재 캐논
-            TripleCannon = new TripleCannon(sprites[1], tip);
+            TripleCannon = new TripleCannon(sprites[1], tip, this);
 
             // 세번째 캐논
         }
@@ -51,8 +51,12 @@ public class CannonController : MonoBehaviour
         if (CurrentCannon != null)
         CurrentCannon.Update();
 
-        //if (detectEnemy.seletedEnemy != null)
-            //Fire();
+        if (detectEnemy.seletedEnemy != null)
+        {
+            Fire();
+            detectEnemy.SelectEnemy();
+        }
+            
     }
 
     public void ChangeCannon(CannonBase changeCannon)

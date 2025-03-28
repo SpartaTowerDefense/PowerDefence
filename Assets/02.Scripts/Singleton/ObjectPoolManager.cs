@@ -40,7 +40,6 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager>
             }
         }
 
-        Debug.Log(typeof(T));
         // 해당되는 팩토리 생성 및 추가
         GameObject obj = factory.path[typeof(T).Name].CreateObject(poolGo, enumType);
 

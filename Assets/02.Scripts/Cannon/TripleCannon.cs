@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TripleCannon : CannonBase
 {
-    public TripleCannon(Sprite sprite, Transform tip) : base(sprite, tip)
+    public TripleCannon(Sprite sprite, Transform tip, CannonController controller) : base(sprite, tip, controller)
     {
         SetData(3, 0, false);
     }
