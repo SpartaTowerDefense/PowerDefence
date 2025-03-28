@@ -61,5 +61,4 @@ public class CannonController : MonoBehaviour
         if (CurrentCannon != null)
             CurrentCannon.Fire();
     }
-
 }
