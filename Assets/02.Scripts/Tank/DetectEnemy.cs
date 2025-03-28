@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -39,6 +40,7 @@ public class DetectEnemy : MonoBehaviour
         {
             //범위내에 적이 없으면 회전값 원상복귀
             transform.rotation = tankRotation;
+            Array.Clear(enemyColliders, 0, enemyColliders.Length);
         }
     }
 
