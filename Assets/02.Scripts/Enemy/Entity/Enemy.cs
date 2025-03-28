@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public enum EnemyState { Move, Knockback, Frozen, Burn, Dead }
@@ -6,6 +7,7 @@ public class Enemy : MonoBehaviour
 {
     // 에너미 스테이터스
     public EnemyData enemyData;
+    private SpriteRenderer spriteRenderer;
     private float Health; // 체력
     private float MovementSpeed; // 이동속도
     private float FrozeTime; // 얼려지는 시간 계수 - 1 이면 함수에서 호출된 시간만큼 얼어있음
@@ -28,6 +30,10 @@ public class Enemy : MonoBehaviour
     private float freezeTimer = 0f;
     private float knockbackTimer = 0f;
     private float burningTimer = 0f;
+
+    //피격 색상 변경
+    private Color originalColor;
+    private Coroutine colorChangeCoroutine;
 
     //데이터 연결
     void Start()
@@ -106,6 +112,9 @@ public class Enemy : MonoBehaviour
         BurningTime = enemyData.BurningTime;
         Flammable = enemyData.Flammable;
         Reward = Mathf.RoundToInt(enemyData.RewardCoin);
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = enemyData.SpriteImage;
+        originalColor = spriteRenderer.color;
     }
 
     private void Move()
@@ -129,7 +138,7 @@ public class Enemy : MonoBehaviour
     {
         isDead = true;
         Debug.Log("죽음");
-        Destroy(gameObject);
+        ObjectPoolManager.Instance.ReturnObject<EnemyFactory>(this.gameObject);
     }
 
     /// <summary>
@@ -178,5 +187,22 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(float amount)
     {
         Health -= amount;
+    }
+
+    //색상 변경 함수
+    private void ChangeColorTemporarily(Color newColor, float duration = 0.2f)
+    {
+        if (colorChangeCoroutine != null)
+            StopCoroutine(colorChangeCoroutine);
+
+        colorChangeCoroutine = StartCoroutine(ChangeColorRoutine(newColor, duration));
+    }
+
+    private IEnumerator ChangeColorRoutine(Color color, float duration)
+    {
+        spriteRenderer.color = color;
+        yield return new WaitForSeconds(duration);
+        spriteRenderer.color = originalColor;
+        colorChangeCoroutine = null;
     }
 }
