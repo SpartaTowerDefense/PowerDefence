@@ -9,6 +9,7 @@ public class CannonController : MonoBehaviour
     
     public CannonBase CurrentCannon { get; set; }
     private DefaultCannon DefaultCannon { get; set; }
+    private DefaultCannon TripleCannon { get; set; }
 
     // Cannon Sprites
     Sprite[] sprites = new Sprite[3];
@@ -26,13 +27,18 @@ public class CannonController : MonoBehaviour
 
         if(DefaultCannon == null)
         {
+            // 첫번째 캐논
             DefaultCannon = new DefaultCannon(sprites[0], tip);
+
             // 두번재 캐논
+            TripleCannon = new DefaultCannon(sprites[1], tip);
+
             // 세번째 캐논
         }
         else
         {
             DefaultCannon.ChangeSprite(sprites[0]);
+            TripleCannon.ChangeSprite(sprites[1]);
         }
 
         ChangeCannon(DefaultCannon);

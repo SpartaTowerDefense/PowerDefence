@@ -11,14 +11,6 @@ public struct CannonData
 
     public Sprite cannonSprite;
     public Transform tip;
-
-
-    public void InitData(int bulletCount, float splashRatio, bool canPenetration)
-    {
-        this.bulletCount = bulletCount;
-        this.splashRatio = splashRatio;
-        this.canPenetration = canPenetration;
-    }
 }
 
 public abstract class CannonBase
@@ -44,6 +36,13 @@ public abstract class CannonBase
     public void Update()
     {
         time -= Time.deltaTime;
+    }
+
+    public void SetData(int bulletCount, float splashRatio, bool canPenetration)
+    {
+        data.bulletCount = bulletCount;
+        data.splashRatio = splashRatio;
+        data.canPenetration = canPenetration;
     }
 
     public abstract void Fire();

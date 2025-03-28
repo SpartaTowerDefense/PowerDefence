@@ -40,7 +40,6 @@ public class Turret : MonoBehaviour
     #region Componenets
     private SpriteRenderer bodySpr { get; set; }
     private SpriteRenderer headSpr { get; set; }
-    public CannonController CannonCtrl { get; private set; }
 
     public DetectEnemy detectEnemy;
 
@@ -82,8 +81,6 @@ public class Turret : MonoBehaviour
         // 컴포넌트 초기화
         detectEnemy = GetComponent<DetectEnemy>();
         bodySpr = transform.GetComponentInChildren<SpriteRenderer>(true);
-
-        CannonCtrl = GetComponent<CannonController>();
     }
 
     /// <summary>

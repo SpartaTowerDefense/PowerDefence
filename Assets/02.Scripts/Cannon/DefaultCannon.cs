@@ -6,7 +6,7 @@ public class DefaultCannon : CannonBase
 {
     public DefaultCannon(Sprite sprite, Transform tip) : base(sprite, tip)
     {
-        data.InitData(1, 0, false);
+        SetData(1, 0, false);
     }
 
     public override void Fire()
@@ -14,7 +14,11 @@ public class DefaultCannon : CannonBase
         if (time > 0f)
             return;
 
-        GameObject bullet = ObjectPoolManager.Instance.GetObject<BulletFactory>();
-        bullet.GetComponent<Bullet>().LaunchBullet();
+        GameObject bullet = null;
+        for (int i = 0; i < data.bulletCount; i++)
+        {
+            bullet = ObjectPoolManager.Instance.GetObject<BulletFactory>();
+            bullet.GetComponent<Bullet>().LaunchBullet();
+        }
     }
 }
