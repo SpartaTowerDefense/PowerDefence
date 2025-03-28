@@ -13,6 +13,8 @@ public class UIButtonHandler : MonoBehaviour
     private int speedCount = 1;
     private bool onPause = false;
 
+    [SerializeField] private GameObject[] square;
+
     private void Start()
     {
         pauseBtn.onClick.AddListener(Pause);
