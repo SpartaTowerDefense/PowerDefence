@@ -11,18 +11,19 @@ public class TurretFactory : FactoryBase
     private const string Black = nameof(Black);
     private const string Blue = nameof(Blue);
     private const string Green = nameof(Green);
+    private const string Red = nameof(Red);
     private const string White = nameof(White);
 
-    private List<TurretData> bodyList = new();
-
+    private TurretData[] bodyList = new TurretData[(int)Enums.TurretType.Count];
     private void Awake()
     {
         FactoryManager.Instance.path.Add(typeof(TurretFactory).Name, this);
 
-        bodyList.Add(ResourceManager.Instance.LoadResource<TurretData>(Black, $"{PATH}{Black}"));
-        bodyList.Add(ResourceManager.Instance.LoadResource<TurretData>(Blue, $"{PATH}{Blue}"));
-        bodyList.Add(ResourceManager.Instance.LoadResource<TurretData>(Green, $"{PATH}{Green}"));
-        bodyList.Add(ResourceManager.Instance.LoadResource<TurretData>(White, $"{PATH}{White}"));
+        bodyList[(int)Enums.TurretType.Black] = (ResourceManager.Instance.LoadResource<TurretData>(Black, $"{PATH}{Black}"));
+        bodyList[(int)Enums.TurretType.Blue] = (ResourceManager.Instance.LoadResource<TurretData>(Blue, $"{PATH}{Blue}"));
+        bodyList[(int)Enums.TurretType.Green] = (ResourceManager.Instance.LoadResource<TurretData>(Green, $"{PATH}{Green}"));
+        bodyList[(int)Enums.TurretType.Red] = (ResourceManager.Instance.LoadResource<TurretData>(Red, $"{PATH}{Red}"));
+        bodyList[(int)Enums.TurretType.White] = (ResourceManager.Instance.LoadResource<TurretData>(White, $"{PATH}{White}"));
     }
 
     // 외부에서 클릭시 매개변수를 받아야되는데?
