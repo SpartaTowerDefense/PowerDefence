@@ -13,7 +13,7 @@ public class UIButtonHandler : MonoBehaviour
     private int speedCount = 1;
     private bool onPause = false;
 
-    [SerializeField] private GameObject[] square;
+    [SerializeField] private GameObject[] square = new GameObject[2];
 
     private void Start()
     {
