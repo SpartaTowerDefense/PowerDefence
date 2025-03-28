@@ -1,13 +1,19 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class Slot : MonoBehaviour
 {
+    //수정 부분
+    [SerializeField] private Placement placement;
+    [SerializeField] private DragHandler dragHandler;
+
+
     [SerializeField] public TurretData TurretData { get; private set; }
     [SerializeField] public Button curButton;
     private UIManager uiManager;
     private Image image;
-    private Placement placement;
+    
 
     private void Start()
     {
@@ -19,21 +25,23 @@ public class Slot : MonoBehaviour
         image = GetComponent<Image>();
     }
 
-    public void SetData(TurretData data, Placement placement)
+    public void SetData(TurretData data, Placement placement, DragHandler dragHandler)
     {
         TurretData = data;
         this.placement = placement;
+        this.dragHandler = dragHandler;
         if (TurretData.BodyImage)
             image.sprite = TurretData.BodyImage;
     }
 
-    public void SetCurData()
+    public void SetCurDataAndStartDrag(BaseEventData data)
     {
         uiManager.Shop.curData = TurretData;
+        dragHandler.OnBeginDrag(data);
     }
-    public void GetMouseUp()
+   public void GetTankPlace(BaseEventData data)
     {
-        Debug.Log("Up");
+        dragHandler.EndDrag(data);
     }
 
 }
