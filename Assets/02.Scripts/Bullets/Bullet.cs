@@ -25,7 +25,7 @@ public class Bullet : MonoBehaviour
             if (collision.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
             {//적 정보를 가져와서 turret에 잇는 body head에 따른 데미지를 준다  
                 enemy.TakeDamage(controller.turretdata.Attack);
-                Debug.Log($"적 체력 : {enemy.Health}");
+                //Debug.Log($"적 체력 : {enemy.Health}");
             }
             
 

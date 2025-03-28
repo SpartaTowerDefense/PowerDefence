@@ -21,7 +21,7 @@ public class UIButtonHandler : MonoBehaviour
         speedBtn.onClick.AddListener(ChangeSpeed);
         startBtn.onClick.AddListener(UIManager.Instance.Title.OnStart);
     }
-
+     
     void Pause()
     {
         onPause = !onPause;
