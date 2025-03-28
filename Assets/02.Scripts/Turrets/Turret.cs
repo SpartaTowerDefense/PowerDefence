@@ -40,11 +40,15 @@ public class Turret : MonoBehaviour
     #region Componenets
     private SpriteRenderer bodySpr { get; set; }
     private SpriteRenderer headSpr { get; set; }
+    public CannonController CannonCtrl { get; private set; }
+
     public DetectEnemy detectEnemy;
+
     #endregion
 
     #region BodyDatas
     public Enums.TurretType Type { get; private set; } = Enums.TurretType.Black;
+    public int Level { get; set; } = 1;
     public int Price { get; private set; } = 1000;
 
     // 변할 수 있는 배율
@@ -57,10 +61,15 @@ public class Turret : MonoBehaviour
 
     #endregion
 
+
+    // HeadData경우에는 필요가 없을꺼 같아서 이건 삭제를 해야됨
+    // HeadData의 정보들은 CannonController의 CurrentCannon에 담겨져 있습니다.
     #region HeadDatas
     public int BulletCount { get; private set; } =  1;
     public float SplashRatio { get; private set; } = 1f;
     public bool CanPenetration { get; private set; } = false;
+
+    private Sprite[] cannonArr = new Sprite[3];
 
     #endregion
 
@@ -72,12 +81,13 @@ public class Turret : MonoBehaviour
     {
         // 컴포넌트 초기화
         detectEnemy = GetComponent<DetectEnemy>();
-        bodySpr = transform.GetComponentInChildren<SpriteRenderer>(Body);
-        headSpr = transform.GetComponentInChildren<SpriteRenderer>(Head);
+        bodySpr = transform.GetComponentInChildren<SpriteRenderer>(true);
+
+        CannonCtrl = GetComponent<CannonController>();
     }
 
     /// <summary>
-    /// Factory에서 초기화 작업
+    /// [사용안함] BulletCount, SplashRatio, CanPenetration
     /// </summary>
     /// <param name="data"></param>
     public void Initinalize(TurretData data)
@@ -93,9 +103,18 @@ public class Turret : MonoBehaviour
         CoinRatio = data.Coin;
         AbilityDuration = data.Duration;
 
+        // Cannon
         BulletCount = data.BulletCount;
         SplashRatio = data.SplashRatio;
         CanPenetration = data.CanPenetration;
+
+        cannonArr[0] = data.LEVEL0;
+        cannonArr[1] = data.LEVEL1;
+        cannonArr[2] = data.LEVEL2;
+
+        bodySpr.sprite = data.BodyImage;
+        headSpr.sprite = data.LEVEL0;
     }
-    
+
+
 }

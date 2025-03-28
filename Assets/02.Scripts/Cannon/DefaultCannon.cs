@@ -4,19 +4,17 @@ using UnityEngine;
 
 public class DefaultCannon : CannonBase
 {
-    // 캐논 1렙
-    // 어떤 바디에 따라서 리소스매니저에 있는 색깔 가져올꺼임
-    public DefaultCannon(int bulletCount, float splashRatio, bool canPenetration) : base(bulletCount, splashRatio, canPenetration)
+    public DefaultCannon(Sprite sprite, Transform tip) : base(sprite, tip)
     {
+        data.InitData(1, 0, false);
     }
 
     public override void Fire()
     {
-        throw new System.NotImplementedException();
-    }
+        if (time > 0f)
+            return;
 
-    public override void Initionalize()
-    {
-        throw new System.NotImplementedException();
+        GameObject bullet = ObjectPoolManager.Instance.GetObject<BulletFactory>();
+        bullet.GetComponent<Bullet>().LaunchBullet();
     }
 }

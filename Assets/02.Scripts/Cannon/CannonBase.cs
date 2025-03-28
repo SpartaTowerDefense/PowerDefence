@@ -1,30 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst;
 using UnityEngine;
 
-public class CannonData
+public struct CannonData
 {
-    public int BulletCount { get; set; } = 1;
-    public float SplashRatio { get; set; } = 0f;
-    public bool CanPenetration { get; set; } = false;
+    public int bulletCount;
+    public float splashRatio;
+    public bool canPenetration;
 
-    public CannonData(int bulletCount, float splashRatio, bool canPenetration)
-    {
-        Initionalize(bulletCount, splashRatio, canPenetration);
-    }
+    public Sprite cannonSprite;
+    public Transform tip;
 
-    public void Initionalize(int defaultCount, float defaultRatio, bool defaultPenetration)
-    {
-        BulletCount = defaultCount;
-        SplashRatio = defaultRatio;
-        CanPenetration = defaultPenetration;
-    }
 
-    public void ModifiyData(int plusCount, float plusRatio, bool canPenetration)
+    public void InitData(int bulletCount, float splashRatio, bool canPenetration)
     {
-        BulletCount += plusCount;
-        SplashRatio += plusRatio;
-        CanPenetration = canPenetration;
+        this.bulletCount = bulletCount;
+        this.splashRatio = splashRatio;
+        this.canPenetration = canPenetration;
     }
 }
 
@@ -34,12 +27,24 @@ public abstract class CannonBase
     public Transform tip; // 총알 나가는 위치
     // public AudioClip clip; 총알 발사시 소리
 
-    public CannonBase(int bulletCount, float splashRatio, bool canPenetration)
+    protected float time = 0f;
+    protected float fireColldown = 1f;
+
+    public CannonBase(Sprite sprite, Transform tip)
     {
-        data = new(bulletCount, splashRatio, canPenetration);
+        ChangeSprite(sprite);
+        data.tip = tip;
     }
 
-    public abstract void Initionalize();
+    public void ChangeSprite(Sprite cannonSprite)
+    {
+        data.cannonSprite = cannonSprite;
+    }
+
+    public void Update()
+    {
+        time -= Time.deltaTime;
+    }
 
     public abstract void Fire();
 }
