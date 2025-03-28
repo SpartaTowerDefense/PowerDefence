@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Black
   m_EditorClassIdentifier: 
   <Type>k__BackingField: 0
-  <SpriteImage>k__BackingField: {fileID: 21300000, guid: 6ec26fb806b257d4984d75600b34974d, type: 3}
+  <BodyImage>k__BackingField: {fileID: 21300000, guid: 6ec26fb806b257d4984d75600b34974d, type: 3}
   <Price>k__BackingField: 0
   <Attack>k__BackingField: 1
   <DotDamage>k__BackingField: 1

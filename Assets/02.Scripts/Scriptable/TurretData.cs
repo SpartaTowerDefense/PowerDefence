@@ -10,7 +10,7 @@ public class TurretData : ScriptableObject
     [field: SerializeField] public Enums.TurretType Type { get; private set; }
 
     // 스프라이트
-    [field:SerializeField] public Sprite SpriteImage { get; private set; }
+    [field:SerializeField] public Sprite BodyImage { get; private set; }
 
     // 가격
     [field:SerializeField] public int Price { get; private set; }
