@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TurretFactory : FactoryBase
@@ -16,13 +17,15 @@ public class TurretFactory : FactoryBase
 
     private void Awake()
     {
+        FactoryManager.Instance.path.Add(typeof(TurretFactory).Name, this);
+
         bodyList.Add(ResourceManager.Instance.LoadResource<TurretData>(Black, $"{PATH}{Black}"));
         bodyList.Add(ResourceManager.Instance.LoadResource<TurretData>(Blue, $"{PATH}{Blue}"));
         bodyList.Add(ResourceManager.Instance.LoadResource<TurretData>(Green, $"{PATH}{Green}"));
         bodyList.Add(ResourceManager.Instance.LoadResource<TurretData>(White, $"{PATH}{White}"));
     }
 
-    // ì™¸ë¶€ì—ì„œ í´ë¦­ì‹œ ë§¤ê°œë³€ìˆ˜ë¥¼ ë°›ì•„ì•¼ë˜ëŠ”ë°?
+    // ¿ÜºÎ¿¡¼­ Å¬¸¯½Ã ¸Å°³º¯¼ö¸¦ ¹Ş¾Æ¾ßµÇ´Âµ¥?
     public override GameObject CreateObject(GameObject obj = null, int enumType = -1)
     {
         if (enumType == -1)
@@ -31,17 +34,19 @@ public class TurretFactory : FactoryBase
             return null;
         }
 
-        // ë°”ë”” ë°ì´í„°ë¥¼ ë°›ëŠ”ë‹¤, í—¤ë“œ ë°ì´í„°ë¥¼ ë°›ëŠ”ë‹¤.
+        // ¹Ùµğ µ¥ÀÌÅÍ¸¦ ¹Ş´Â´Ù, Çìµå µ¥ÀÌÅÍ¸¦ ¹Ş´Â´Ù.
         TurretData bodyData = bodyList[enumType];
 
-        // ë§¤ê°œë³€ìˆ˜ë¡œ ë°›ì€ ì˜¤ë¸Œì íŠ¸ ì²´í‚¹
+        // ¸Å°³º¯¼ö·Î ¹ŞÀº ¿ÀºêÁ§Æ® Ã¼Å·
         if(obj == null)
-            obj = Instantiate(Prefab);  // ë§¤ê°œë³€ìˆ˜ë¥¼ ëª»ë°›ì•˜ì„ë•Œ ìƒˆë¡œ ìƒì„±
+            obj = Instantiate(Prefab, transform);  // ¸Å°³º¯¼ö¸¦ ¸ø¹Ş¾ÒÀ»¶§ »õ·Î »ı¼º
 
         Turret turret = obj.GetComponent<Turret>();
-        //ë°”ê¾¼ ë¶€ë¶„ 
-        // ì˜¤ë¸Œì íŠ¸ ë°ì´í„°ì— ë®ì–´ì”Œìš°ê¸°
+        CannonController ctrl = obj.GetComponent<CannonController>();
+
+        // ¿ÀºêÁ§Æ® µ¥ÀÌÅÍ¿¡ µ¤¾î¾º¿ì±â
         turret.Initinalize(bodyData);
+        ctrl.Initinalize(bodyData);
 
         return obj;
     }
