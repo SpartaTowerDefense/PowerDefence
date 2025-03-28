@@ -1,32 +1,55 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
-// ÀÓ½Ã¹æÆí
+// ì„ì‹œë°©í¸
 [System.Serializable]
 public class TurretStatus
 {
-    public float attack;
-    public float dotDamage;
-    public float flinch;
-    public float knockback;
-    public int coin;
-    public float duration;
+    public int Level { get; private set; }
+    public int Price { get; private set; }
+    public float Attack { get; private set; }
+    public float DotDamage { get; private set; }
+    public float Flinch { get; private set; }
+    public float Knockback { get; private set; }
+    public float Coin { get; private set; } // ì½”ì¸ íšë“ëŸ‰ ë°°ìœ¨
+    public float Duration { get; private set; }
 
-    public float bulletCount;
-    public float splashRatio;
-    public float canPentration;
-
-    public TurretStatus(float attack, float dotDamage, float flinch, 
-        float knockback, int coin, float duration, int bulletCount, float splashRatio, bool canPentration)
+    public TurretStatus(TurretData data)
     {
-        this.attack = attack;
-        this.dotDamage = dotDamage;
-        this.flinch = flinch;
-        this.knockback = knockback;
-        this.coin = coin;
-        this.duration = duration;
+        Initinalize(data);
+    }
+
+    public void Initinalize(TurretData data)
+    {
+        Level = 1;
+        this.Price = data.Price;
+        this.Attack = data.Attack;
+        this.DotDamage = data.DotDamage;
+        this.Flinch = data.Flinch;
+        this.Knockback = data.Knockback;
+        this.Coin = data.Coin;
+        this.Duration = data.Duration;
+    }
+
+    public void LevelUp(int price, float attack, float dotDamage, float flinch,
+        float knockback, float coin, float duration)
+    {
+        Level++;
+        this.Price += price;
+        this.Attack += attack;
+        this.DotDamage += dotDamage;
+        this.Flinch += flinch;
+        this.Knockback += knockback;
+        this.Coin += coin;
+        this.Duration += duration;
+    }
+
+    public TurretStatus GetStatus()
+    {
+        return this;
     }
 }
 
@@ -39,79 +62,40 @@ public class Turret : MonoBehaviour
 
     #region Componenets
     private SpriteRenderer bodySpr { get; set; }
-    private SpriteRenderer headSpr { get; set; }
-
-    public DetectEnemy detectEnemy;
 
     #endregion
 
     #region BodyDatas
     public Enums.TurretType Type { get; private set; } = Enums.TurretType.Black;
-    public int Level { get; set; } = 1;
-    public int Price { get; private set; } = 1000;
+    public int Level { get; set; } = 1; // ë°”ë””ì— ëŒ€í•œ ë ˆë²¨
 
-    // º¯ÇÒ ¼ö ÀÖ´Â ¹èÀ²
-    public float AttackRatio { get; private set; } = 1f;
-    public float DotDamageRatio { get; private set; } = 1f;
-    public float FlinchRatio { get; private set; } = 1f;
-    public float KnockbackRatio { get; private set; } = 1f;
-    public float CoinRatio { get; private set; } = 1f;
-    public float AbilityDuration { get; private set; } = 1f;
+    // ë³€í•  ìˆ˜ ìˆëŠ” ë°°ìœ¨ TurretData ì§ì ‘ í˜¸ì¶œX TurretDataëŠ” ë””í´íŠ¸ ê°’
+    public TurretStatus TurretStat { get; private set; } = null;
 
     #endregion
-
-
-    // HeadData°æ¿ì¿¡´Â ÇÊ¿ä°¡ ¾øÀ»²¨ °°¾Æ¼­ ÀÌ°Ç »èÁ¦¸¦ ÇØ¾ßµÊ
-    // HeadDataÀÇ Á¤º¸µéÀº CannonControllerÀÇ CurrentCannon¿¡ ´ã°ÜÁ® ÀÖ½À´Ï´Ù.
-    #region HeadDatas
-    public int BulletCount { get; private set; } =  1;
-    public float SplashRatio { get; private set; } = 1f;
-    public bool CanPenetration { get; private set; } = false;
-
-    private Sprite[] cannonArr = new Sprite[3];
-
-    #endregion
-
-    // Turret Default Status
-    [field:SerializeField] public TurretStatus DefaultStatus { get; private set; }
 
 
     private void Awake()
     {
-        // ÄÄÆ÷³ÍÆ® ÃÊ±âÈ­
-        detectEnemy = GetComponent<DetectEnemy>();
+        // ì»´í¬ë„ŒíŠ¸ ì´ˆê¸°í™”
         bodySpr = transform.GetComponentInChildren<SpriteRenderer>(true);
     }
 
     /// <summary>
-    /// [»ç¿ë¾ÈÇÔ] BulletCount, SplashRatio, CanPenetration
+    /// [ì‚¬ìš©ì•ˆí•¨] BulletCount, SplashRatio, CanPenetration
     /// </summary>
     /// <param name="data"></param>
     public void Initinalize(TurretData data)
     {
-        // µğÆúÆ® °ª µ¥ÀÌÅÍ
+        // ë””í´íŠ¸ ê°’ ë°ì´í„°
         if (data == null)
             return;
 
-        AttackRatio = data.Attack;
-        DotDamageRatio = data.DotDamage;
-        FlinchRatio = data.Flinch;
-        KnockbackRatio = data.Knockback;
-        CoinRatio = data.Coin;
-        AbilityDuration = data.Duration;
-
-        // Cannon
-        BulletCount = data.BulletCount;
-        SplashRatio = data.SplashRatio;
-        CanPenetration = data.CanPenetration;
-
-        cannonArr[0] = data.LEVEL0;
-        cannonArr[1] = data.LEVEL1;
-        cannonArr[2] = data.LEVEL2;
+        if (TurretStat == null)
+            TurretStat = new(data);
+        else
+            TurretStat.Initinalize(data);
 
         bodySpr.sprite = data.BodyImage;
-        headSpr.sprite = data.LEVEL0;
     }
-
-
 }

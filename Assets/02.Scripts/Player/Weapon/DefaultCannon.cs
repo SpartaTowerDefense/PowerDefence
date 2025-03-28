@@ -6,7 +6,8 @@ public class DefaultCannon : CannonBase
 {
     public DefaultCannon(Sprite sprite, Transform tip) : base(sprite, tip)
     {
-        SetData(1, 0, false);
+        // 디폴트 총은 총알 개수 1개, 스플래쉬 반지름 범위 0, 관통x
+        data.Inintionalize(1, 0, false);
     }
 
     public override void Fire()
@@ -15,7 +16,7 @@ public class DefaultCannon : CannonBase
             return;
 
         GameObject bullet = null;
-        for (int i = 0; i < data.bulletCount; i++)
+        for (int i = 0; i < data.BulletCount; i++)
         {
             bullet = ObjectPoolManager.Instance.GetObject<BulletFactory>();
             bullet.GetComponent<Bullet>().LaunchBullet();

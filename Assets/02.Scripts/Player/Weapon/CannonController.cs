@@ -50,6 +50,10 @@ public class CannonController : MonoBehaviour
             CurrentCannon.Update();
     }
 
+    /// <summary>
+    /// UI에서 포씬을 강화했을때 호출 ( 매개변수는 CannonController에 참조 )
+    /// </summary>
+    /// <param name="changeCannon"></param>
     public void ChangeCannon(CannonBase changeCannon)
     {
         CurrentCannon = changeCannon;
