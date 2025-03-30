@@ -27,12 +27,6 @@ public class TurretData : ScriptableObject
     [field: Header("AbilityTimeDuration")]
     [field:Range(0,5)][field: SerializeField] public float Duration { get; private set; } = 1f;
 
-    // 포씬 디폴트 값
-    [field:Header("Cannon Datas")]
-    [field: SerializeField] public int BulletCount { get; set; } = 1;
-    [field: Range(0, 5)][field: SerializeField] public float SplashRatio { get; set; } = 0f;
-    [field: SerializeField] public bool CanPenetration { get; set; } = false; // 관통할 수 있는지
-
     [field:Header("CannonImg")]
     [field: SerializeField] public Sprite LEVEL0 { get; set; }
     [field: SerializeField] public Sprite LEVEL1 { get; set; }

@@ -3,14 +3,26 @@ using System.Collections.Generic;
 using Unity.Burst;
 using UnityEngine;
 
-public struct CannonData
+public class CannonData
 {
-    public int bulletCount;
-    public float splashRatio;
-    public bool canPenetration;
+    public int BulletCount { get; set; }
+    public float SplashRatio { get; set; }
+    public bool CanPenetration { get; set; }
 
     public Sprite cannonSprite;
     public Transform tip;
+
+    public CannonData(int bulletCount, float splashRatio, bool canPenetration)
+    {
+        Inintionalize(bulletCount, splashRatio, canPenetration);
+    }
+
+    public void Inintionalize(int bulletCount, float splashRatio, bool canPenetration)
+    {
+        BulletCount = bulletCount;
+        SplashRatio = splashRatio;
+        CanPenetration = canPenetration;
+    }
 }
 
 public abstract class CannonBase
@@ -43,11 +55,9 @@ public abstract class CannonBase
         continous_CoolDown -= Time.deltaTime;
     }
 
-    public void SetData(int bulletCount, float splashRatio, bool canPenetration)
+    public CannonData GetData()
     {
-        data.bulletCount = bulletCount;
-        data.splashRatio = splashRatio;
-        data.canPenetration = canPenetration;
+        return data;
     }
 
     public abstract void Fire(Vector3 targetPos);

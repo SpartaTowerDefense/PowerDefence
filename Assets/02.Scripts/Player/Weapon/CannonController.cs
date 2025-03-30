@@ -31,13 +31,13 @@ public class CannonController : MonoBehaviour
 
         if(DefaultCannon == null)
         {
-            // ì²«ë²ˆì§¸ ìºë…¼
+            // ì²«ë²ˆì§?ìºë…¼
             DefaultCannon = new DefaultCannon(sprites[0], tip, this);
 
-            // ë‘ë²ˆì¬ ìºë…¼
+            // ?ë²ˆ??ìºë…¼
             TripleCannon = new TripleCannon(sprites[1], tip, this);
 
-            // ì„¸ë²ˆì§¸ ìºë…¼
+            // ?¸ë²ˆì§?ìºë…¼
         }
         else
         {
@@ -61,6 +61,10 @@ public class CannonController : MonoBehaviour
             
     }
 
+    /// <summary>
+    /// UI¿¡¼­ Æ÷¾ÀÀ» °­È­ÇßÀ»¶§ È£Ãâ ( ¸Å°³º¯¼ö´Â CannonController¿¡ ÂüÁ¶ )
+    /// </summary>
+    /// <param name="changeCannon"></param>
     public void ChangeCannon(CannonBase changeCannon)
     {
         CurrentCannon = changeCannon;

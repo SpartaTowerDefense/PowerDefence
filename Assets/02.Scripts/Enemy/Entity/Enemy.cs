@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour
     // 에너미 스테이터스
     public EnemyData enemyData;
     private SpriteRenderer spriteRenderer;
-    private float Health; // 체력
+    public float Health; // 체력
     private float MovementSpeed; // 이동속도
     private float FrozeTime; // 얼려지는 시간 계수 - 1 이면 함수에서 호출된 시간만큼 얼어있음
     private float KnockbackTime; // 뒤로 날아가는 시간
