@@ -8,7 +8,7 @@ public class DefaultCannon : CannonBase
     private Transform tp;
     public DefaultCannon(Sprite sprite, Transform tip, CannonController controller) : base(sprite, tip, controller)
     {
-        data.Inintionalize(1, 0, false);
+        data.Inintionalize(1, 3, false);
     }
 
     public override void Fire(Vector3 targetPos)
@@ -24,6 +24,7 @@ public class DefaultCannon : CannonBase
         Bullet bul = bullet.GetComponent<Bullet>();
         // 탄환에 현재 컨트롤러 정보 넘기기
         bul.controller = this.controller;
+        bul.SplashRatio = data.SplashRatio;
         // 포지션 동기화
         bullet.transform.position = tp.position;
 

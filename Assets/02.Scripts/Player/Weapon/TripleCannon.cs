@@ -18,6 +18,8 @@ public class TripleCannon : CannonBase
 
         bullet = ObjectPoolManager.Instance.GetObject<BulletFactory>();
         Bullet bul = bullet.GetComponent<Bullet>();
+        bul.controller = this.controller;
+        bul.SplashRatio = data.SplashRatio;
         bullet.transform.position = tip.position;
 
         Vector2 lookPos = targetPos - tip.position;

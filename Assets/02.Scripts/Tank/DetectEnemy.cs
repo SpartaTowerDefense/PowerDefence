@@ -62,7 +62,7 @@ public class DetectEnemy : MonoBehaviour
     // 공격할 적 선택
     public void SelectEnemy(int mode = 0, int count = 0)
     {
-        enemyColliders = OverlapCircleAllSorted(transform.position, range, enemyLayer);
+        enemyColliders = Utils.OverlapCircleAllSorted(transform.position, range, enemyLayer,this.transform.position);
         if (enemyColliders.Length > 0)
         {
             if (mode == 1)
@@ -107,12 +107,5 @@ public class DetectEnemy : MonoBehaviour
 
     }
 
-    public Collider2D[] OverlapCircleAllSorted(Vector2 center, float radius, int layerMask)
-    {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(center, radius, layerMask);
-
-        return colliders
-            .OrderBy(c => Vector2.SqrMagnitude((Vector2)c.transform.position - (Vector2)transform.position))
-            .ToArray();
-    }
+    
 }
