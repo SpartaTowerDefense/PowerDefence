@@ -13,7 +13,8 @@ public class Slot : MonoBehaviour
     [SerializeField] public Button curButton;
     private UIManager uiManager;
     private Image image;
-    
+
+    public Turret curTurret;
 
     private void Start()
     {

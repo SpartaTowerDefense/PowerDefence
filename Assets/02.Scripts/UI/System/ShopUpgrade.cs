@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 public class ShopUpgrade : Shop
 {
-    [SerializeField] TextMeshProUGUI description;
-
     public void UpgradeCannon()
     {
         CannonController cannonController = UIManager.Instance.curTurret.GetComponent<CannonController>();
@@ -15,7 +13,7 @@ public class ShopUpgrade : Shop
 
     public void UpgaradeBody()
     {
-
+        CannonController cannonController = UIManager.Instance.curTurret.GetComponent<CannonController>();
     }
 
 }

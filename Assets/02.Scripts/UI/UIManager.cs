@@ -20,7 +20,7 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] private ButtonEffect buttonEffect;
     public ButtonEffect ButtonEffect { get => buttonEffect; }
 
-    public TurretData curTurretData;
+    public Turret curTurret;
 
     private void Start()
     {
