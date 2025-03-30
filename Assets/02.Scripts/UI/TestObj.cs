@@ -21,10 +21,10 @@ public class TestObj : MonoBehaviour
             trans[i] = obj.transform.GetChild(i).gameObject.transform;
         }
 
-        StartCoroutine(Totarget());
+        StartCoroutine(ToTarget());
     }
 
-    IEnumerator Totarget()
+    IEnumerator ToTarget()
     {
         for (int i = 0; i < trans.Length; i++)
         {
@@ -47,4 +47,10 @@ public class TestObj : MonoBehaviour
             transform.position = targetPosition;
         }
     }
+    public void StopToTarget()
+    {
+        StopCoroutine(ToTarget());
+        Destroy(gameObject);
+    }
+
 }

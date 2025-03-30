@@ -1,6 +1,6 @@
 using DG.Tweening;
 using System.Collections;
-using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class Title : MonoBehaviour
@@ -19,7 +19,7 @@ public class Title : MonoBehaviour
         CameraFollow();
     }
 
-    public void OnStart()
+    public void GameStart()
     {
         UIManager uiManager = UIManager.Instance;
         Sequence seq = DOTween.Sequence();
@@ -28,7 +28,9 @@ public class Title : MonoBehaviour
            .OnComplete(() =>
            {
                uiManager.OnActive(false, gameObject.transform.parent.gameObject);
-               Destroy(obj);
+               TestObj test = obj.GetComponent<TestObj>();
+               if (test != null)
+                   test.StopToTarget();
            });
         StartCoroutine(ChangeSet());
     }
@@ -47,5 +49,5 @@ public class Title : MonoBehaviour
         _camera.transform.position = new Vector3(obj.transform.position.x + 2, obj.transform.position.y, _camera.transform.position.z);
 
     }
-    
+
 }

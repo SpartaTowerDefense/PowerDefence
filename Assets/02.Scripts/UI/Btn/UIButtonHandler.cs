@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,20 +6,21 @@ public class UIButtonHandler : MonoBehaviour
     [SerializeField] private Button pauseBtn;
     [SerializeField] private Button speedBtn;
     [SerializeField] private Button startBtn;
-    
+
+    [SerializeField] private Button cannonUpBtn;
+    [SerializeField] private Button bodyUpBtn;
+
     [SerializeField] private int maxSpeed = 3;
     private int speedCount = 1;
     private bool onPause = false;
-
-    [SerializeField] private GameObject[] square = new GameObject[2];
 
     private void Start()
     {
         pauseBtn.onClick.AddListener(Pause);
         speedBtn.onClick.AddListener(ChangeSpeed);
-        startBtn.onClick.AddListener(UIManager.Instance.Title.OnStart);
+        startBtn.onClick.AddListener(UIManager.Instance.Title.GameStart);
     }
-     
+
     void Pause()
     {
         onPause = !onPause;

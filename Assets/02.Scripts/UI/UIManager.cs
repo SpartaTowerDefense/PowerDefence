@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,10 +17,15 @@ public class UIManager : Singleton<UIManager>
     public UIButtonHandler UIButtonHandler { get => uiButtonHandler; }
     [SerializeField] private Title title;
     public Title Title { get => title; }
+    [SerializeField] private ButtonEffect buttonEffect;
+    public ButtonEffect ButtonEffect { get => buttonEffect; }
+
+    public TurretData curTurretData;
 
     private void Start()
     {
         commander = new Commander(20, 0);
+        DOTween.Init(true, true);
         uiDataBinder.Init();
         OnActive(true, title.gameObject.transform.parent.gameObject);
     }
@@ -30,7 +36,11 @@ public class UIManager : Singleton<UIManager>
         {
             GameObject child = transform.GetChild(i).gameObject;
 
-            if (child == a || child == b || child == c || child == d)
+            if (child.TryGetComponent<ButtonEffect>(out ButtonEffect bf))
+            {
+                continue;
+            }
+            else if (child == a || child == b || child == c || child == d)
             {
                 child.SetActive(set);
             }
