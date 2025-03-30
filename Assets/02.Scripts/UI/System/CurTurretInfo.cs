@@ -15,6 +15,6 @@ public class CurTurretInfo : Shop
         Turret turret = UIManager.Instance.curTurret;
         //image.sprite = turret.bodySpr;
         //cannonLv.text = turret.
-        bodyLv.text = turret.TurretStat.Level.ToString();
+        //bodyLv.text = turret.TurretStat.Level.ToString();
     }
 }

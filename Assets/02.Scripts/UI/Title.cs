@@ -5,13 +5,17 @@ using UnityEngine;
 
 public class Title : MonoBehaviour
 {
+    UIButtonHandler uIButtonHandler;
+
     public GameObject obj;
     private Camera _camera;
     private bool onStart = false;
 
     private void Start()
     {
+        uIButtonHandler = UIManager.Instance.UIButtonHandler;
         _camera = Camera.main;
+        uIButtonHandler.BindButton(uIButtonHandler.SetStartBtn(), GameStart);
     }
 
     private void LateUpdate()
@@ -19,7 +23,7 @@ public class Title : MonoBehaviour
         CameraFollow();
     }
 
-    public void GameStart()
+    void GameStart()
     {
         UIManager uiManager = UIManager.Instance;
         Sequence seq = DOTween.Sequence();
@@ -27,7 +31,7 @@ public class Title : MonoBehaviour
            .Append(transform.DORotate(new Vector3(0, 0, -90), 1f))
            .OnComplete(() =>
            {
-               uiManager.OnActive(false, gameObject.transform.parent.gameObject);
+               uiManager.ActiveCnavasChild(false, gameObject.transform.parent.gameObject);
                TestObj test = obj.GetComponent<TestObj>();
                if (test != null)
                    test.StopToTarget();

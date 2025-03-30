@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class UIButtonHandler : MonoBehaviour
@@ -10,29 +11,24 @@ public class UIButtonHandler : MonoBehaviour
     [SerializeField] private Button cannonUpBtn;
     [SerializeField] private Button bodyUpBtn;
 
-    [SerializeField] private int maxSpeed = 3;
-    private int speedCount = 1;
-    private bool onPause = false;
+    public Button SetPauseBtn() => pauseBtn;
+    public Button SetSpeedBtn() =>speedBtn;
+    public Button SetStartBtn() => startBtn;
+    public Button SetCannonUpBtn() => cannonUpBtn;
+    public Button SetBodyUpBtn() => bodyUpBtn;
 
-    private void Start()
+    public void SetInteractable(Button btn, bool enable)
     {
-        pauseBtn.onClick.AddListener(Pause);
-        speedBtn.onClick.AddListener(ChangeSpeed);
-        startBtn.onClick.AddListener(UIManager.Instance.Title.GameStart);
+        if(btn.interactable != enable)
+            btn.interactable = enable;
     }
-
-    void Pause()
+    public void BindButton(Button button, params UnityAction[] actions)
     {
-        onPause = !onPause;
-        Time.timeScale = onPause ? 0f : speedCount;
-        Debug.Log(Time.timeScale);
-    }
-
-    void ChangeSpeed()
-    {
-        speedCount = (speedCount < maxSpeed) ? speedCount + 1 : 1;
-        if (!onPause)
-            Time.timeScale = speedCount;
-        Debug.Log(Time.timeScale);
+        button.onClick.RemoveAllListeners();
+        foreach (var action in actions)
+        {
+            if(action != null)
+                button.onClick.AddListener(action);
+        }
     }
 }
