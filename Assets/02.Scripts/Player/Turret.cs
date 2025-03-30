@@ -8,14 +8,13 @@ using UnityEngine;
 [System.Serializable]
 public class TurretStatus
 {
-    public int Level { get; private set; }
     public int Price { get; private set; }
-    public float Attack { get; private set; }
-    public float DotDamage { get; private set; }
-    public float Flinch { get; private set; }
-    public float Knockback { get; private set; }
-    public float Coin { get; private set; } // 코인 획득량 배율
-    public float Duration { get; private set; }
+    public float Attack { get; set; }
+    public float DotDamage { get; set; }
+    public float Flinch { get; set; }
+    public float Knockback { get; set; }
+    public float Coin { get; set; } // 코인 획득량 배율
+    public float Duration { get; set; }
 
     public TurretStatus(TurretData data)
     {
@@ -24,7 +23,6 @@ public class TurretStatus
 
     public void Initinalize(TurretData data)
     {
-        Level = 1;
         this.Price = data.Price;
         this.Attack = data.Attack;
         this.DotDamage = data.DotDamage;
@@ -34,7 +32,21 @@ public class TurretStatus
         this.Duration = data.Duration;
     }
 
-    public void LevelUp(int price, float attack, float dotDamage, float flinch,
+    public void LevelUp(float ratio)
+    {
+        this.Attack *= ratio;
+        this.DotDamage *= ratio;
+        this.Flinch *= ratio;
+        this.Knockback *= ratio;
+        this.Coin *= ratio;
+    }
+
+    public void SetPriceRatio(float ratio)
+    {
+        this.Price *= Mathf.FloorToInt(this.Price * ratio);
+    }
+
+    /*public void LevelUp(int price, float attack, float dotDamage, float flinch,
         float knockback, float coin, float duration)
     {
         Level++;
@@ -45,7 +57,7 @@ public class TurretStatus
         this.Knockback += knockback;
         this.Coin += coin;
         this.Duration += duration;
-    }
+    }*/
 
     public TurretStatus GetStatus()
     {
@@ -55,11 +67,6 @@ public class TurretStatus
 
 public class Turret : MonoBehaviour
 {
-    #region StringKeys
-    private const string Body = nameof(Body);
-    private const string Head = nameof(Head);
-    #endregion
-
     #region Componenets
     private SpriteRenderer bodySpr { get; set; }
 
@@ -68,12 +75,13 @@ public class Turret : MonoBehaviour
     #region BodyDatas
     public Enums.TurretType Type { get; private set; } = Enums.TurretType.Black;
     public int Level { get; set; } = 1; // 바디에 대한 레벨
+    private int maxLevel = 30;
 
     // 변할 수 있는 배율 TurretData 직접 호출X TurretData는 디폴트 값
     public TurretStatus TurretStat { get; private set; } = null;
 
     #endregion
-
+    
 
     private void Awake()
     {
@@ -96,6 +104,20 @@ public class Turret : MonoBehaviour
         else
             TurretStat.Initinalize(data);
 
+        Level = 1;
         bodySpr.sprite = data.BodyImage;
+    }
+
+    public void LevelUp()
+    {
+        if(Level < maxLevel)
+        {
+            if (TurretStat == null)
+                return;
+
+            Level++;
+            TurretStat.LevelUp(1.2f);
+            TurretStat.SetPriceRatio(2);
+        }
     }
 }

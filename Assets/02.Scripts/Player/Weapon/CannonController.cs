@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CannonController : MonoBehaviour
 {
+    public int level = 1;
+
     public Transform tip;
     public SpriteRenderer spr;
 
@@ -13,6 +15,8 @@ public class CannonController : MonoBehaviour
     public CannonBase CurrentCannon { get; set; }
     private DefaultCannon DefaultCannon { get; set; }
     private TripleCannon TripleCannon { get; set; }
+
+    private CannonBase[] cannonList;
 
     // Cannon Sprites
     Sprite[] sprites = new Sprite[3];
@@ -45,14 +49,16 @@ public class CannonController : MonoBehaviour
             TripleCannon.ChangeSprite(sprites[1]);
         }
 
-        ChangeCannon(DefaultCannon);
+        cannonList = new CannonBase[] { DefaultCannon, TripleCannon };
+        level = 0;
+        ChangeCannon();
         //ChangeCannon(TripleCannon);
     }
 
     public void Update()
     {
         if (CurrentCannon != null)
-        CurrentCannon.Update();
+            CurrentCannon.Update();
 
         if (DetectEnemy.seletedEnemy != null)
         {
@@ -64,18 +70,16 @@ public class CannonController : MonoBehaviour
     /// <summary>
     /// UI에서 포씬을 강화했을때 호출 ( 매개변수는 CannonController에 참조 )
     /// </summary>
-    /// <param name="changeCannon"></param>
-    public void ChangeCannon(CannonBase changeCannon)
+    public void ChangeCannon()
     {
-        CurrentCannon = changeCannon;
-        spr.sprite = changeCannon.data.cannonSprite;
+        level = Mathf.Min(++level, cannonList.Length);
+        CurrentCannon = cannonList[level - 1];
+        spr.sprite = CurrentCannon.data.cannonSprite;
     }
 
     public void Fire()
     {
         if (CurrentCannon != null)
             CurrentCannon.Fire(DetectEnemy.seletedEnemy.transform.position);
-
-        
     }
 }
