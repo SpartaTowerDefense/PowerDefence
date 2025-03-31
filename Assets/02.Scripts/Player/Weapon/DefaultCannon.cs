@@ -9,6 +9,7 @@ public class DefaultCannon : CannonBase
     public DefaultCannon(Sprite sprite, Transform tip, CannonController controller) : base(sprite, tip, controller)
     {
         data.Inintionalize(1, 3, false);
+        controller.DetectEnemy.SetRange(5f);
     }
 
     public override void Fire(Vector3 targetPos)

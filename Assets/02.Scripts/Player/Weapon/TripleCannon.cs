@@ -8,6 +8,7 @@ public class TripleCannon : CannonBase
     public TripleCannon(Sprite sprite, Transform tip, CannonController controller) : base(sprite, tip, controller)
     {
         data.Inintionalize(3, 0, false);
+        controller.DetectEnemy.SetRange(5f);
     }
 
     GameObject bullet = null;

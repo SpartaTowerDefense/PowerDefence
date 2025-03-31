@@ -9,7 +9,7 @@ using UnityEngine.UIElements;
 public class DetectEnemy : MonoBehaviour
 {
     [SerializeField] private LayerMask enemyLayer;
-    [SerializeField] private float range;
+    public float Range { get; private set; }
     private Quaternion tankRotation;
     public Collider2D seletedEnemy;
     public Collider2D[] selectedEnemies;
@@ -28,7 +28,7 @@ public class DetectEnemy : MonoBehaviour
     private void Update()
     {
         //범위 내에 적이 진입했는지 체크
-        if (Physics2D.OverlapCircle(transform.position, range, enemyLayer))
+        if (Physics2D.OverlapCircle(transform.position, Range, enemyLayer))
         {
             //한놈을 선택하기
             if (seletedEnemy == null)
@@ -56,13 +56,13 @@ public class DetectEnemy : MonoBehaviour
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, range);
+        Gizmos.DrawWireSphere(transform.position, Range);
     }
 
     // 공격할 적 선택
     public void SelectEnemy(int mode = 0, int count = 0)
     {
-        enemyColliders = Utils.OverlapCircleAllSorted(transform.position, range, enemyLayer,this.transform.position);
+        enemyColliders = Utils.OverlapCircleAllSorted(transform.position, Range, enemyLayer,this.transform.position);
         if (enemyColliders.Length > 0)
         {
             if (mode == 1)
@@ -80,10 +80,6 @@ public class DetectEnemy : MonoBehaviour
             }
             
         }
-        
-
-        
-
         
     }
     // 적 바라보기
@@ -107,5 +103,9 @@ public class DetectEnemy : MonoBehaviour
 
     }
 
+    public void SetRange(float range)
+    {
+        Range = range;
+    }
     
 }

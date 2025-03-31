@@ -7,6 +7,7 @@ public class MeleeCannon : CannonBase
     public MeleeCannon(Sprite sprite, Transform tip, CannonController controller) : base(sprite, tip, controller)
     {
         data.Inintionalize(0, 3, false);
+        controller.DetectEnemy.SetRange(2f);
     }
     public override void Fire(Vector3 targetPos)
     {
