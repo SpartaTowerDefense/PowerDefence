@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CannonController : MonoBehaviour
@@ -35,13 +36,13 @@ public class CannonController : MonoBehaviour
 
         if(DefaultCannon == null)
         {
-            // ì²«ë²ˆì§?ìºë…¼
+            // ï§£ãƒ«ì¾²ï§?ï§¦ë¨®ë‰
             DefaultCannon = new DefaultCannon(sprites[0], tip, this);
 
-            // ?ë²ˆ??ìºë…¼
+            // ?ë¨®ì¾²??ï§¦ë¨®ë‰
             TripleCannon = new TripleCannon(sprites[1], tip, this);
 
-            // ?¸ë²ˆì§?ìºë…¼
+            // ?ëªƒì¾²ï§?ï§¦ë¨®ë‰
         }
         else
         {
@@ -68,7 +69,7 @@ public class CannonController : MonoBehaviour
     }
 
     /// <summary>
-    /// UI¿¡¼­ Æ÷¾ÀÀ» °­È­ÇßÀ»¶§ È£Ãâ ( ¸Å°³º¯¼ö´Â CannonController¿¡ ÂüÁ¶ )
+    /// UIì—ì„œ í¬ì”¬ì„ ê°•í™”í–ˆì„ë•Œ í˜¸ì¶œ ( ë§¤ê°œë³€ìˆ˜ëŠ” CannonControllerì— ì°¸ì¡° )
     /// </summary>
     public void ChangeCannon()
     {

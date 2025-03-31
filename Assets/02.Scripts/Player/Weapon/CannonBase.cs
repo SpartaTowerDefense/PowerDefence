@@ -28,7 +28,7 @@ public class CannonData
 
 public abstract class CannonBase
 {
-    public CannonData data;
+    public CannonData data = new(1,0,false);
     public Transform tip; // 총알 나가는 위치
     public CannonController controller;
     // public AudioClip clip; 총알 발사시 소리
