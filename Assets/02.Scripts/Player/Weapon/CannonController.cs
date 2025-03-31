@@ -5,13 +5,16 @@ using UnityEngine;
 
 public class CannonController : MonoBehaviour
 {
+    private const int InitPrice = 1500;
+    public int Price { get; private set; } = InitPrice;
+    
     public int level = 1;
 
     public Transform tip;
     public SpriteRenderer spr;
 
-    public GameObject muzzleObject;
-    private WaitForSeconds muzzleWaitFor = new(0.2f);
+    public GameObject muzzleObject; // muzzleFlash 이펙트 오브젝트
+    private WaitForSeconds muzzleWaitFor = new(0.05f);
 
     public DetectEnemy DetectEnemy { get; private set; }
     public TurretData turretdata;
@@ -42,10 +45,8 @@ public class CannonController : MonoBehaviour
 
         if(DefaultCannon == null)
         {
-            // 泥ル쾲吏?罹먮끉
             DefaultCannon = new DefaultCannon(sprites[0], tip, this);
 
-            // ?먮쾲??罹먮끉
             TripleCannon = new TripleCannon(sprites[1], tip, this);
 
             SplashCannon = new SplashCannon(sprites[1], tip, this);
@@ -53,8 +54,6 @@ public class CannonController : MonoBehaviour
             PenetrationCannon = new PenetrationCannon(sprites[1], tip, this);
 
             MeleeCannon = new MeleeCannon(sprites[2], tip, this);
-
-            // ?몃쾲吏?罹먮끉
         }
         else
         {
@@ -67,6 +66,7 @@ public class CannonController : MonoBehaviour
 
         cannonList = new CannonBase[] { DefaultCannon, TripleCannon, SplashCannon, PenetrationCannon, MeleeCannon };
         level = 0;
+        Price = InitPrice;
         ChangeCannon();
         //ChangeCannon(TripleCannon);
     }
@@ -91,7 +91,9 @@ public class CannonController : MonoBehaviour
         
         level = Mathf.Min(++level, cannonList.Length);
         CurrentCannon = cannonList[level - 1];
+        CurrentCannon.OnMuzzleFlash = OnMuzzleFlash;
         spr.sprite = CurrentCannon.data.cannonSprite;
+        SetPriceRatio(1.2f);
         Debug.Log($"선택된 캐논 : {CurrentCannon}");
     }
 
@@ -100,14 +102,24 @@ public class CannonController : MonoBehaviour
         if (CurrentCannon != null)
         {
             CurrentCannon.Fire(DetectEnemy.seletedEnemy.transform.position);
-            StartCoroutine(OnMuzzleFlash());
         }
     }
 
-    private IEnumerator OnMuzzleFlash()
+    private void OnMuzzleFlash()
+    {
+        StartCoroutine(MuzzleFlash());
+    }
+
+    private IEnumerator MuzzleFlash()
     {
         muzzleObject.SetActive(true);
         yield return muzzleWaitFor;
         muzzleObject.SetActive(false);
+    }
+
+    // 가격 설정
+    public void SetPriceRatio(float ratio)
+    {
+        this.Price *= Mathf.FloorToInt(this.Price * ratio);
     }
 }
