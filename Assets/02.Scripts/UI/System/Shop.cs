@@ -3,11 +3,15 @@ using UnityEngine.Tilemaps;
 
 public class Shop : MonoBehaviour
 {
-    [SerializeField] private Canvas mainCanvas;
+    [Header("카메라")]
     [SerializeField] private Camera mainCam;
+
+    [Header("Object")]
+    [SerializeField] private Canvas mainCanvas;
     [SerializeField] private Tilemap roadTile;
     [SerializeField] private Tilemap groundTile;
     [SerializeField] GameObject previewPrefab;
+
     [SerializeField] private TurretData[] bodySo;
     [SerializeField] private Transform slotTransform;
     [SerializeField] private GameObject slot;
@@ -25,12 +29,12 @@ public class Shop : MonoBehaviour
             Slot slotComponent = obj.GetComponent<Slot>();
             DragHandler dragHandler = obj.GetComponent<DragHandler>();
 
-            dragHandler.Init(mainCanvas, mainCam, placement, roadTile,groundTile,previewPrefab);
+            dragHandler.Init(mainCanvas, mainCam, placement, roadTile, groundTile, previewPrefab);
             slotComponent.SetData(bodySo[i], placement, dragHandler);
         }
     }
 
-    void BuyTurret()
+    public void BuyTurret()
     {
         if (!curData) return;
         if (curData.Price > UIManager.Instance.Commander.gold) return;

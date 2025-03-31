@@ -9,15 +9,13 @@ public class DragHandler : MonoBehaviour
 {
     [Header("참조")]
     [SerializeField] private Canvas canvas; // 마우스의 좌표를 UI로 변환할 때 필요한 변수
-    [SerializeField] private Placement placement;
+    public Placement placement;
     [SerializeField] private GameObject tankPreviewPrefab;
     [SerializeField] private Camera maincam;
     [SerializeField] private Tilemap roadTile;
     [SerializeField] private Tilemap groundTile;
 
     private GameObject previewInstance;
-    private SpriteRenderer previewRenderer;
-    private SpriteRenderer outlineRenderer;
 
     private Coroutine dragCoroutine;
     private bool isDrag = false;
@@ -38,10 +36,7 @@ public class DragHandler : MonoBehaviour
 
         isDrag = true; //드래그상태
         previewInstance = Instantiate(tankPreviewPrefab);
-        //previewRenderer = previewInstance.GetComponent<SpriteRenderer>();
-        //previewRenderer.sprite = UIManager.Instance.Shop.curData.BodyImage;
 
-        //outlineRenderer = previewInstance.GetComponentInChildren<SpriteRenderer>();   
         var controller = previewInstance.GetComponent<PreviewTurretController>();
         if(controller != null)
         {
@@ -90,18 +85,14 @@ public class DragHandler : MonoBehaviour
             Vector3Int cellPos = groundTile.WorldToCell(worldPos);
             Vector3 snappedPos = groundTile.CellToWorld(cellPos);
             snappedPos += new Vector3(0.5f, 0.5f, 0);
+
             previewInstance.transform.position = snappedPos;
+            previewInstance.transform.rotation = placement.GetCurrentRotation();
             
             bool canPlace = placement.CanPlaceTank(cellPos);
             //추가된 내용
             controller?.SetPlacementColor(canPlace);
 
-            //if (outlineRenderer != null)
-            //{
-            //    outlineRenderer.color = canPlace
-            //         ? new Color(0f, 1f, 0f, 0.5f)
-            //         : new Color(1f, 0f, 0f, 0.5f);
-            //}
             bool isOverUI = IsPointerOverUI();
             previewInstance.gameObject.SetActive(!isOverUI);
 
