@@ -35,7 +35,7 @@ public class UIManager : Singleton<UIManager>
         ActiveCnavasChild(true, title.gameObject.transform.parent.gameObject);
     }
 
-    public void ActiveCnavasChild(bool set, params GameObject[] onActive)
+    public void ActiveCnavasChild(bool enable, params GameObject[] onActive)
     {
         for (int i = 0; i < transform.childCount; i++)
         {
@@ -47,11 +47,11 @@ public class UIManager : Singleton<UIManager>
             }
             else if (onActive.Where(n => n != null).Any(n => n == child))
             {
-                child.SetActive(set);
+                child.SetActive(enable);
             }
             else
             {
-                child.SetActive(!set);
+                child.SetActive(!enable);
             }
         }
     }

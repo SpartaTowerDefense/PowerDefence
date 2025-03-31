@@ -47,6 +47,8 @@ public class SelectTurret : MonoBehaviour
                     return;
                 }
             }
+            if(uiButtonHandler.SetBodyUpBtn())
+                uiButtonHandler.SetBodyUpBtn().interactable = false;
             if (lastTurret != null)
                 lastTurret = null;
             if (grid.activeInHierarchy)

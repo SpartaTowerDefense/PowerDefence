@@ -25,9 +25,9 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         pointerEventData = eventData;
         UIRayFindButton(pointerEventData, true);
-        if (gameObject.TryGetComponent<Button>(out Button button))
+        if (gameObject.TryGetComponent<Button>(out Button button) && button.interactable)
         {
-            ChangeButtonInText();
+            ChangeButtonInTextOrder();
             buttonEffect.OnActiveSquare(true);
             buttonEffect.ChangeSquare(rectTransform);
             buttonEffect.ShakeSquare();
@@ -37,15 +37,15 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void OnPointerExit(PointerEventData eventData)
     {
         UIRayFindButton(pointerEventData, false);
-        if (gameObject.TryGetComponent<Button>(out Button button))
+        if (gameObject.TryGetComponent<Button>(out Button button) && button.interactable)
         {
-            BackButtonInText();
+            BackButtonInTextOrder();
             buttonEffect.OnActiveSquare(false);
             buttonEffect.StopShakeSquare();
         }
     }
 
-    void ChangeButtonInText()
+    void ChangeButtonInTextOrder()
     {
         if (text != null)
         {
@@ -61,7 +61,7 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         }
     }
 
-    void BackButtonInText()
+    void BackButtonInTextOrder()
     {
         if (text != null)
         {
