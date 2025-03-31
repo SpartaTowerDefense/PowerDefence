@@ -1553,7 +1553,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c014036c10f6f2146aa87cac05b94768, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 4996791469419700082, guid: 24ba1056bd61c7a4f82b82256ca4bd1e, type: 3}
+  bulletPrefab: {fileID: 2272054449533900641, guid: a709c63a3b1a255459be7c554bfb1d1d, type: 3}
   spawnPoint: {fileID: 340034697}
 --- !u!1 &1257178763
 GameObject:

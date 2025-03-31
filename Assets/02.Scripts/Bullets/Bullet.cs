@@ -34,7 +34,7 @@ public class Bullet : MonoBehaviour
                 else
                     DefaultAttack(enemy, controller.turretdata.Type);
             }
-            
+
 
             if (!currentData.CanPenetration) // 만약 관통속성이 false라면
             {
@@ -54,7 +54,7 @@ public class Bullet : MonoBehaviour
 
     void DefaultAttack(Enemy enemy, Enums.TurretType turretType)
     {
-        
+
         switch (turretType)
         {
             case Enums.TurretType.White:
@@ -79,22 +79,20 @@ public class Bullet : MonoBehaviour
                 Debug.Log("터렛타입이 잘못됨");
                 break;
         }
-            
-       Debug.Log($"적 체력 : {enemy.Health}");
     }
 
     void SplashAttack(Enemy enemy, Enums.TurretType turretType)
     {
         splashColiders = Utils.OverlapCircleAllSorted(enemy.transform.position, SplashRatio, enemyLayer, this.transform.position);
-        foreach(Collider2D collider in splashColiders)
+        foreach (Collider2D collider in splashColiders)
         {
             Debug.Log($"스플래시 공격 받은 적 {collider}");
             if (collider.TryGetComponent<Enemy>(out Enemy enemies))
             {
                 DefaultAttack(enemies, turretType);
-                
+
             }
         }
     }
-   
+
 }

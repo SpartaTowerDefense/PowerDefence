@@ -201,6 +201,7 @@ public class Enemy : MonoBehaviour
         isDead = true;
         Debug.Log("죽음");
         ObjectPoolManager.Instance.ReturnObject<EnemyFactory>(this.gameObject);
+        GameManager.Instance.PlusMoney(Reward);
     }
 
     /// <summary>

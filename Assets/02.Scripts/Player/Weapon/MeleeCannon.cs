@@ -19,14 +19,14 @@ public class MeleeCannon : CannonBase
         controller.DetectEnemy.SelectEnemy();
         foreach (Collider2D collider in controller.DetectEnemy.enemyColliders)
         {
-            if(collider.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
+            if (collider.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
             {
                 DefaultAttack(enemy, controller.turretdata.Type);
             }
         }
 
         time = meleeCoolDown;
-        
+
     }
     void DefaultAttack(Enemy enemy, Enums.TurretType turretType)
     {
@@ -55,7 +55,5 @@ public class MeleeCannon : CannonBase
                 Debug.Log("터렛타입이 잘못됨");
                 break;
         }
-
-        Debug.Log($"적 체력 : {enemy.Health}");
     }
 }
