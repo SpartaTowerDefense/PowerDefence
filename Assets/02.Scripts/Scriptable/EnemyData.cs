@@ -19,5 +19,5 @@ public class EnemyData : ScriptableObject
     [field: Range(0, 5)][field: SerializeField] public float Flammable { get; private set; } = 0.5f;
 
     [field: Header("Reward")]
-    [field: Range(0, 10)][field: SerializeField] public float RewardCoin { get; private set; } = 5f;
+    [field: Range(0, 3000)][field: SerializeField] public float RewardCoin { get; private set; } = 5f;
 }

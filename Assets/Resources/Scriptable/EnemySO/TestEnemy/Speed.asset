@@ -20,4 +20,4 @@ MonoBehaviour:
   <knockbackDistance>k__BackingField: 1
   <BurningTime>k__BackingField: 1
   <Flammable>k__BackingField: 0.5
-  <RewardCoin>k__BackingField: 5
+  <RewardCoin>k__BackingField: 500
