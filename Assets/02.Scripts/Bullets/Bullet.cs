@@ -4,38 +4,39 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    private Turret turret;
-    private Rigidbody rb;
+    //private Turret turret;
+    public Rigidbody2D rb;
     private Collider2D collider;
-    [SerializeField] private float bulletSpeed = 2f;
-
+    public float bulletSpeed = 5f;
+    public CannonController controller;
+    private Collider2D[] splashColiders;
+    [SerializeField] LayerMask enemyLayer;
+    public float SplashRatio { get; set; }
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
-        collider = GetComponent<Collider2D>();
-    }
-    // 비활성상태에서 활성화 됐을떄(발사 됐을 떄)
-    private void OnEnable()
-    {
-        if(!transform.parent.TryGetComponent<Turret>(out turret))
-        {
-            //부모의 터렛 스크립트를 찾지 못했을떄
-            //오브젝트 풀에 반납한다.
-            ObjectPoolManager.Instance.ReturnObject<BulletFactory>(this.gameObject);
-            Debug.Log("터렛 스크립트를 찾지 못함");
-            return;
-        }
+        if (rb == null) rb = GetComponent<Rigidbody2D>();
+        if (collider == null) collider = GetComponent<Collider2D>();
+        splashColiders = new Collider2D[5];
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag.Equals("Enemy"))
+        if (collision.gameObject.tag.Equals("Enemy"))
         {
+            CannonData currentData = controller.CurrentCannon.GetData();
             //적 정보를 가져온다
-            //적 정보를 가져와서 turret에 잇는 body head에 따른 데미지를 준다
+            if (collision.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
+            {//적 정보를 가져와서 turret에 잇는 body head에 따른 데미지를 준다  
+                //스플래시인지 아닌지 체크
+                if (SplashRatio > 0)
+                    SplashAttack(enemy, controller.turretdata.Type);
+                else
+                    DefaultAttack(enemy, controller.turretdata.Type);
+            }
             
-            if (!turret.CanPenetration) // 만약 관통속성이 false라면
+
+            if (!currentData.CanPenetration) // 만약 관통속성이 false라면
             {
                 //오브젝트풀에 반납한다.
                 ObjectPoolManager.Instance.ReturnObject<BulletFactory>(this.gameObject);
@@ -43,7 +44,7 @@ public class Bullet : MonoBehaviour
         }
 
         //만약 탄환이 맵의 경계선을 만나면
-        if (collision.gameObject.layer == 8)
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Boundary"))
         {
             //오브젝트 풀에 반납한다
             ObjectPoolManager.Instance.ReturnObject<BulletFactory>(this.gameObject);
@@ -51,12 +52,49 @@ public class Bullet : MonoBehaviour
 
     }
 
-    //탄환 발싸
-    public void LaunchBullet()
+    void DefaultAttack(Enemy enemy, Enums.TurretType turretType)
     {
-        //터렛이 바라보는 방향으로 발사
-        rb.AddForce(Vector2.right * bulletSpeed);
+        
+        switch (turretType)
+        {
+            case Enums.TurretType.White:
+                enemy.TakeDamage(controller.turretdata.Attack);
+                enemy.ApplyKnockback(controller.turretdata.Knockback);
+                break;
+            case Enums.TurretType.Blue:
+                enemy.TakeDamage(controller.turretdata.Attack);
+                enemy.ApplyFrozen(controller.turretdata.Flinch); // turretdata에서 얼음 관련 스탯이 먼지 알아야함
+                break;
+            case Enums.TurretType.Red:
+                enemy.TakeDamage(controller.turretdata.Attack);
+                enemy.ApplyBurning(controller.turretdata.DotDamage);
+                break;
+            case Enums.TurretType.Black:
+                enemy.TakeDamage(controller.turretdata.Attack); // 임시 변수
+                break;
+            case Enums.TurretType.Green:
+                //죽었을때 돈을 더 
+                break;
+            default:
+                Debug.Log("터렛타입이 잘못됨");
+                break;
+        }
+            
+       Debug.Log($"적 체력 : {enemy.Health}");
     }
 
-    
+    void SplashAttack(Enemy enemy, Enums.TurretType turretType)
+    {
+        splashColiders = Utils.OverlapCircleAllSorted(enemy.transform.position, SplashRatio, enemyLayer, this.transform.position);
+        foreach(Collider2D collider in splashColiders)
+        {
+            Debug.Log($"스플래시 공격 받은 적 {collider}");
+            if (collider.TryGetComponent<Enemy>(out Enemy enemies))
+            {
+                DefaultAttack(enemies, turretType);
+                
+            }
+        }
+    }
+   
 }

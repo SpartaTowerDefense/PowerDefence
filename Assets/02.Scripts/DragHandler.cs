@@ -3,55 +3,54 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 public class DragHandler : MonoBehaviour
 {
     [Header("참조")]
-    [SerializeField] private Canvas canvas; // 마우스의 좌표를 UI로 변환할 때 필요한 변수
-    [SerializeField] private Placement placement;
-    [SerializeField] private GameObject tankPreviewPrefab;
-    [SerializeField] private Camera maincam;
+    [SerializeField] private Canvas canvas; // 마우스의 좌표를 UI로 변환할 때 사용하는 캔버스 
+    public Placement placement; //실제 유닛을 배치하는 스크립트
+    [SerializeField] private GameObject tankPreviewPrefab;  // 
+    [SerializeField] private Camera maincam; // 스크린 좌표에서 월드 좌표로 변환하는 메인카메라
     [SerializeField] private Tilemap roadTile;
+    [SerializeField] private Tilemap groundTile;
 
-
-    private RectTransform rectTransform; // UI 오브젝트를 마우스의 좌표로 움직이게 만들기 위한 변수
-    private Vector2 originalPosition; // UI상 초기 위치
-    private GameObject previewInstance;
-    private SpriteRenderer previewRenderer;
+    private GameObject previewInstance; //드래그할 때 보이는 미리보기 
 
     private Coroutine dragCoroutine;
-    private bool isDrag = false;
-    private bool isPlace = false;
+    private bool isDrag = false; // 현재 드래그상태인지
+    private bool isPlace = false; // 현재 배치완료상태인지
 
-    private void Awake()
-    {
-        rectTransform = GetComponent<RectTransform>();
-    }
-
-    private void Start()
-    {
-        originalPosition = rectTransform.anchoredPosition; //UI 아이콘의 초기 위치를 기준 앵커포인트로부터의 상대 위치로 저장
-    }
-    public void Init(Canvas canvas, Camera mainCam, Placement placement, Tilemap roadTile, GameObject previewPrefab)
+    /// <summary>
+    /// 외부에서 초기화 (Shop에서 초기화)
+    /// </summary>
+    public void Init(Canvas canvas, Camera mainCam, Placement placement, Tilemap roadTile, Tilemap groundTile, GameObject previewPrefab)
     {
         this.canvas = canvas;
         this.maincam = mainCam;
         this.placement = placement;
         this.roadTile = roadTile;
+        this.groundTile = groundTile;
         this.tankPreviewPrefab = previewPrefab;
     }
+
+    /// <summary>
+    /// 드래그 시작 시 호출
+    /// </summary>
     public void OnBeginDrag(BaseEventData data)
     {
-        if (isPlace || UIManager.Instance.Shop.curData == null) return;
+        if (UIManager.Instance.Shop.curData == null) return; //현재선택한 정보가 없다면 반환
 
-        isDrag = true; //드래그상태
-        previewInstance = Instantiate(tankPreviewPrefab);
-        previewRenderer = previewInstance.GetComponent<SpriteRenderer>();
-        previewRenderer.sprite = UIManager.Instance.Shop.curData.BodyImage;
+        isDrag = true; //드래그 상태
+        previewInstance = Instantiate(tankPreviewPrefab); //미리보기 프리펩 생성
 
-        dragCoroutine = StartCoroutine(HandleDragPreview());
+        var controller = previewInstance.GetComponent<PreviewTurretController>();
+        if(controller != null)
+        {
+            controller.SetBodySprite(UIManager.Instance.Shop.curData.BodyImage); //선택한 Turret의 Body로 입히기
+        }
+
+        dragCoroutine = StartCoroutine(HandleDragPreview(controller)); //드래그를 통해 계속 미리보기 인스턴스를 따라가도록 만든 코루틴
     }
 
     public void OnDrag(BaseEventData data)
@@ -59,67 +58,74 @@ public class DragHandler : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// 드래그 종료 시 호출
+    /// </summary>
     public void EndDrag(BaseEventData data)
     {
         isDrag = false; //드래그상태 해제
         StopCoroutine(dragCoroutine);
 
-        PointerEventData ped = data as PointerEventData;
+        PointerEventData ped = data as PointerEventData; // Unity 이벤트 시스템을 활용하여 마우스의 정보가 담긴 데이터로 변환과정
         Vector3 worldPos = maincam.ScreenToWorldPoint(ped.position);
         worldPos.z = 0f;
 
         TurretData selectedData = UIManager.Instance.Shop.curData;
 
-        bool isSuccess = placement.TryPlaceTank(worldPos, selectedData);
-        Destroy(previewInstance);
+        if(!UIManager.Instance.Shop.CanBuy(selectedData)) //구매가 불가능하다면
+        {
+            Destroy(previewInstance); //미리보기 프리펩 삭제
+            return;
+        }
+        bool isSuccess = placement.TryPlaceTurret(worldPos, selectedData); //worldPos에 원하는 Data의 Turret을 배치하기 위한 bool변수
+        Destroy(previewInstance);  //미리보기 프리펩은 삭제
 
-        if (isSuccess)
+        if (isSuccess) 
         {
-            isPlace = true;
-            gameObject.SetActive(true);
+            isPlace = true; 
+            UIManager.Instance.Shop.BuyTurret(); //UI에서 구매로직을 호출
+            gameObject.SetActive(true); //Ui와 함께 있기 때문에 활성화, 비활성화로 표시
         }
-        else
-        {
-            rectTransform.position = originalPosition; //드래그 종료후 오브젝트를 배치하지 못했다면
-                                                               // UI의 최초 위치로 
-        }
+
     }
 
-    private IEnumerator HandleDragPreview()
+    /// <summary>
+    /// 드래그 중 프리뷰터렛 마우스를 따라가게 하고, 배치 가능 여부 색상 갱신
+    /// </summary>
+    private IEnumerator HandleDragPreview(PreviewTurretController controller) 
     {
-        RectTransform canvasRect = canvas.GetComponent<RectTransform>();
-
         while (isDrag)
         {
             Vector2 mousePos = Mouse.current.position.ReadValue();
             Vector3 worldPos = maincam.ScreenToWorldPoint(mousePos);
             worldPos.z = 0f;
 
-            Vector3Int cellPos = roadTile.WorldToCell(worldPos);
-            Vector3 snappedPos = roadTile.CellToWorld(cellPos);
+            Vector3Int cellPos = groundTile.WorldToCell(worldPos); //마우스의 가장 가까운 Cell좌표를 계산 (int형으로 만들기)
+            Vector3 snappedPos = groundTile.CellToWorld(cellPos); // 셀의 중심에 오도록 만들기 위한 좌표설정
+            snappedPos += new Vector3(0.5f, 0.5f, 0);
+
             previewInstance.transform.position = snappedPos;
+            previewInstance.transform.rotation = placement.GetCurrentRotation(); // 회전값 적용
+            
+            bool canPlace = placement.CanPlaceTurret(cellPos); //배치 가능한지 확인
+            controller?.SetPlacementColor(canPlace); //가능하다면 색깔 변경
 
-            bool canPlace = placement.CanPlaceTank(cellPos);
-
-            if (canPlace)
-            {
-                previewRenderer.color = new Color(0f, 1f, 0f, 0.5f);
-            }
-            else
-            {
-                previewRenderer.color = new Color(1f, 0f, 0f, 0.5f);
-            }
-            bool isOverUI = IsPointerOverUI();
-            previewInstance.gameObject.SetActive(!isOverUI);
+            bool isOverUI = IsPointerOverUI(); //마우스가 UI에 존재한다면 미리보기 프리펩 숨기기
+            previewInstance.gameObject.SetActive(!isOverUI); 
 
             yield return null;
         }
     }
+
+    /// <summary>
+    /// 마우스가 UI에 위치했는지를 체크
+    /// </summary>
     private bool IsPointerOverUI()
     {
-        PointerEventData eventData = new PointerEventData(EventSystem .current);
-
-        eventData.position = Mouse.current.position.ReadValue();
+        PointerEventData eventData = new(EventSystem.current)
+        {
+            position = Mouse.current.position.ReadValue()
+        };
 
         var results = new List<RaycastResult>();
         GraphicRaycaster raycaster = canvas.GetComponent<GraphicRaycaster>();
@@ -127,48 +133,6 @@ public class DragHandler : MonoBehaviour
 
         return results.Count > 0;
     }
-
-    public void SetCanvas(Canvas canvas)
-    {
-        this.canvas = canvas;
-    }
 }
-    //private void OnLeftClickStarted(InputAction.CallbackContext context) //드래그시작시
-    //{
-    //    if (isPlace) return;
-    //    isDrag = true;
-    //}
-
-    //private void OnLeftClickCanceled(InputAction.CallbackContext context) //드래그 종료시
-    //{
-    //    if (!isDrag || isPlace) return; //
-            
-    //    isDrag = false;
-
-    //    TurretData selectedData = UIManager.Instance.Shop.curData;
-
-    //    if(selectedData == null)
-    //    {
-    //        rectTransform.anchoredPosition = originalPosition;
-    //    }
-
-    //    Vector2 mouseScreenPos = inputActions.PlayerActions.MousePosition.ReadValue<Vector2>();
-    //    Vector3 worldPos = Camera.main.ScreenToWorldPoint(
-    //        new Vector3(mouseScreenPos.x, mouseScreenPos.y, 0f)
-    //    ); 
-    //    worldPos.z = 0f; //z축은 고정
-
-    //    bool isSuccess = placement.TryPlaceTank(worldPos, selectedData);
-    //    if (isSuccess)
-    //    {
-    //        isPlace = true;
-    //        gameObject.SetActive(true);
-    //    }
-    //    else
-    //    {
-    //        rectTransform.anchoredPosition = originalPosition; //드래그 종료후 오브젝트를 배치하지 못했다면
-    //                                                           // UI의 최초 위치로 
-    //    }
-    //}
 
 

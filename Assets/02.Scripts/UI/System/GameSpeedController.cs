@@ -1,21 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class UIButtonHandler : MonoBehaviour
+public class GameSpeedController : MonoBehaviour
 {
-    [SerializeField] private Button pauseBtn;
-    [SerializeField] private Button speedBtn;
-    
+    UIButtonHandler uiButtonHandler;
+
     [SerializeField] private int maxSpeed = 3;
     private int speedCount = 1;
     private bool onPause = false;
 
     private void Start()
     {
-        pauseBtn.onClick.AddListener(Pause);
-        speedBtn.onClick.AddListener(ChangeSpeed);
+        uiButtonHandler = UIManager.Instance.UIButtonHandler;
+        uiButtonHandler.BindButton(uiButtonHandler.SetPauseBtn(), Pause);
+        uiButtonHandler.BindButton(uiButtonHandler.SetSpeedBtn(), ChangeSpeed);
     }
 
     void Pause()
