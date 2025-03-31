@@ -4,33 +4,29 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private Transform[] spawnPoints; // 적 스폰 위치들
-    [SerializeField] private float spawnInterval = 2f; // 스폰 간격
-    [SerializeField] private int enemyType = 0; // 어떤 EnemyData 쓸지
+    [SerializeField] private Transform spawnPoint; // 적 스폰 위치들
+    [SerializeField] private SpawnPatternData spawnPattern; //스크랩터블 오브젝트 스테이지 정보 사용
 
-    private float timer;
+    private int currentSpawnIndex = 0;
+    private float timer = 0f;
 
     void Update()
     {
-        timer += Time.deltaTime;
+        if (spawnPattern == null || currentSpawnIndex >= spawnPattern.spawnSequence.Length) return;
 
-        if (timer >= spawnInterval)
+        timer += Time.deltaTime;
+        var current = spawnPattern.spawnSequence[currentSpawnIndex];
+
+        if (timer >= current.delay)
         {
-            SpawnEnemy(enemyType);
-            enemyType += 1;
-            if (enemyType > 4)
-            {
-                enemyType = 0;
-            }
-            timer = 0;
+            SpawnEnemy(current.enemyType);
+            timer = 0f;
+            currentSpawnIndex++;
         }
     }
 
     void SpawnEnemy(int type)
     {
-        // 스폰 위치 무작위 선택
-        Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-
         // EnemyFactory를 통해 적 생성
         GameObject enemy = ObjectPoolManager.Instance.GetObject<EnemyFactory>(type);
 
