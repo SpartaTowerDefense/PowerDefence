@@ -29,8 +29,9 @@ public class SelectTurret : MonoBehaviour
             if (EventSystem.current.IsPointerOverGameObject())
                 return;
 
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit))
+            Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(mouseWorldPos, Vector2.zero);
+            if (hit.collider != null)
             {
                 if (hit.collider.TryGetComponent<Turret>(out Turret turret))
                 {
