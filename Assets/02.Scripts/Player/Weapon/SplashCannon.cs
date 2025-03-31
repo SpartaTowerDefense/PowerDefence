@@ -9,8 +9,7 @@ public class SplashCannon : CannonBase
     private int count = 0;
     public SplashCannon(Sprite sprite, Transform tip, CannonController controller) : base(sprite, tip, controller)
     {
-        data.Inintionalize(3, 1f, false);
-        controller.DetectEnemy.SetRange(4f);
+        data.Inintionalize(3, 1f, false, 4f);
         tp = tip;
     }
 
@@ -25,7 +24,6 @@ public class SplashCannon : CannonBase
         if (continous_Time > 0)
             return;
 
-        GameObject bullet = null;
         controller.DetectEnemy.SelectEnemy();
         bullet = ObjectPoolManager.Instance.GetObject<BulletFactory>(1);
         Bullet bul = bullet.GetComponent<Bullet>();

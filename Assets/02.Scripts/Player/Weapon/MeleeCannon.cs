@@ -6,8 +6,7 @@ public class MeleeCannon : CannonBase
 {
     public MeleeCannon(Sprite sprite, Transform tip, CannonController controller) : base(sprite, tip, controller)
     {
-        data.Inintionalize(0, 0, false);
-        controller.DetectEnemy.SetRange(3f);
+        data.Inintionalize(0, 0, false, 4f);
     }
     public override void Fire(Vector3 targetPos)
     {
@@ -49,7 +48,9 @@ public class MeleeCannon : CannonBase
                 enemy.TakeDamage(controller.turretdata.Attack); // 임시 변수
                 break;
             case Enums.TurretType.Green:
-                //죽었을때 돈을 더 
+                enemy.TakeDamage(controller.turretdata.Attack);
+                if (enemy.GetHealth() < 0)
+                    enemy.RewardModifier = controller.turretdata.Coin;
                 break;
             default:
                 Debug.Log("터렛타입이 잘못됨");

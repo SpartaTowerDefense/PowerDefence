@@ -20,6 +20,7 @@ public class Enemy : MonoBehaviour
     private float BurningTime; // 타는 시간
     private float Flammable; // 타고있을때 더 불이 적용되면 불 데미지가 얼마나 증가하는지 - 1 이면 불 데미지 그만큼 추가
     private int Reward;
+    public float RewardModifier { get; set; }
 
     //다중 상태 병렬 처리
     private bool isFrozen = false;
@@ -201,7 +202,7 @@ public class Enemy : MonoBehaviour
         isDead = true;
         Debug.Log("죽음");
         ObjectPoolManager.Instance.ReturnObject<EnemyFactory>(this.gameObject);
-        GameManager.Instance.commander.AddGold(Reward);
+        GameManager.Instance.commander.AddGold(GetRewardCoin(RewardModifier));
     }
 
     /// <summary>
@@ -275,5 +276,15 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(duration);
         spriteRenderer.color = originalColor;
         colorChangeCoroutine = null;
+    }
+
+    public float GetHealth()
+    {
+        return Health;
+    }
+
+    public int GetRewardCoin(float Coin)
+    {
+        return Mathf.CeilToInt(Reward * Coin);
     }
 }

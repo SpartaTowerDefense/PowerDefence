@@ -8,10 +8,12 @@ public class DefaultCannon : CannonBase
     private Transform tp;
     public DefaultCannon(Sprite sprite, Transform tip, CannonController controller) : base(sprite, tip, controller)
     {
-        data.Inintionalize(1, 0, false);
+        data.Inintionalize(1, 0, false, 3f);
         controller.DetectEnemy.SetRange(3f);
         tp = tip;
     }
+
+    GameObject bullet = null;
 
     public override void Fire(Vector3 targetPos)
     {
@@ -19,9 +21,6 @@ public class DefaultCannon : CannonBase
 
         if (time > 0f)
             return;
-
-        GameObject bullet = null;
-
         //오브젝트 풀에서 객체 가져오기
         bullet = ObjectPoolManager.Instance.GetObject<BulletFactory>(1);
         // 객체에 잇는 스크립트 정보 가져오기
