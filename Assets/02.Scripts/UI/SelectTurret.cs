@@ -40,7 +40,7 @@ public class SelectTurret : MonoBehaviour
                     grid.transform.position = turret.gameObject.transform.position;
                     UIManager.Instance.curTurret = turret;
 
-                    BindBtn(uiButtonHandler.SetCannonUpBtn());
+                    BindBtn(uiButtonHandler.SetCannonUpBtn()/*, turret.gameObject.GetComponent<CannonController>().ChangeCannon*/ );
                     BindBtn(uiButtonHandler.SetBodyUpBtn(), turret.LevelUp);
 
                     return;
