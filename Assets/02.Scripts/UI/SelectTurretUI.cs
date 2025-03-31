@@ -31,7 +31,7 @@ public class SelectTurretUI : MonoBehaviour
         _camera.enabled = false;
         _cameraMask.color = invisible;
 
-        ClearUI();
+        //ClearUI();
     }
 
     public void DisplayTurret(Turret turret, UnityAction onCannonUpgrade, UnityAction onBodyUpgrade)
@@ -77,7 +77,7 @@ public class SelectTurretUI : MonoBehaviour
     {
         uiButtonHandler.BindButton(button, action, () =>
         {
-            OnRequestClearSelection?.Invoke(); 
+            OnRequestClearSelection?.Invoke();
         });
         uiButtonHandler.SetInteractable(button, true);
     }

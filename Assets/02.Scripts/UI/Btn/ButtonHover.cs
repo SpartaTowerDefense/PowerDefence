@@ -25,24 +25,28 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerClickHan
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (isHover) return;
-        isHover = true;
-
         pointerEventData = eventData;
         UIRayFindButton(pointerEventData, false);
         if (gameObject.TryGetComponent<Button>(out Button button) && button.interactable)
         {
+            if (isHover) return;
+            isHover = true;
             ChangeButtonInTextOrder();
             buttonEffect.OnActiveSquare(true);
-            buttonEffect.ChangeSquare(rectTransform);
+            buttonEffect.ChangeTransformSquare(rectTransform);
+            buttonEffect.ChangeColorSquare();
             buttonEffect.ShakeSquare();
         }
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
+
         if (isHover)
-            buttonEffect.ClickEffectSquare(buttonEffect.ShakeSquare); 
+            buttonEffect.ClickEffectSquare(
+                () => buttonEffect.ChangeTransformSquare(rectTransform),
+                buttonEffect.ShakeSquare);
+
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -52,13 +56,12 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerClickHan
 
     public void EndEffect()
     {
-        if (!isHover) return;
-        isHover = false;
-
         if (pointerEventData != null)
             UIRayFindButton(pointerEventData, true);
         if (gameObject.TryGetComponent<Button>(out Button button) && button.interactable)
         {
+            if (!isHover) return;
+            isHover = false;
             BackButtonInTextOrder();
             buttonEffect.OnActiveSquare(false);
         }

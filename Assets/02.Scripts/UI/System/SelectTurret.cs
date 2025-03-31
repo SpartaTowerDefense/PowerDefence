@@ -42,6 +42,7 @@ public class SelectTurret : MonoBehaviour
         else
         {
             ClearSelection();
+            selectTurretUI.ClearUI();
         }
     }
 
@@ -49,6 +50,5 @@ public class SelectTurret : MonoBehaviour
     {
         lastTurret = null;
         UIManager.Instance.curTurret = null;
-        selectTurretUI.ClearUI();
     }
 }
