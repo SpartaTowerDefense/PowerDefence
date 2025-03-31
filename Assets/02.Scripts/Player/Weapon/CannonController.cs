@@ -63,7 +63,7 @@ public class CannonController : MonoBehaviour
         }
 
         cannonList = new CannonBase[] { DefaultCannon, TripleCannon, SplashCannon, PenetrationCannon, MeleeCannon };
-        level = 1;
+        level = 0;
         ChangeCannon();
         //ChangeCannon(TripleCannon);
     }
