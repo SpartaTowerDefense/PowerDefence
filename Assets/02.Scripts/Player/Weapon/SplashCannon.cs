@@ -23,7 +23,6 @@ public class SplashCannon : CannonBase
         if (continous_Time > 0)
             return;
 
-        GameObject bullet = null;
         controller.DetectEnemy.SelectEnemy();
         bullet = ObjectPoolManager.Instance.GetObject<BulletFactory>(1);
         Bullet bul = bullet.GetComponent<Bullet>();

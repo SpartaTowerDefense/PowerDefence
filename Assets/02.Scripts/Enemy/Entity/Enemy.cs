@@ -119,7 +119,7 @@ public class Enemy : MonoBehaviour
 
     private void Move()
     {
-        //transform.Translate(Vector2.right * MovementSpeed * Time.deltaTime);
+        transform.Translate(Vector2.right * MovementSpeed * Time.deltaTime);
     }
 
     private void Knockback()

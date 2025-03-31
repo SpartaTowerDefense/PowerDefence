@@ -7,7 +7,7 @@ public class Bullet : MonoBehaviour
     //private Turret turret;
     public Rigidbody2D rb;
     private Collider2D collider;
-    public float bulletSpeed = 5f;
+    public float bulletSpeed = 8f;
     public CannonController controller;
     private Collider2D[] splashColiders;
     [SerializeField] LayerMask enemyLayer;
