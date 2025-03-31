@@ -1,5 +1,8 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using static UnityEngine.GraphicsBuffer;
 
 public class SelectTurret : MonoBehaviour
 {
@@ -26,8 +29,9 @@ public class SelectTurret : MonoBehaviour
             if (EventSystem.current.IsPointerOverGameObject())
                 return;
 
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit))
+            Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(mouseWorldPos, Vector2.zero);
+            if (hit.collider != null)
             {
                 if (hit.collider.TryGetComponent<Turret>(out Turret turret))
                 {
@@ -37,16 +41,15 @@ public class SelectTurret : MonoBehaviour
                     grid.transform.position = turret.gameObject.transform.position;
                     UIManager.Instance.curTurret = turret;
 
-                    uiButtonHandler.BindButton(uiButtonHandler.SetBodyUpBtn(),
-                        () => uiButtonHandler.SetInteractable(uiButtonHandler.SetBodyUpBtn(),false), 
-                        turret.LevelUp, 
-                        ActiveFalse, 
-                        DeleteLastTurret);
-                    uiButtonHandler.SetInteractable(uiButtonHandler.SetBodyUpBtn(), true);
-                    
+                    BindBtn(uiButtonHandler.SetCannonUpBtn()/*, turret.gameObject.GetComponent<CannonController>().ChangeCannon*/ );
+                    BindBtn(uiButtonHandler.SetBodyUpBtn(), turret.LevelUp);
+
                     return;
                 }
             }
+            ActiveFalse();
+            if (uiButtonHandler.SetCannonUpBtn())
+                uiButtonHandler.SetCannonUpBtn().interactable = false;
             if(uiButtonHandler.SetBodyUpBtn())
                 uiButtonHandler.SetBodyUpBtn().interactable = false;
             if (lastTurret != null)
@@ -57,10 +60,17 @@ public class SelectTurret : MonoBehaviour
                 UIManager.Instance.curTurret = null;
         }
     }
-
+    void BindBtn(Button button,UnityAction action = null)
+    {
+        uiButtonHandler.BindButton(button,
+                        action,
+                        DeleteLastTurret);
+        uiButtonHandler.SetInteractable(button, true);
+    }
     void ActiveFalse()
     {
-        grid.SetActive(false);
+        if(grid.activeInHierarchy)
+            grid.SetActive(false);
     }
 
     void DeleteLastTurret()
