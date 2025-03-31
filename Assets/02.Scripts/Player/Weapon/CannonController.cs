@@ -19,6 +19,9 @@ public class CannonController : MonoBehaviour
     public CannonBase CurrentCannon { get; set; }
     private DefaultCannon DefaultCannon { get; set; }
     private TripleCannon TripleCannon { get; set; }
+    private SplashCannon SplashCannon { get; set; }
+    private PenetrationCannon PenetrationCannon { get; set; }
+    private MeleeCannon MeleeCannon { get; set; }
 
     private CannonBase[] cannonList;
 
@@ -45,15 +48,24 @@ public class CannonController : MonoBehaviour
             // ?먮쾲??罹먮끉
             TripleCannon = new TripleCannon(sprites[1], tip, this);
 
+            SplashCannon = new SplashCannon(sprites[1], tip, this);
+
+            PenetrationCannon = new PenetrationCannon(sprites[1], tip, this);
+
+            MeleeCannon = new MeleeCannon(sprites[2], tip, this);
+
             // ?몃쾲吏?罹먮끉
         }
         else
         {
             DefaultCannon.ChangeSprite(sprites[0]);
             TripleCannon.ChangeSprite(sprites[1]);
+            SplashCannon.ChangeSprite(sprites[1]);
+            PenetrationCannon.ChangeSprite(sprites[1]);
+            MeleeCannon.ChangeSprite(sprites[2]);
         }
 
-        cannonList = new CannonBase[] { DefaultCannon, TripleCannon };
+        cannonList = new CannonBase[] { DefaultCannon, TripleCannon, SplashCannon, PenetrationCannon, MeleeCannon };
         level = 0;
         ChangeCannon();
         //ChangeCannon(TripleCannon);
@@ -76,9 +88,11 @@ public class CannonController : MonoBehaviour
     /// </summary>
     public void ChangeCannon()
     {
+        
         level = Mathf.Min(++level, cannonList.Length);
         CurrentCannon = cannonList[level - 1];
         spr.sprite = CurrentCannon.data.cannonSprite;
+        Debug.Log($"선택된 캐논 : {CurrentCannon}");
     }
 
     public void Fire()

@@ -4,17 +4,15 @@ using UnityEngine.UI;
 
 public class Slot : MonoBehaviour
 {
-    //수정 부분
+    [Header("참조")]
     [SerializeField] private Placement placement;
     [SerializeField] private DragHandler dragHandler;
-
+    public Turret curTurret;
 
     [SerializeField] public TurretData TurretData { get; private set; }
     [SerializeField] public Button curButton;
     private UIManager uiManager;
     private Image image;
-
-    public Turret curTurret;
 
     private void Start()
     {
@@ -40,7 +38,7 @@ public class Slot : MonoBehaviour
         uiManager.Shop.curData = TurretData;
         dragHandler.OnBeginDrag(data);
     }
-   public void GetTankPlace(BaseEventData data)
+   public void GetTurretPlace(BaseEventData data)
     {
         dragHandler.EndDrag(data);
     }
