@@ -196,7 +196,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 10
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -1160,6 +1160,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 11391993}
+  - component: {fileID: 11391994}
   m_Layer: 0
   m_Name: BulletFactory
   m_TagString: Untagged
@@ -1182,6 +1183,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2122160815}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &11391994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 11391992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c5521f1b8b719246991dbe7965e428f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Prefab: {fileID: 4545854559683015507, guid: b4342ef5453637d4fb52e6cc2ead75a2, type: 3}
 --- !u!1 &21370094
 GameObject:
   m_ObjectHideFlags: 0
@@ -2012,7 +2026,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 10
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -2506,7 +2520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da74e2261bbd71949b9306d925139638, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grid: {fileID: 1108076551352929476, guid: a84f53b3df2af7d4db88763309dd7ee6, type: 3}
+  grid: {fileID: 1088492664}
 --- !u!81 &616222042
 AudioListener:
   m_ObjectHideFlags: 0
@@ -4631,7 +4645,6 @@ MonoBehaviour:
   roadTile: {fileID: 9588108}
   groundTile: {fileID: 1831341204}
   obstacleTile: {fileID: 417461141}
-  tankPrefab: {fileID: 8710440442959217692, guid: 76bb20271c6ca9f4fafbb434a826c3be, type: 3}
   turretFactory: {fileID: 0}
 --- !u!114 &1712257173
 MonoBehaviour:
@@ -8386,6 +8399,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92d484f7dbfe2ea47acbc24f84598365, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  createNum: 3
 --- !u!1 &2004641072
 GameObject:
   m_ObjectHideFlags: 0
@@ -8614,19 +8628,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 204f4e1e607a6e148a9db8385ed646e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCanvas: {fileID: 1815105385}
   mainCam: {fileID: 616222043}
+  mainCanvas: {fileID: 1815105385}
   roadTile: {fileID: 9588108}
   groundTile: {fileID: 1831341204}
   previewPrefab: {fileID: 8710440442959217692, guid: 76bb20271c6ca9f4fafbb434a826c3be, type: 3}
+  slotTransform: {fileID: 1712257171}
+  slot: {fileID: 2477639005887596335, guid: 102d965c31c090c4fab96eee5e8cceb0, type: 3}
   bodySo:
   - {fileID: 11400000, guid: cbdd028d158850146b4d6b14de9f2cb2, type: 2}
   - {fileID: 11400000, guid: 755390dc53297b54db2c944673b2a03e, type: 2}
   - {fileID: 11400000, guid: 49a78258d23a89442a7f61513cabb5d8, type: 2}
   - {fileID: 11400000, guid: 320c96341e8d89a4f9c0ddd4f2633b93, type: 2}
   - {fileID: 11400000, guid: 2111f4fe7d167714ba33582944985813, type: 2}
-  slotTransform: {fileID: 1712257171}
-  slot: {fileID: 2477639005887596335, guid: 102d965c31c090c4fab96eee5e8cceb0, type: 3}
   curData: {fileID: 0}
   placement: {fileID: 1712257172}
 --- !u!1 &2122160814

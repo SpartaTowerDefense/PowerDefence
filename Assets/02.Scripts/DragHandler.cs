@@ -53,10 +53,10 @@ public class DragHandler : MonoBehaviour
         dragCoroutine = StartCoroutine(HandleDragPreview(controller)); //드래그를 통해 계속 미리보기 인스턴스를 따라가도록 만든 코루틴
     }
 
-    //public void OnDrag(BaseEventData data)
-    //{
+    public void OnDrag(BaseEventData data)
+    {
 
-    //}
+    }
 
     /// <summary>
     /// 드래그 종료 시 호출
