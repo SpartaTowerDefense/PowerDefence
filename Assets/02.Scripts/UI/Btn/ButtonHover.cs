@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
 {
     RectTransform textRectTransform;
     Vector3 textPosition;
@@ -37,6 +37,12 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             buttonEffect.ChangeSquare(rectTransform);
             buttonEffect.ShakeSquare();
         }
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (isHover)
+            buttonEffect.ClickEffectSquare();
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -106,5 +112,5 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         else return;
     }
 
-   
+
 }
