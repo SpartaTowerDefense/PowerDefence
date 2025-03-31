@@ -7,7 +7,7 @@ public class Bullet : MonoBehaviour
     //private Turret turret;
     public Rigidbody2D rb;
     private Collider2D collider;
-    public float bulletSpeed = 5f;
+    public float bulletSpeed = 8f;
     public CannonController controller;
     private Collider2D[] splashColiders;
     [SerializeField] LayerMask enemyLayer;
@@ -34,7 +34,7 @@ public class Bullet : MonoBehaviour
                 else
                     DefaultAttack(enemy, controller.turretdata.Type);
             }
-            
+
 
             if (!currentData.CanPenetration) // 만약 관통속성이 false라면
             {
@@ -54,7 +54,7 @@ public class Bullet : MonoBehaviour
 
     void DefaultAttack(Enemy enemy, Enums.TurretType turretType)
     {
-        
+
         switch (turretType)
         {
             case Enums.TurretType.White:
@@ -73,28 +73,28 @@ public class Bullet : MonoBehaviour
                 enemy.TakeDamage(controller.turretdata.Attack); // 임시 변수
                 break;
             case Enums.TurretType.Green:
-                //죽었을때 돈을 더 
+                enemy.TakeDamage(controller.turretdata.Attack);
+                if (enemy.GetHealth() < 0)
+                    enemy.RewardModifier = controller.turretdata.Coin;
                 break;
             default:
                 Debug.Log("터렛타입이 잘못됨");
                 break;
         }
-            
-       Debug.Log($"적 체력 : {enemy.Health}");
     }
 
     void SplashAttack(Enemy enemy, Enums.TurretType turretType)
     {
         splashColiders = Utils.OverlapCircleAllSorted(enemy.transform.position, SplashRatio, enemyLayer, this.transform.position);
-        foreach(Collider2D collider in splashColiders)
+        foreach (Collider2D collider in splashColiders)
         {
             Debug.Log($"스플래시 공격 받은 적 {collider}");
             if (collider.TryGetComponent<Enemy>(out Enemy enemies))
             {
                 DefaultAttack(enemies, turretType);
-                
+
             }
         }
     }
-   
+
 }

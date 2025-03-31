@@ -14,7 +14,7 @@ public class TripleCannon : CannonBase
         tp = tip;
     }
 
-    
+    GameObject bullet = null;
     public override void Fire(Vector3 targetPos)
     {
         base.Fire(targetPos);
@@ -25,7 +25,6 @@ public class TripleCannon : CannonBase
         if (continous_Time > 0)
             return;
 
-        GameObject bullet = null;
         controller.DetectEnemy.SelectEnemy();
         bullet = ObjectPoolManager.Instance.GetObject<BulletFactory>(1);
         Bullet bul = bullet.GetComponent<Bullet>();
@@ -67,7 +66,6 @@ public class TripleCannon : CannonBase
         }
         else
         {
-            isContinousShooting = false;
             count = 1;
             time = fireColldown;
             controller.DetectEnemy.SelectEnemy(1);

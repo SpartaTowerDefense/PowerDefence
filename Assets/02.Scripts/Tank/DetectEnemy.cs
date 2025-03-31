@@ -32,6 +32,7 @@ public class DetectEnemy : MonoBehaviour
             if (seletedEnemy == null)
             {
                 SelectEnemy();
+                ChasingEnemy();
             }
             else
             {   //선택된 적이 범위 내에 있는지 검사

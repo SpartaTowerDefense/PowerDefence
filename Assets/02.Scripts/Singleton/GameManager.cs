@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-    public float Money { get; private set; } = 0f;
+    public float Money { get; private set; } = 3000f;
 
     /// <summary>
     /// 돈을 추가하는 함수

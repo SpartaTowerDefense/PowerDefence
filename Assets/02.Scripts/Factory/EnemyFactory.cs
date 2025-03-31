@@ -14,8 +14,9 @@ public class EnemyFactory : FactoryBase
     private const string Small = nameof(Small);
     private const string Speed = nameof(Speed);
 
-
     private List<EnemyData> enemyDataList = new();
+
+    [SerializeField] public WaypointPath path;
 
     private void Awake()
     {

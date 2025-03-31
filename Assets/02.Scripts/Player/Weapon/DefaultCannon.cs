@@ -13,15 +13,14 @@ public class DefaultCannon : CannonBase
         tp = tip;
     }
 
+    GameObject bullet = null;
+
     public override void Fire(Vector3 targetPos)
     {
         base.Fire(targetPos);
 
         if (time > 0f)
             return;
-
-        GameObject bullet = null;
-
         //오브젝트 풀에서 객체 가져오기
         bullet = ObjectPoolManager.Instance.GetObject<BulletFactory>(1);
         // 객체에 잇는 스크립트 정보 가져오기
