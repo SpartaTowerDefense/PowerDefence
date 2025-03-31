@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using Unity.Burst;
 using UnityEngine;
 
@@ -36,6 +37,7 @@ public abstract class CannonBase
     protected float continous_CoolDown = 0f;
     protected float continous_Time = 0.2f;
     protected float fireColldown = 1f;
+    protected float meleeCoolDown = 3f;
 
     public CannonBase(Sprite sprite, Transform tip, CannonController controller)
     {

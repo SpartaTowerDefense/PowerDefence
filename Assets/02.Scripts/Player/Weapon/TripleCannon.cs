@@ -33,7 +33,7 @@ public class TripleCannon : CannonBase
         {
             count++;
             continous_Time = continous_CoolDown;
-            controller.DetectEnemy.SelectEnemy();
+            controller.DetectEnemy.SelectEnemy(1);
             return;
         }
         else

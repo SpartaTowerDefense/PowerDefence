@@ -10,13 +10,18 @@ public class MeleeCannon : CannonBase
     }
     public override void Fire(Vector3 targetPos)
     {
-        foreach(Collider2D collider in controller.DetectEnemy.enemyColliders)
+        if (time > 0f)
+            return;
+
+        foreach (Collider2D collider in controller.DetectEnemy.enemyColliders)
         {
             if(collider.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
             {
                 DefaultAttack(enemy, controller.turretdata.Type);
             }
         }
+
+        time = meleeCoolDown;
         
     }
     void DefaultAttack(Enemy enemy, Enums.TurretType turretType)
