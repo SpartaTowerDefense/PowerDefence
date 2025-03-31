@@ -46,8 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {fileID: 3873725776328475353}
-  spawnInterval: 2
-  enemyType: 0
+  spawnPattern: {fileID: 11400000, guid: 2746cf466edcd0d47a82516714a77ee0, type: 2}
 --- !u!1 &6501460829626893881
 GameObject:
   m_ObjectHideFlags: 0

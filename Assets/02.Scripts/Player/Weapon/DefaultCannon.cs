@@ -8,7 +8,7 @@ public class DefaultCannon : CannonBase
     private Transform tp;
     public DefaultCannon(Sprite sprite, Transform tip, CannonController controller) : base(sprite, tip, controller)
     {
-        data.Inintionalize(1, 0, false);
+        data.Inintionalize(1, 0, false, 3f);
         controller.DetectEnemy.SetRange(3f);
         tp = tip;
     }

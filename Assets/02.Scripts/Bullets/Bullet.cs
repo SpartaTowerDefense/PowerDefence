@@ -11,6 +11,7 @@ public class Bullet : MonoBehaviour
     public CannonController controller;
     private Collider2D[] splashColiders;
     [SerializeField] LayerMask enemyLayer;
+    [SerializeField] private bool hasHit = false;
     public float SplashRatio { get; set; }
 
     private void Awake()
@@ -20,11 +21,26 @@ public class Bullet : MonoBehaviour
         splashColiders = new Collider2D[5];
     }
 
+    private void OnEnable()
+    {
+        hasHit = false;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        //만약 탄환이 맵의 경계선을 만나면
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Boundary"))
+        {
+            //오브젝트 풀에 반납한다
+            ObjectPoolManager.Instance.ReturnObject<BulletFactory>(this.gameObject);
+        }
+
+        if (hasHit) return;
+
         if (collision.gameObject.tag.Equals("Enemy"))
         {
             CannonData currentData = controller.CurrentCannon.GetData();
+            hasHit = true;
             //적 정보를 가져온다
             if (collision.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
             {//적 정보를 가져와서 turret에 잇는 body head에 따른 데미지를 준다  
@@ -35,19 +51,11 @@ public class Bullet : MonoBehaviour
                     DefaultAttack(enemy, controller.turretdata.Type);
             }
 
-
             if (!currentData.CanPenetration) // 만약 관통속성이 false라면
             {
                 //오브젝트풀에 반납한다.
                 ObjectPoolManager.Instance.ReturnObject<BulletFactory>(this.gameObject);
             }
-        }
-
-        //만약 탄환이 맵의 경계선을 만나면
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Boundary"))
-        {
-            //오브젝트 풀에 반납한다
-            ObjectPoolManager.Instance.ReturnObject<BulletFactory>(this.gameObject);
         }
 
     }
