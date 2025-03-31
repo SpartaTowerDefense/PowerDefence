@@ -12,10 +12,12 @@ public class Shop : MonoBehaviour
     [SerializeField] private Tilemap groundTile;
     [SerializeField] GameObject previewPrefab;
 
-    [SerializeField] private TurretData[] bodySo;
+    [Header("UI")]
     [SerializeField] private Transform slotTransform;
     [SerializeField] private GameObject slot;
 
+    [Header("정보")]
+    [SerializeField] private TurretData[] bodySo;
     public TurretData curData;
 
     [Header("배치시스템")]
@@ -34,10 +36,15 @@ public class Shop : MonoBehaviour
         }
     }
 
-    public void BuyTurret()
+    public bool BuyTurret()
     {
-        if (!curData) return;
-        if (curData.Price > UIManager.Instance.Commander.gold) return;
+        if (!curData) return false;
+        if (!CanBuy(curData)) return false ;
         UIManager.Instance.Commander.SubtractGold(curData.Price);
+        return true;
+    }
+    public bool CanBuy(TurretData data) //살 수 있는지 확인하고 반환해주는 메서드
+    {
+        return data && UIManager.Instance.Commander.gold >= data.Price;
     }
 }
