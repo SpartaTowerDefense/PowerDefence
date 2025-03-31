@@ -1,10 +1,13 @@
 using DG.Tweening;
+
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ButtonEffect : MonoBehaviour
 {
+    [SerializeField] private int createNum = 3;
+
     private GameObject[] squareArray;
     private RectTransform[] rectTransformArray;
     private Image[] imageArray;
@@ -13,7 +16,7 @@ public class ButtonEffect : MonoBehaviour
 
     private void Start()
     {
-        CreateSquare(3);
+        CreateSquare(createNum);
         OnActiveSquare(false);
     }
 
@@ -43,6 +46,7 @@ public class ButtonEffect : MonoBehaviour
         {
             obj?.SetActive(square);
         }
+        if (!square) KillTween(shakeTweens);
     }
 
     public void ChangeSquare(RectTransform rectTransform)
@@ -52,12 +56,12 @@ public class ButtonEffect : MonoBehaviour
             rectTransformArray[i].sizeDelta = rectTransform.sizeDelta * rectTransform.localScale * Random.Range(1f, 1.2f);
             rectTransformArray[i].position = rectTransform.position;
 
-            imageArray[i].color = ChnageColor(0.6f);
+            imageArray[i].color = ChangeColor(0.6f);
         }
     }
 
     //채도 높은 색만 뽑아 알파값 조절
-    Color ChnageColor(float alpha)
+    Color ChangeColor(float alpha)
     {
         float h = Random.Range(0f, 1f);
         float s = Random.Range(0.7f, 1f);
@@ -67,14 +71,6 @@ public class ButtonEffect : MonoBehaviour
 
         return color;
     }
-    void KillTween(List<Tween> tween)
-    {
-        foreach (Tween t in tween)
-        {
-            t.Kill();
-        }
-        tween.Clear();
-    }
 
     public void ShakeSquare()
     {
@@ -82,14 +78,28 @@ public class ButtonEffect : MonoBehaviour
         Sequence shakeSequence = DOTween.Sequence();
         foreach (RectTransform trans in rectTransformArray)
         {
-            shakeSequence.Append(trans.DOShakePosition(10, 10, 10, 90, false, false));
+            shakeSequence.Join(trans.DOShakePosition(10, 10, 10, 90, false, false));
         }
         shakeSequence.SetLoops(-1, LoopType.Restart);
         shakeTweens.Add(shakeSequence);
     }
 
-    public void StopShakeSquare()
+    //public void ClickEffectSquare()
+    //{
+    //    Sequence clickSequence = DOTween.Sequence();
+    //    for (int i = 0; i < squareArray.Length; i++)
+    //    {
+    //        RectTransform originRect = rectTransformArray[i];
+    //        Vector3 originScale = originRect.localScale;
+    //    }
+    //}
+
+    void KillTween(List<Tween> tween)
     {
-        KillTween(shakeTweens);
+        foreach (Tween t in tween)
+        {
+            t.Kill();
+        }
+        tween.Clear();
     }
 }

@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class MonoHelper : Singleton<MonoHelper>
 {
-    public new Coroutine StartCoroutine(IEnumerator coroutine)
+
+    public static Coroutine StartCoroutineHelper(IEnumerator coroutine)
     {
-        return StartCoroutine(coroutine);
+        return Instance.StartCoroutine(coroutine);
     }
 
-    public new void StopCoroutine(Coroutine coroutine)
+    public static void StopCoroutineHelper(Coroutine coroutine)
     {
-        StopCoroutine(coroutine);
+        Instance.StopCoroutine(coroutine);
     }
 }

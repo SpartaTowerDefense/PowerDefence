@@ -14,6 +14,8 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     RectTransform rectTransform;
     PointerEventData pointerEventData;
 
+    bool isHover = false;
+
     private void Start()
     {
         text = gameObject.GetComponentInChildren<TextMeshProUGUI>();
@@ -23,8 +25,11 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (isHover) return;
+        isHover = true;
+
         pointerEventData = eventData;
-        UIRayFindButton(pointerEventData, true);
+        UIRayFindButton(pointerEventData, false);
         if (gameObject.TryGetComponent<Button>(out Button button) && button.interactable)
         {
             ChangeButtonInTextOrder();
@@ -36,12 +41,20 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        UIRayFindButton(pointerEventData, false);
+        EndEffect();
+    }
+
+    public void EndEffect()
+    {
+        if (isHover)
+            isHover = false;
+
+        if (pointerEventData != null)
+            UIRayFindButton(pointerEventData, true);
         if (gameObject.TryGetComponent<Button>(out Button button) && button.interactable)
         {
             BackButtonInTextOrder();
             buttonEffect.OnActiveSquare(false);
-            buttonEffect.StopShakeSquare();
         }
     }
 
@@ -50,7 +63,7 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         if (text != null)
         {
             textColor = text.color;
-            textRectTransform = text.rectTransform.parent as RectTransform;
+            textRectTransform = transform as RectTransform;
             textPosition = text.rectTransform.anchoredPosition;
 
             text.color = Color.white;
@@ -66,8 +79,8 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         if (text != null)
         {
             text.color = textColor;
-            text.rectTransform.anchoredPosition = textPosition;
             text.rectTransform.SetParent(textRectTransform, false);
+            text.rectTransform.anchoredPosition = textPosition;
         }
     }
 
@@ -86,10 +99,12 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         {
             image.raycastTarget = enable;
         }
-        else if (raycastObject.TryGetComponent<Text>(out Text text))
+        else if (raycastObject.TryGetComponent<TextMeshProUGUI>(out TextMeshProUGUI text))
         {
             text.raycastTarget = enable;
         }
         else return;
     }
+
+   
 }
