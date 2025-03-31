@@ -17,6 +17,8 @@ public class TripleCannon : CannonBase
     
     public override void Fire(Vector3 targetPos)
     {
+        base.Fire(targetPos);
+
         if (time > 0)
             return;
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -28,6 +29,8 @@ public class CannonData
 
 public abstract class CannonBase
 {
+    public Action OnMuzzleFlash;
+
     public CannonData data = new(1,0,false);
     public Transform tip; // 총알 나가는 위치
     public CannonController controller;
@@ -63,5 +66,9 @@ public abstract class CannonBase
         return data;
     }
 
-    public abstract void Fire(Vector3 targetPos);
+    public virtual void Fire(Vector3 targetPos)
+    {
+        if (time < 0f && continous_Time < 0f)
+            OnMuzzleFlash?.Invoke();
+    }
 }
