@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 public class DragHandler : MonoBehaviour
@@ -18,8 +17,8 @@ public class DragHandler : MonoBehaviour
 
     private GameObject previewInstance;
     private SpriteRenderer previewRenderer;
-    private SpriteRenderer outlineRenderer;
-    private GameObject outlineInstance;
+    //private SpriteRenderer outlineRenderer;
+    //private GameObject outlineInstance;
 
     private Coroutine dragCoroutine;
     private bool isDrag = false;
@@ -41,13 +40,14 @@ public class DragHandler : MonoBehaviour
         isDrag = true; //드래그상태
         previewInstance = Instantiate(tankPreviewPrefab);
         previewRenderer = previewInstance.GetComponent<SpriteRenderer>();
+
         //outlineRenderer = outlineInstance.GetComponentInChildren<SpriteRenderer>();   
         previewRenderer.sprite = UIManager.Instance.Shop.curData.BodyImage;
         //outlineRenderer.sprite = UIManager.Instance.Shop.curData.BodyImage;
 
         dragCoroutine = StartCoroutine(HandleDragPreview());
     }
-
+    
     public void OnDrag(BaseEventData data)
     {
 
@@ -107,9 +107,10 @@ public class DragHandler : MonoBehaviour
     }
     private bool IsPointerOverUI()
     {
-        PointerEventData eventData = new PointerEventData(EventSystem .current);
-
-        eventData.position = Mouse.current.position.ReadValue();
+        PointerEventData eventData = new(EventSystem.current)
+        {
+            position = Mouse.current.position.ReadValue()
+        };
 
         var results = new List<RaycastResult>();
         GraphicRaycaster raycaster = canvas.GetComponent<GraphicRaycaster>();
