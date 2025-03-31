@@ -11,6 +11,7 @@ public class Bullet : MonoBehaviour
     public CannonController controller;
     private Collider2D[] splashColiders;
     [SerializeField] LayerMask enemyLayer;
+    private bool hasHit = false;
     public float SplashRatio { get; set; }
 
     private void Awake()
@@ -22,9 +23,12 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (hasHit) return;
+
         if (collision.gameObject.tag.Equals("Enemy"))
         {
             CannonData currentData = controller.CurrentCannon.GetData();
+            hasHit = true;
             //적 정보를 가져온다
             if (collision.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
             {//적 정보를 가져와서 turret에 잇는 body head에 따른 데미지를 준다  
