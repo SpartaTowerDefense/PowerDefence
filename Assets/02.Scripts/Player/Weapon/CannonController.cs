@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class CannonController : MonoBehaviour
 {
+    private const int InitPrice = 1500;
+    public int Price { get; private set; } = InitPrice;
+    
     public int level = 1;
 
     public Transform tip;
@@ -63,6 +66,7 @@ public class CannonController : MonoBehaviour
 
         cannonList = new CannonBase[] { DefaultCannon, TripleCannon, SplashCannon, PenetrationCannon, MeleeCannon };
         level = 0;
+        Price = InitPrice;
         ChangeCannon();
         //ChangeCannon(TripleCannon);
     }
@@ -89,6 +93,7 @@ public class CannonController : MonoBehaviour
         CurrentCannon = cannonList[level - 1];
         CurrentCannon.OnMuzzleFlash = OnMuzzleFlash;
         spr.sprite = CurrentCannon.data.cannonSprite;
+        SetPriceRatio(1.2f);
         Debug.Log($"선택된 캐논 : {CurrentCannon}");
     }
 
@@ -110,5 +115,11 @@ public class CannonController : MonoBehaviour
         muzzleObject.SetActive(true);
         yield return muzzleWaitFor;
         muzzleObject.SetActive(false);
+    }
+
+    // 가격 설정
+    public void SetPriceRatio(float ratio)
+    {
+        this.Price *= Mathf.FloorToInt(this.Price * ratio);
     }
 }
