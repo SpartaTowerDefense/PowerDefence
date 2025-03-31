@@ -1,35 +1,31 @@
-using DG.Tweening;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TestObj : MonoBehaviour
 {
     [SerializeField] private GameObject obj;
     private Transform[] trans;
+    private Coroutine moveRoutine;
     public float speed = 1;
 
     private void Start()
     {
-
-        if(UIManager.Instance.Title.obj == null)
+        if (UIManager.Instance.Title.obj == null)
             UIManager.Instance.Title.obj = gameObject;
 
         trans = new Transform[obj.transform.childCount];
         for (int i = 0; i < obj.transform.childCount; i++)
         {
-            trans[i] = obj.transform.GetChild(i).gameObject.transform;
+            trans[i] = obj.transform.GetChild(i);
         }
 
-        StartCoroutine(Totarget());
+        moveRoutine = StartCoroutine(ToTarget());
     }
 
-    IEnumerator Totarget()
+    IEnumerator ToTarget()
     {
         for (int i = 0; i < trans.Length; i++)
         {
-            //yield return transform.DOMove(trans[i].position, 1f).SetSpeedBased(true).SetEase(Ease.Linear).WaitForCompletion();
-
             Vector3 startPosition = transform.position;
             Vector3 targetPosition = trans[i].position;
 
@@ -47,4 +43,14 @@ public class TestObj : MonoBehaviour
             transform.position = targetPosition;
         }
     }
+    public void StopToTarget()
+    {
+        if (moveRoutine != null)
+        {
+            StopCoroutine(moveRoutine);
+            moveRoutine = null;
+        }
+        Destroy(gameObject);
+    }
+
 }

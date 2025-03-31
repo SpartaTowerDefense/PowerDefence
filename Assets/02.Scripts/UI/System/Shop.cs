@@ -34,5 +34,6 @@ public class Shop : MonoBehaviour
     {
         if (!curData) return;
         if (curData.Price > UIManager.Instance.Commander.gold) return;
+        UIManager.Instance.Commander.SubtractGold(curData.Price);
     }
 }

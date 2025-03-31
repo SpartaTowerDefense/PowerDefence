@@ -1,17 +1,21 @@
 using DG.Tweening;
 using System.Collections;
-using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class Title : MonoBehaviour
 {
+    UIButtonHandler uIButtonHandler;
+
     public GameObject obj;
     private Camera _camera;
     private bool onStart = false;
 
     private void Start()
     {
+        uIButtonHandler = UIManager.Instance.UIButtonHandler;
         _camera = Camera.main;
+        uIButtonHandler.BindButton(uIButtonHandler.SetStartBtn(), GameStart);
     }
 
     private void LateUpdate()
@@ -19,7 +23,7 @@ public class Title : MonoBehaviour
         CameraFollow();
     }
 
-    public void OnStart()
+    void GameStart()
     {
         UIManager uiManager = UIManager.Instance;
         Sequence seq = DOTween.Sequence();
@@ -27,8 +31,10 @@ public class Title : MonoBehaviour
            .Append(transform.DORotate(new Vector3(0, 0, -90), 1f))
            .OnComplete(() =>
            {
-               uiManager.OnActive(false, gameObject.transform.parent.gameObject);
-               Destroy(obj);
+               uiManager.ActiveCnavasChild(false, gameObject.transform.parent.gameObject);
+               TestObj test = obj.GetComponent<TestObj>();
+               if (test != null)
+                   test.StopToTarget();
            });
         StartCoroutine(ChangeSet());
     }
@@ -47,5 +53,5 @@ public class Title : MonoBehaviour
         _camera.transform.position = new Vector3(obj.transform.position.x + 2, obj.transform.position.y, _camera.transform.position.z);
 
     }
-    
+
 }
