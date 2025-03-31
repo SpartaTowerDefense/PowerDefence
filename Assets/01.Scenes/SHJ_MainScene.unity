@@ -508,7 +508,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roadTile: {fileID: 215824530}
   groundTile: {fileID: 1806830264}
-  tankPrefab: {fileID: 8710440442959217692, guid: 76bb20271c6ca9f4fafbb434a826c3be, type: 3}
+  obstacleTile: {fileID: 0}
   turretFactory: {fileID: 0}
 --- !u!1 &215824527
 GameObject:
@@ -2821,7 +2821,7 @@ GameObject:
   - component: {fileID: 1108725409}
   - component: {fileID: 1108725412}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Start
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4077,19 +4077,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 204f4e1e607a6e148a9db8385ed646e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCanvas: {fileID: 1257178766}
   mainCam: {fileID: 519420031}
+  mainCanvas: {fileID: 1257178766}
   roadTile: {fileID: 215824530}
   groundTile: {fileID: 1806830264}
   previewPrefab: {fileID: 8710440442959217692, guid: 76bb20271c6ca9f4fafbb434a826c3be, type: 3}
+  slotTransform: {fileID: 150822745}
+  slot: {fileID: 2477639005887596335, guid: 102d965c31c090c4fab96eee5e8cceb0, type: 3}
   bodySo:
   - {fileID: 11400000, guid: cbdd028d158850146b4d6b14de9f2cb2, type: 2}
   - {fileID: 11400000, guid: 755390dc53297b54db2c944673b2a03e, type: 2}
   - {fileID: 11400000, guid: 49a78258d23a89442a7f61513cabb5d8, type: 2}
   - {fileID: 11400000, guid: 320c96341e8d89a4f9c0ddd4f2633b93, type: 2}
   - {fileID: 11400000, guid: 2111f4fe7d167714ba33582944985813, type: 2}
-  slotTransform: {fileID: 150822745}
-  slot: {fileID: 2477639005887596335, guid: 102d965c31c090c4fab96eee5e8cceb0, type: 3}
   curData: {fileID: 0}
   placement: {fileID: 150822748}
 --- !u!114 &1678959533
