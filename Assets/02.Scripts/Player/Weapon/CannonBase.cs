@@ -34,7 +34,7 @@ public abstract class CannonBase
     // public AudioClip clip; 총알 발사시 소리
 
     protected float time = 0f;
-    protected float continous_CoolDown = 1f;
+    protected float continous_CoolDown = 0.3f;
     protected float continous_Time = 0.0f;
     protected float fireColldown = 2f;
     protected float meleeCoolDown = 3f;
@@ -55,7 +55,7 @@ public abstract class CannonBase
     public void Update()
     {
         time -= Time.deltaTime;
-        continous_CoolDown -= Time.deltaTime;
+        continous_Time -= Time.deltaTime;
     }
 
     public CannonData GetData()

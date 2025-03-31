@@ -85,9 +85,11 @@ public class CannonController : MonoBehaviour
     /// </summary>
     public void ChangeCannon()
     {
+        
         level = Mathf.Min(++level, cannonList.Length);
         CurrentCannon = cannonList[level - 1];
         spr.sprite = CurrentCannon.data.cannonSprite;
+        Debug.Log($"선택된 캐논 : {CurrentCannon}");
     }
 
     public void Fire()

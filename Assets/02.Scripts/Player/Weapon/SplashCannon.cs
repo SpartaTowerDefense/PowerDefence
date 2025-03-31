@@ -9,7 +9,7 @@ public class SplashCannon : CannonBase
     private int count = 0;
     public SplashCannon(Sprite sprite, Transform tip, CannonController controller) : base(sprite, tip, controller)
     {
-        data.Inintionalize(3, 3, false);
+        data.Inintionalize(3, 1f, false);
         controller.DetectEnemy.SetRange(4f);
         tp = tip;
     }
@@ -17,10 +17,14 @@ public class SplashCannon : CannonBase
     GameObject bullet = null;
     public override void Fire(Vector3 targetPos)
     {
-        if (time > 0f && continous_Time > 0)
+        if (time > 0)
             return;
 
-        controller.DetectEnemy.SelectEnemy(1);
+        if (continous_Time > 0)
+            return;
+
+        GameObject bullet = null;
+        controller.DetectEnemy.SelectEnemy();
         bullet = ObjectPoolManager.Instance.GetObject<BulletFactory>(1);
         Bullet bul = bullet.GetComponent<Bullet>();
         bul.controller = this.controller;
@@ -37,14 +41,32 @@ public class SplashCannon : CannonBase
         if (count < data.BulletCount)
         {
             count++;
+            if (controller.DetectEnemy.enemyColliders.Length >= data.BulletCount)
+            {
+                //한발씩 쏘기
+                controller.DetectEnemy.seletedEnemy = controller.DetectEnemy.enemyColliders[count - 1];
+                Debug.Log(controller.DetectEnemy.seletedEnemy);
+                Debug.Log($"count : {count}");
+            }
+            else if (controller.DetectEnemy.enemyColliders.Length < data.BulletCount && controller.DetectEnemy.enemyColliders.Length > 1)
+            {
+                controller.DetectEnemy.seletedEnemy = controller.DetectEnemy.enemyColliders[Mathf.FloorToInt(count / 2)];
+                Debug.Log(controller.DetectEnemy.seletedEnemy);
+                Debug.Log($"count : {count}");
+            }
+            else
+            {
+                controller.DetectEnemy.SelectEnemy();
+                Debug.Log(controller.DetectEnemy.seletedEnemy);
+                Debug.Log($"count : {count}");
+            }
             continous_Time = continous_CoolDown;
-            //controller.DetectEnemy.SelectEnemy(1);
             return;
         }
         else
         {
-            count = 0;
-            continous_Time = 0f;
+            isContinousShooting = false;
+            count = 1;
             time = fireColldown;
             controller.DetectEnemy.SelectEnemy(1);
             return;

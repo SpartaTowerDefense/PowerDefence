@@ -6,7 +6,7 @@ using UnityEngine;
 public class TripleCannon : CannonBase
 {
     private Transform tp;
-    private int count = 0;
+    private int count = 1;
     public TripleCannon(Sprite sprite, Transform tip, CannonController controller) : base(sprite, tip, controller)
     {
         data.Inintionalize(3, 0, false);
@@ -24,7 +24,7 @@ public class TripleCannon : CannonBase
             return;
 
         GameObject bullet = null;
-        controller.DetectEnemy.SelectEnemy(1);
+        controller.DetectEnemy.SelectEnemy();
         bullet = ObjectPoolManager.Instance.GetObject<BulletFactory>(1);
         Bullet bul = bullet.GetComponent<Bullet>();
         bul.controller = this.controller;
@@ -38,8 +38,7 @@ public class TripleCannon : CannonBase
         bul.rb.gravityScale = 0f;
         bul.rb.AddForce((targetPos - bullet.transform.position).normalized * bul.bulletSpeed, ForceMode2D.Impulse);
 
-
-        if (count < data.BulletCount)
+        if (count  < data.BulletCount)
         {
             count++;
             if(controller.DetectEnemy.enemyColliders.Length >= data.BulletCount)
@@ -67,17 +66,11 @@ public class TripleCannon : CannonBase
         else
         {
             isContinousShooting = false;
-            count = 0;
+            count = 1;
             time = fireColldown;
             controller.DetectEnemy.SelectEnemy(1);
             return;
         }
         
-    }
-
-    IEnumerator test()
-    {
-        Debug.Log("호출");
-        yield return null;
     }
 }

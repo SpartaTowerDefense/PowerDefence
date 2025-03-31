@@ -7,13 +7,14 @@ public class MeleeCannon : CannonBase
     public MeleeCannon(Sprite sprite, Transform tip, CannonController controller) : base(sprite, tip, controller)
     {
         data.Inintionalize(0, 0, false);
-        controller.DetectEnemy.SetRange(4f);
+        controller.DetectEnemy.SetRange(3f);
     }
     public override void Fire(Vector3 targetPos)
     {
         if (time > 0f)
             return;
 
+        controller.DetectEnemy.SelectEnemy();
         foreach (Collider2D collider in controller.DetectEnemy.enemyColliders)
         {
             if(collider.gameObject.TryGetComponent<Enemy>(out Enemy enemy))

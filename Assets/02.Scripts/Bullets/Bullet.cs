@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class Bullet : MonoBehaviour
 {
@@ -18,6 +17,7 @@ public class Bullet : MonoBehaviour
     {
         if (rb == null) rb = GetComponent<Rigidbody2D>();
         if (collider == null) collider = GetComponent<Collider2D>();
+        splashColiders = new Collider2D[5];
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -80,7 +80,7 @@ public class Bullet : MonoBehaviour
                 break;
         }
             
-        Debug.Log($"적 체력 : {enemy.Health}");
+       Debug.Log($"적 체력 : {enemy.Health}");
     }
 
     void SplashAttack(Enemy enemy, Enums.TurretType turretType)
@@ -88,9 +88,11 @@ public class Bullet : MonoBehaviour
         splashColiders = Utils.OverlapCircleAllSorted(enemy.transform.position, SplashRatio, enemyLayer, this.transform.position);
         foreach(Collider2D collider in splashColiders)
         {
-            if(TryGetComponent<Enemy>(out Enemy enemies))
+            Debug.Log($"스플래시 공격 받은 적 {collider}");
+            if (collider.TryGetComponent<Enemy>(out Enemy enemies))
             {
                 DefaultAttack(enemies, turretType);
+                
             }
         }
     }
