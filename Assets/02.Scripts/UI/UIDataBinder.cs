@@ -19,10 +19,9 @@ public class UIDataBinder : MonoBehaviour
     }
     public void SetUIText()
     {
-        GameManager gameManager = GameManager.Instance;
-        healthValue.text = gameManager.health.ToString();
+        Commander commander = GameManager.Instance.commander;
+        healthValue.text = commander.health.ToString();
         goldValue.text = commander.gold.ToString();
         waveNum.text = commander.wave.ToString();
-        //enemyCount.text = 
     }
 }

@@ -203,6 +203,7 @@ public class Enemy : MonoBehaviour
         Debug.Log("죽음");
         ObjectPoolManager.Instance.ReturnObject<EnemyFactory>(this.gameObject);
         GameManager.Instance.commander.AddGold(GetRewardCoin(RewardModifier));
+        UIManager.Instance.UIDataBinder.SetUIText();
     }
 
     /// <summary>

@@ -66,8 +66,8 @@ public class CannonController : MonoBehaviour
 
         cannonList = new CannonBase[] { DefaultCannon, TripleCannon, SplashCannon, PenetrationCannon, MeleeCannon };
         level = 0;
-        Price = InitPrice;
         ChangeCannon();
+        Price = InitPrice;
         //ChangeCannon(TripleCannon);
     }
 
@@ -90,7 +90,7 @@ public class CannonController : MonoBehaviour
     {
         Commander commander = GameManager.Instance.commander;
 
-        if (!commander.CanBuy(Price))
+        if (!commander.CanBuy(Price) && level > 1)
             return;
 
         if(level < cannonList.Length)
@@ -99,10 +99,16 @@ public class CannonController : MonoBehaviour
             CurrentCannon = cannonList[level - 1];
             CurrentCannon.OnMuzzleFlash = OnMuzzleFlash;
             spr.sprite = CurrentCannon.data.cannonSprite;
-            commander.SubtractGold(Price); // 먼저 차감
 
-            SetPriceRatio(1.2f); // 현재 가격에서 증가
+            if(level > 1)
+            {
+                commander.SubtractGold(Price); // 먼저 차감
+                UIManager.Instance.UIDataBinder.SetUIText();
+                SetPriceRatio(1.2f); // 현재 가격에서 증가
+            }
+
             Debug.Log($"선택된 캐논 : {CurrentCannon}");
+
         }
     }
 
@@ -129,6 +135,6 @@ public class CannonController : MonoBehaviour
     // 가격 설정
     public void SetPriceRatio(float ratio)
     {
-        this.Price *= Mathf.FloorToInt(this.Price * ratio);
+        this.Price = Mathf.FloorToInt(this.Price * ratio);
     }
 }
