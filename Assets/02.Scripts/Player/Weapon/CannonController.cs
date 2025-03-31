@@ -10,6 +10,9 @@ public class CannonController : MonoBehaviour
     public Transform tip;
     public SpriteRenderer spr;
 
+    public GameObject muzzleObject;
+    private WaitForSeconds muzzleWaitFor = new(0.2f);
+
     public DetectEnemy DetectEnemy { get; private set; }
     public TurretData turretdata;
     
@@ -81,6 +84,16 @@ public class CannonController : MonoBehaviour
     public void Fire()
     {
         if (CurrentCannon != null)
+        {
             CurrentCannon.Fire(DetectEnemy.seletedEnemy.transform.position);
+            StartCoroutine(OnMuzzleFlash());
+        }
+    }
+
+    private IEnumerator OnMuzzleFlash()
+    {
+        muzzleObject.SetActive(true);
+        yield return muzzleWaitFor;
+        muzzleObject.SetActive(false);
     }
 }
