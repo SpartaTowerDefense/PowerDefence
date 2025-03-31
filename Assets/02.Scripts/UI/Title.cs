@@ -11,11 +11,15 @@ public class Title : MonoBehaviour
     private Camera _camera;
     private bool onStart = false;
 
+    private ButtonHover[] childs;
+
     private void Start()
     {
         uIButtonHandler = UIManager.Instance.UIButtonHandler;
         _camera = Camera.main;
         uIButtonHandler.BindButton(uIButtonHandler.SetStartBtn(), GameStart);
+
+        childs = GetComponentsInChildren<ButtonHover>();
     }
 
     private void LateUpdate()
@@ -25,6 +29,16 @@ public class Title : MonoBehaviour
 
     void GameStart()
     {
+        foreach (var child in childs)
+        {
+            child.EndEffect();
+            StartCoroutine(DisableNextFrame(child));
+        }
+        ButtonEffect effect = gameObject.GetComponentInChildren<ButtonEffect>();
+        if (effect != null)
+        {
+            effect.enabled = false;
+        }
         UIManager uiManager = UIManager.Instance;
         Sequence seq = DOTween.Sequence();
         seq.Append(transform.DORotate(new Vector3(0, 0, -15), 0.5f))
@@ -38,10 +52,17 @@ public class Title : MonoBehaviour
            });
         StartCoroutine(ChangeSet());
     }
+
+    IEnumerator DisableNextFrame(MonoBehaviour target)
+    {
+        yield return null;
+        target.enabled = false;
+    }
+
     IEnumerator ChangeSet()
     {
         yield return new WaitForSeconds(0.5f);
-        obj.GetComponent<SpriteRenderer>().DOFade(0, 0.99f);
+        obj.GetComponent<SpriteRenderer>().DOFade(0, 0.9f);
         _camera.transform.DOMove(new Vector3(0, 0, -10), 1f);
         _camera.DOOrthoSize(5, 1);
         onStart = true;
