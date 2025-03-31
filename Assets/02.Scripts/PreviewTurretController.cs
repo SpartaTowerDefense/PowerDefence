@@ -23,7 +23,7 @@ public class PreviewTurretController : MonoBehaviour
         if (squareRenderer == null) return;
 
         squareRenderer.color = canPlace
-            ? new Color(0f, 1f, 0f, 0.5f)    // 초록
-            : new Color(1f, 0f, 0f, 0.5f);   // 빨강
+            ? new Color(0f, 1f, 0f, 0.3f)    // 초록
+            : new Color(1f, 0f, 0f, 0.3f);   // 빨강
     }
 }

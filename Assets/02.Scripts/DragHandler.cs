@@ -42,7 +42,7 @@ public class DragHandler : MonoBehaviour
         //previewRenderer.sprite = UIManager.Instance.Shop.curData.BodyImage;
 
         //outlineRenderer = previewInstance.GetComponentInChildren<SpriteRenderer>();   
-        var controller = GetComponent<PreviewTurretController>();
+        var controller = previewInstance.GetComponent<PreviewTurretController>();
         if(controller != null)
         {
             controller.SetBodySprite(UIManager.Instance.Shop.curData.BodyImage);
