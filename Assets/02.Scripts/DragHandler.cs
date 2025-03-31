@@ -17,8 +17,7 @@ public class DragHandler : MonoBehaviour
 
     private GameObject previewInstance;
     private SpriteRenderer previewRenderer;
-    //private SpriteRenderer outlineRenderer;
-    //private GameObject outlineInstance;
+    private SpriteRenderer outlineRenderer;
 
     private Coroutine dragCoroutine;
     private bool isDrag = false;
@@ -39,13 +38,17 @@ public class DragHandler : MonoBehaviour
 
         isDrag = true; //드래그상태
         previewInstance = Instantiate(tankPreviewPrefab);
-        previewRenderer = previewInstance.GetComponent<SpriteRenderer>();
+        //previewRenderer = previewInstance.GetComponent<SpriteRenderer>();
+        //previewRenderer.sprite = UIManager.Instance.Shop.curData.BodyImage;
 
-        //outlineRenderer = outlineInstance.GetComponentInChildren<SpriteRenderer>();   
-        previewRenderer.sprite = UIManager.Instance.Shop.curData.BodyImage;
-        //outlineRenderer.sprite = UIManager.Instance.Shop.curData.BodyImage;
+        //outlineRenderer = previewInstance.GetComponentInChildren<SpriteRenderer>();   
+        var controller = GetComponent<PreviewTurretController>();
+        if(controller != null)
+        {
+            controller.SetBodySprite(UIManager.Instance.Shop.curData.BodyImage);
+        }
 
-        dragCoroutine = StartCoroutine(HandleDragPreview());
+        dragCoroutine = StartCoroutine(HandleDragPreview(controller));
     }
     
     public void OnDrag(BaseEventData data)
@@ -74,7 +77,7 @@ public class DragHandler : MonoBehaviour
         }
     }
 
-    private IEnumerator HandleDragPreview()
+    private IEnumerator HandleDragPreview(PreviewTurretController controller) //원래 비어있었음.
     {
         RectTransform canvasRect = canvas.GetComponent<RectTransform>();
 
@@ -90,15 +93,15 @@ public class DragHandler : MonoBehaviour
             previewInstance.transform.position = snappedPos;
             
             bool canPlace = placement.CanPlaceTank(cellPos);
+            //추가된 내용
+            controller?.SetPlacementColor(canPlace);
 
-            if (canPlace)
-            {
-                previewRenderer.color = new Color(0f, 1f, 0f, 0.5f);
-            }
-            else
-            {
-                previewRenderer.color = new Color(1f, 0f, 0f, 0.5f);
-            }
+            //if (outlineRenderer != null)
+            //{
+            //    outlineRenderer.color = canPlace
+            //         ? new Color(0f, 1f, 0f, 0.5f)
+            //         : new Color(1f, 0f, 0f, 0.5f);
+            //}
             bool isOverUI = IsPointerOverUI();
             previewInstance.gameObject.SetActive(!isOverUI);
 
