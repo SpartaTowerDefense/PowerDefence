@@ -1,46 +1,53 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class DefaultCannon : CannonBase
+public class PenetrationCannon : CannonBase
 {
     private Transform tp;
-    public DefaultCannon(Sprite sprite, Transform tip, CannonController controller) : base(sprite, tip, controller)
+    private int count = 0;
+    public PenetrationCannon(Sprite sprite, Transform tip, CannonController controller) : base(sprite, tip, controller)
     {
-        data.Inintionalize(1, 0, false);
-        controller.DetectEnemy.SetRange(3f);
+        data.Inintionalize(3, 3, false);
+        controller.DetectEnemy.SetRange(4f);
         tp = tip;
     }
 
+    GameObject bullet = null;
     public override void Fire(Vector3 targetPos)
     {
-        if (time > 0f)
+        if (time > 0f && continous_Time > 0)
             return;
 
-        GameObject bullet = null;
-
-        //오브젝트 풀에서 객체 가져오기
+        controller.DetectEnemy.SelectEnemy(1);
         bullet = ObjectPoolManager.Instance.GetObject<BulletFactory>(1);
-        // 객체에 잇는 스크립트 정보 가져오기
         Bullet bul = bullet.GetComponent<Bullet>();
-        // 탄환에 현재 컨트롤러 정보 넘기기
         bul.controller = this.controller;
         bul.SplashRatio = data.SplashRatio;
-        // 포지션 동기화
         bullet.transform.position = tp.position;
 
-        //각도구하기
         Vector2 lookPos = targetPos - tp.position;
         float rotz = Mathf.Atan2(lookPos.y, lookPos.x) * Mathf.Rad2Deg;
         bullet.transform.rotation = Quaternion.Euler(0, 0, rotz + 90f);
 
-        //발사
         bul.rb.gravityScale = 0f;
         bul.rb.AddForce((targetPos - bullet.transform.position).normalized * bul.bulletSpeed, ForceMode2D.Impulse);
 
-        //발사시 쿨타임 추가
-        time = fireColldown;
-        //controller.DetectEnemy.SelectEnemy();
+        if (count < data.BulletCount)
+        {
+            count++;
+            continous_Time = continous_CoolDown;
+            //controller.DetectEnemy.SelectEnemy(1);
+            return;
+        }
+        else
+        {
+            count = 0;
+            continous_Time = 0f;
+            time = fireColldown;
+            controller.DetectEnemy.SelectEnemy(1);
+            return;
+        }
+
     }
 }

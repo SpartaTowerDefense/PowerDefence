@@ -9,7 +9,7 @@ public class MonoHelper : Singleton<MonoHelper>
         return StartCoroutine(coroutine);
     }
 
-    public new void StopCoroutine(IEnumerator coroutine)
+    public new void StopCoroutine(Coroutine coroutine)
     {
         StopCoroutine(coroutine);
     }

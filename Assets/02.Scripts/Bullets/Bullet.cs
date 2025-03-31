@@ -70,7 +70,7 @@ public class Bullet : MonoBehaviour
                 enemy.ApplyBurning(controller.turretdata.DotDamage);
                 break;
             case Enums.TurretType.Black:
-                enemy.TakeDamage(controller.turretdata.Attack + 5f); // 임시 변수
+                enemy.TakeDamage(controller.turretdata.Attack); // 임시 변수
                 break;
             case Enums.TurretType.Green:
                 //죽었을때 돈을 더 
