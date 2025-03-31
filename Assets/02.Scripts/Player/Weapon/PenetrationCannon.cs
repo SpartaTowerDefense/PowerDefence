@@ -16,6 +16,8 @@ public class PenetrationCannon : CannonBase
     GameObject bullet = null;
     public override void Fire(Vector3 targetPos)
     {
+        base.Fire(targetPos);
+
         if (time > 0)
             return;
 

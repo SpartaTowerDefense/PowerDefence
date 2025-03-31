@@ -17,6 +17,8 @@ public class DefaultCannon : CannonBase
 
     public override void Fire(Vector3 targetPos)
     {
+        base.Fire(targetPos);
+
         if (time > 0f)
             return;
         //오브젝트 풀에서 객체 가져오기
