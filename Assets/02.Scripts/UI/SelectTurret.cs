@@ -1,11 +1,16 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static UnityEngine.GraphicsBuffer;
 
 public class SelectTurret : MonoBehaviour
 {
+    [SerializeField] TextMeshProUGUI cannonInfo;
+    [SerializeField] TextMeshProUGUI cannonUpgradePirce;
+    [SerializeField] TextMeshProUGUI bodyInfo;
+    [SerializeField] TextMeshProUGUI bodyUpgradePirce;
+
     [SerializeField] private GameObject grid;
     private UIButtonHandler uiButtonHandler;
     private Turret lastTurret;
@@ -61,6 +66,26 @@ public class SelectTurret : MonoBehaviour
                 UIManager.Instance.curTurret = null;
         }
     }
+    void ClickTurretInfo()
+    {
+        Turret turret = UIManager.Instance.curTurret;
+        CannonController cannonController= turret.gameObject.GetComponent<CannonController>();
+        if (turret != null)
+        {
+            cannonInfo.text = cannonController.level.ToString();
+            //cannonUpgradePirce.text = cannonController.
+            bodyInfo.text = turret.Level.ToString();
+            bodyUpgradePirce.text = turret.TurretStat.Price.ToString();
+        }
+        else
+        {
+            cannonInfo.text = string.Empty;
+            cannonUpgradePirce.text = string.Empty;
+            bodyInfo.text = string.Empty;
+            bodyUpgradePirce.text = string.Empty;
+        }
+
+    }
     void BindBtn(Button button,UnityAction action = null)
     {
         uiButtonHandler.BindButton(button,
@@ -68,7 +93,6 @@ public class SelectTurret : MonoBehaviour
                         DeleteLastTurret);
         uiButtonHandler.SetInteractable(button, true);
     }
-
     void DeleteLastTurret()
     {
         lastTurret = null;
