@@ -88,11 +88,11 @@ public class CannonController : MonoBehaviour
     /// </summary>
     public void ChangeCannon()
     {
-        
         level = Mathf.Min(++level, cannonList.Length);
         CurrentCannon = cannonList[level - 1];
         CurrentCannon.OnMuzzleFlash = OnMuzzleFlash;
         spr.sprite = CurrentCannon.data.cannonSprite;
+        DetectEnemy.SetRange(CurrentCannon.data.Range);
         SetPriceRatio(1.2f);
         Debug.Log($"선택된 캐논 : {CurrentCannon}");
     }
