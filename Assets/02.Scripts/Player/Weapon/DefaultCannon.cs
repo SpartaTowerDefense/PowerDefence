@@ -15,6 +15,8 @@ public class DefaultCannon : CannonBase
 
     public override void Fire(Vector3 targetPos)
     {
+        base.Fire(targetPos);
+
         if (time > 0f)
             return;
 

@@ -11,6 +11,8 @@ public class MeleeCannon : CannonBase
     }
     public override void Fire(Vector3 targetPos)
     {
+        base.Fire(targetPos);
+
         if (time > 0f)
             return;
 
