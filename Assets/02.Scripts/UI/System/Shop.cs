@@ -40,7 +40,7 @@ public class Shop : MonoBehaviour
     {
         if (!curData) return false;
         if (!CanBuy(curData)) return false ;
-        UIManager.Instance.Commander.SubtractGold(curData.Price);
+        UIManager.Instance.Commander.SubtractGold(curData.Price); // 선택된 터렛의 정보를 넘겨야됨 @bsy
         return true;
     }
     public bool CanBuy(TurretData data) //살 수 있는지 확인하고 반환해주는 메서드

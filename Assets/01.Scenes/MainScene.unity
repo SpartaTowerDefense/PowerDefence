@@ -4868,6 +4868,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Prefab: {fileID: 0}
+  path: {fileID: 0}
 --- !u!114 &585096162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4880,9 +4881,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 439bfd39792563b4ab1f262d33b2e1fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPoints: []
-  spawnInterval: 2
-  enemyType: 0
+  spawnPoint: {fileID: 0}
+  spawnPattern: {fileID: 0}
 --- !u!1 &599321755
 GameObject:
   m_ObjectHideFlags: 0

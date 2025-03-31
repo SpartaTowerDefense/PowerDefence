@@ -88,13 +88,22 @@ public class CannonController : MonoBehaviour
     /// </summary>
     public void ChangeCannon()
     {
-        
-        level = Mathf.Min(++level, cannonList.Length);
-        CurrentCannon = cannonList[level - 1];
-        CurrentCannon.OnMuzzleFlash = OnMuzzleFlash;
-        spr.sprite = CurrentCannon.data.cannonSprite;
-        SetPriceRatio(1.2f);
-        Debug.Log($"선택된 캐논 : {CurrentCannon}");
+        Commander commander = GameManager.Instance.commander;
+
+        if (!commander.CanBuy(Price))
+            return;
+
+        if(level < cannonList.Length)
+        {
+            level++;
+            CurrentCannon = cannonList[level - 1];
+            CurrentCannon.OnMuzzleFlash = OnMuzzleFlash;
+            spr.sprite = CurrentCannon.data.cannonSprite;
+            commander.SubtractGold(Price); // 먼저 차감
+
+            SetPriceRatio(1.2f); // 현재 가격에서 증가
+            Debug.Log($"선택된 캐논 : {CurrentCannon}");
+        }
     }
 
     public void Fire()
