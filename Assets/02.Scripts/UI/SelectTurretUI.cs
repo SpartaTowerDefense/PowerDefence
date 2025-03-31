@@ -12,8 +12,12 @@ public class SelectTurretUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI bodyLv;
     [SerializeField] private TextMeshProUGUI bodyUpgradePrice;
     [SerializeField] private GameObject grid;
+    [SerializeField] private Image _cameraMask;
+    [SerializeField] private Camera _camera;
 
-    UIButtonHandler uiButtonHandler;
+    private UIButtonHandler uiButtonHandler;
+    private readonly Color visible = new Color(1, 1, 1, 1);
+    private readonly Color invisible = new Color(1, 1, 1, 0);
 
     public UnityAction OnRequestClearSelection;
 
@@ -24,6 +28,8 @@ public class SelectTurretUI : MonoBehaviour
         textPanel.SetActive(false);
         grid = Instantiate(grid);
         grid.SetActive(false);
+        _camera.enabled = false;
+        _cameraMask.color = invisible;
 
         ClearUI();
     }
@@ -34,6 +40,10 @@ public class SelectTurretUI : MonoBehaviour
 
         grid.SetActive(true);
         grid.transform.position = turret.transform.position;
+
+        _camera.enabled = true;
+        _camera.transform.position = new Vector3(turret.transform.position.x, turret.transform.position.y, -10f);
+        _cameraMask.color = visible;
 
         BindButton(uiButtonHandler.SetCannonUpBtn(), onCannonUpgrade);
         BindButton(uiButtonHandler.SetBodyUpBtn(), onBodyUpgrade);
@@ -48,8 +58,12 @@ public class SelectTurretUI : MonoBehaviour
 
     public void ClearUI()
     {
+        _cameraMask.color = invisible;
+        _camera.enabled = false;
+
         grid.SetActive(false);
         textPanel.SetActive(false);
+        
         cannonLv.text = string.Empty;
         cannonUpgradePrice.text = string.Empty;
         bodyLv.text = string.Empty;

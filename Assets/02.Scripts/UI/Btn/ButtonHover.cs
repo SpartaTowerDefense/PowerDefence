@@ -88,7 +88,6 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerClickHan
             text.rectTransform.SetParent(textRectTransform, false);
             text.rectTransform.anchoredPosition = textPosition;
         }
-        Debug.Log("꺄아럼ㄴ아ㅣㄹ ㅓㄴㅁ이ㅏㄹㅇ");
     }
 
     //자주 쓰는 ui 컴포먼트만 검사 raycastTarget의 위치가 다르기 때문에 전체 통합은 안된다고 판단
