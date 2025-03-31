@@ -164,3 +164,6 @@ MonoBehaviour:
   rb: {fileID: 0}
   bulletSpeed: 2
   controller: {fileID: 0}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
