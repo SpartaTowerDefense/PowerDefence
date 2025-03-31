@@ -47,7 +47,8 @@ public class SelectTurret : MonoBehaviour
                     return;
                 }
             }
-            ActiveFalse();
+            if (grid.activeInHierarchy)
+                grid.SetActive(false);
             if (uiButtonHandler.SetCannonUpBtn())
                 uiButtonHandler.SetCannonUpBtn().interactable = false;
             if(uiButtonHandler.SetBodyUpBtn())
@@ -66,12 +67,6 @@ public class SelectTurret : MonoBehaviour
                         action,
                         DeleteLastTurret);
         uiButtonHandler.SetInteractable(button, true);
-    }
-
-    void ActiveFalse()
-    {
-        if(grid.activeInHierarchy)
-            grid.SetActive(false);
     }
 
     void DeleteLastTurret()

@@ -13,6 +13,7 @@ public class ButtonEffect : MonoBehaviour
     private Image[] imageArray;
 
     private List<Tween> shakeTweens = new List<Tween>();
+    private List<Tween> clickTweens = new List<Tween>();
 
     private void Start()
     {
@@ -84,15 +85,20 @@ public class ButtonEffect : MonoBehaviour
         shakeTweens.Add(shakeSequence);
     }
 
-    //public void ClickEffectSquare()
-    //{
-    //    Sequence clickSequence = DOTween.Sequence();
-    //    for (int i = 0; i < squareArray.Length; i++)
-    //    {
-    //        RectTransform originRect = rectTransformArray[i];
-    //        Vector3 originScale = originRect.localScale;
-    //    }
-    //}
+    public void ClickEffectSquare()
+    {
+        for (int i = 0; i < squareArray.Length; i++)
+        {
+            Sequence clickSequence = DOTween.Sequence();
+            RectTransform originRect = rectTransformArray[i];
+            clickSequence
+                .Append(rectTransformArray[i].DOScale(originRect.localScale * 0.5f, 0.2f))
+                .Append(rectTransformArray[i].DOScale(originRect.localScale, 0.2f))
+                .SetEase(Ease.OutQuad)
+                 .OnComplete(() => clickSequence.Kill());
+            clickTweens.Add(clickSequence);
+        }
+    }
 
     void KillTween(List<Tween> tween)
     {
