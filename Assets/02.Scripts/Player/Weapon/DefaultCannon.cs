@@ -38,8 +38,8 @@ public class DefaultCannon : CannonBase
         bul.rb.gravityScale = 0f;
         bul.rb.AddForce((targetPos - bullet.transform.position).normalized * bul.bulletSpeed, ForceMode2D.Impulse);
 
-        //발사 쿨타임 추가
+        //발사시 쿨타임 추가
         time = fireColldown;
-        controller.DetectEnemy.SelectEnemy();
+        //controller.DetectEnemy.SelectEnemy();
     }
 }

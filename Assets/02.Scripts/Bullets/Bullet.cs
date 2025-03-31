@@ -29,7 +29,10 @@ public class Bullet : MonoBehaviour
             if (collision.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
             {//적 정보를 가져와서 turret에 잇는 body head에 따른 데미지를 준다  
                 //스플래시인지 아닌지 체크
-                DefaultAttack(enemy, controller.turretdata.Type);
+                if (SplashRatio > 0)
+                    SplashAttack(enemy, controller.turretdata.Type);
+                else
+                    DefaultAttack(enemy, controller.turretdata.Type);
             }
             
 

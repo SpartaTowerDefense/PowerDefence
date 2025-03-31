@@ -17,6 +17,7 @@ public class TripleCannon : CannonBase
         if (time > 0f && continous_Time > 0)
             return;
 
+        controller.DetectEnemy.SelectEnemy(1);
         bullet = ObjectPoolManager.Instance.GetObject<BulletFactory>();
         Bullet bul = bullet.GetComponent<Bullet>();
         bul.controller = this.controller;
@@ -34,7 +35,7 @@ public class TripleCannon : CannonBase
         {
             count++;
             continous_Time = continous_CoolDown;
-            controller.DetectEnemy.SelectEnemy(1);
+            //controller.DetectEnemy.SelectEnemy(1);
             return;
         }
         else
@@ -42,7 +43,7 @@ public class TripleCannon : CannonBase
             count = 0;
             continous_Time = 0f;
             time = fireColldown;
-            controller.DetectEnemy.SelectEnemy();
+            controller.DetectEnemy.SelectEnemy(1);
             return;
         }
         
