@@ -19,12 +19,15 @@ public static class Utils
         return null;
     }
 
-    public static Collider2D[] OverlapCircleAllSorted(Vector2 center, float radius, int layerMask, Vector2 thisPoint)
-    {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(center, radius, layerMask);
+    private static Collider2D[] buffer = new Collider2D[10];
 
-        return colliders
-            .OrderBy(c => Vector2.SqrMagnitude((Vector2)c.transform.position - thisPoint))
+    public static Collider2D[] OverlapCircleAllSorted(Vector2 center, float radius, int layerMask, Vector2 referencePoint)
+    {
+        int count = Physics2D.OverlapCircleNonAlloc(center, radius, buffer, layerMask);
+
+        return buffer
+            .Take(count) // 사용된 요소까지만 정렬
+            .OrderBy(c => Vector2.SqrMagnitude((Vector2)c.transform.position - referencePoint))
             .ToArray();
     }
 
