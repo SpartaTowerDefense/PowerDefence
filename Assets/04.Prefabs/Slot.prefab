@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7791865557006086125}
   - component: {fileID: 241365411887341920}
   - component: {fileID: 8941587420961740878}
+  - component: {fileID: -934030402963170429}
   m_Layer: 5
   m_Name: Slot
   m_TagString: Untagged
@@ -93,6 +94,7 @@ MonoBehaviour:
   placement: {fileID: 0}
   dragHandler: {fileID: 0}
   curButton: {fileID: 0}
+  curTurret: {fileID: 0}
 --- !u!114 &241365411887341920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,4 +158,16 @@ MonoBehaviour:
   maincam: {fileID: 0}
   roadTile: {fileID: 0}
   groundTile: {fileID: 0}
-  outlinePrefab: {fileID: 7860531304406740113, guid: 4f5b8662f35458340a3e0e435d78a3f1, type: 3}
+--- !u!114 &-934030402963170429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2477639005887596335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fafba540f65e4cf468daabbaea4dd3db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dragHandler: {fileID: 8941587420961740878}
