@@ -17,6 +17,12 @@ public class EnemyFactory : FactoryBase
     private List<EnemyData> enemyDataList = new();
 
     [SerializeField] public WaypointPath path;
+    [SerializeField] public EnemySpawner enemySpawner;
+
+    public void Gamestart()
+    {
+        enemySpawner.GameStart();
+    }
 
     private void Awake()
     {

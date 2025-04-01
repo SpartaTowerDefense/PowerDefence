@@ -3,12 +3,13 @@ using UnityEngine.EventSystems;
 
 public class SelectTurret : MonoBehaviour
 {
-    [SerializeField] private SelectTurretUI selectTurretUI;
+    private SelectTurretUI selectTurretUI;
 
     private Turret lastTurret;
 
     private void Start()
     {
+        selectTurretUI = GetComponent<SelectTurretUI>();
         selectTurretUI.OnRequestClearSelection = ClearSelection;
     }
 

@@ -31,7 +31,7 @@ public class SelectTurretUI : MonoBehaviour
         _camera.enabled = false;
         _cameraMask.color = invisible;
 
-        //ClearUI();
+        ClearUI();
     }
 
     public void DisplayTurret(Turret turret, UnityAction onCannonUpgrade, UnityAction onBodyUpgrade)
@@ -69,8 +69,10 @@ public class SelectTurretUI : MonoBehaviour
         bodyLv.text = string.Empty;
         bodyUpgradePrice.text = string.Empty;
 
-        uiButtonHandler.SetCannonUpBtn().interactable = false;
-        uiButtonHandler.SetBodyUpBtn().interactable = false;
+        uiButtonHandler.SetInteractable(uiButtonHandler.SetCannonUpBtn(), false);
+        uiButtonHandler.SetInteractable(uiButtonHandler.SetBodyUpBtn(), false);
+        //uiButtonHandler.SetCannonUpBtn().interactable = false;
+        //uiButtonHandler.SetBodyUpBtn().interactable = false;
     }
 
     private void BindButton(Button button, UnityAction action)

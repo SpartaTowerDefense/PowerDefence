@@ -9,9 +9,12 @@ public class EnemySpawner : MonoBehaviour
 
     private int currentSpawnIndex = 0;
     private float timer = 0f;
+    private bool gamestart = false;
 
     void Update()
     {
+        if (!gamestart) return;
+
         if (spawnPattern == null || currentSpawnIndex >= spawnPattern.spawnSequence.Length) return;
 
         timer += Time.deltaTime;
@@ -32,5 +35,10 @@ public class EnemySpawner : MonoBehaviour
 
         // 위치 설정
         enemy.transform.position = spawnPoint.position;
+    }
+
+    public void GameStart()
+    {
+        gamestart = true;
     }
 }
