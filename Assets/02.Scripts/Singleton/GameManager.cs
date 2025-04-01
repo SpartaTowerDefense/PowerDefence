@@ -1,9 +1,11 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
     [SerializeField] private List<GameObject> stageMaps;
+    [SerializeField] private List<Placement> placements;
 
     private int currentStage = 0;
 
@@ -11,7 +13,6 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
-        //SaveGame();
         LoadGame();
     }
     public void StageClear()
@@ -27,6 +28,8 @@ public class GameManager : Singleton<GameManager>
         {
             stageMaps[i].SetActive(i == stage); //i번째가 해당 stage와 일치하는 것만 SetActive시키기
         }
+        Placement placement = FindObjectOfType<Placement>();
+        placements[stage].SetStageIndex(stage); // 타일맵 인덱스 갱신
     }
 
     public void SaveGame()
@@ -38,7 +41,7 @@ public class GameManager : Singleton<GameManager>
         SaveData data = DataManager.Instance.Load();
         if(data != null)
         {
-            commander = new Commander(20, data.gold); // 체력은 항상 20
+            commander = new Commander(20, data.gold); // 체력은 항상 20으로 고정
             currentStage = data.stage;
 
             ActiveStage(currentStage);

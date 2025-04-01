@@ -8,8 +8,6 @@ public class Shop : MonoBehaviour
 
     [Header("Object")]
     [SerializeField] private Canvas mainCanvas;
-    [SerializeField] private Tilemap roadTile;
-    [SerializeField] private Tilemap groundTile;
     [SerializeField] GameObject previewPrefab;
 
     [Header("UI")]
@@ -31,7 +29,7 @@ public class Shop : MonoBehaviour
             Slot slotComponent = obj.GetComponent<Slot>();
             DragHandler dragHandler = obj.GetComponent<DragHandler>();
 
-            dragHandler.Init(mainCanvas, mainCam, placement, roadTile, groundTile, previewPrefab);
+            dragHandler.Init(mainCanvas, mainCam, placement,previewPrefab);
             slotComponent.SetData(bodySo[i], placement, dragHandler);
         }
     }
