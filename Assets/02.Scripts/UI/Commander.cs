@@ -28,4 +28,9 @@ public class Commander
     {
         this.gold = Mathf.Max(0, this.gold - gold);
     }
+
+    public bool CanBuy(int gold)
+    {
+        return this.gold >= gold;
+    }
 }

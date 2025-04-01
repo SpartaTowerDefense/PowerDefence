@@ -11,6 +11,8 @@ public class TestBullet : MonoBehaviour
     public bool isFrozen = false;
     public bool isBurning = false;
 
+    private bool hasHit = false;
+
     private void Start()
     {
         Destroy(gameObject, lifeTime); // 수명 초과 시 파괴
@@ -23,9 +25,13 @@ public class TestBullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (hasHit) return;
+
         Enemy enemy = collision.GetComponent<Enemy>();
         if (enemy != null)
         {
+            hasHit = true;
+
             if (isKnockback)
             {
                 enemy.ApplyKnockback(2);
@@ -38,6 +44,7 @@ public class TestBullet : MonoBehaviour
             {
                 enemy.ApplyBurning(3);
             }
+
             enemy.TakeDamage(1);
             Destroy(gameObject);
         }
