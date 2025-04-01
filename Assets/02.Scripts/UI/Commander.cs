@@ -17,16 +17,25 @@ public class Commander
     public void SubtractHealth(int damage)
     {
         health = Mathf.Max(0, health - damage);
+
+        if (UIManager.Instance)
+            UIManager.Instance.UIDataBinder.SetUIText();
     }
 
     public void AddGold(int gold)
     {
         this.gold += gold;
+
+        if (UIManager.Instance)
+            UIManager.Instance.UIDataBinder.SetUIText();
     }
 
     public void SubtractGold(int gold)
     {
         this.gold = Mathf.Max(0, this.gold - gold);
+
+        if(UIManager.Instance)
+            UIManager.Instance.UIDataBinder.SetUIText();
     }
 
     public bool CanBuy(int gold)

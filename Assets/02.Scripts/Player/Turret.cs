@@ -121,8 +121,6 @@ public class Turret : MonoBehaviour
             TurretStat.LevelUp(1.2f);
             commander.SubtractGold(TurretStat.Price); // 차감 후
             TurretStat.SetPriceRatio(2); // 가격 증가
-
-            UIManager.Instance.UIDataBinder.SetUIText();
         }
     }
 }

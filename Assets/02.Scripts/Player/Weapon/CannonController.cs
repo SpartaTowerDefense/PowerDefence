@@ -98,7 +98,6 @@ public class CannonController : MonoBehaviour
             if (level > 1)
             {
                 commander.SubtractGold(Price); // 먼저 차감
-                UIManager.Instance.UIDataBinder.SetUIText();
                 SetPriceRatio(1.2f); // 현재 가격에서 증가
                 SetRange(CurrentCannon.data.Range);
             }
