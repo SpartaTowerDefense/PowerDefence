@@ -53,31 +53,13 @@ public class Enemy : MonoBehaviour
             path = ((EnemyFactory)FactoryManager.Instance.path[nameof(EnemyFactory)]).path;
         }
         InitializeFromData();
+
+        originalColor = new Color(1f, 1f, 1f, 1f);
     }
 
     void OnEnable()
     {
-        path = ((EnemyFactory)FactoryManager.Instance.path[nameof(EnemyFactory)]).path;
-
-        currentWaypointIndex = 0;
-
-        isDead = false;
-        isFrozen = false;
-        isKnockback = false;
-        knockbackPower = 0;
-        isBurning = false;
-        burningDamage = 0;
-        burningTickTimer = 0;
-
-        freezeTimer = 0f;
-        knockbackTimer = 0f;
-        burningTimer = 0f;
-
-        spriteRenderer.color = originalColor;
-        if (colorChangeCoroutine != null)
-        {
-            colorChangeCoroutine = null;
-        }
+        
     }
 
     void FixedUpdate()
@@ -149,7 +131,30 @@ public class Enemy : MonoBehaviour
         Reward = Mathf.RoundToInt(enemyData.RewardCoin);
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = enemyData.SpriteImage;
-        originalColor = spriteRenderer.color;
+        
+
+
+        path = ((EnemyFactory)FactoryManager.Instance.path[nameof(EnemyFactory)]).path;
+
+        currentWaypointIndex = 0;
+
+        isDead = false;
+        isFrozen = false;
+        isKnockback = false;
+        knockbackPower = 0;
+        isBurning = false;
+        burningDamage = 0;
+        burningTickTimer = 0;
+
+        freezeTimer = 0f;
+        knockbackTimer = 0f;
+        burningTimer = 0f;
+
+        spriteRenderer.color = originalColor;
+        if (colorChangeCoroutine != null)
+        {
+            colorChangeCoroutine = null;
+        }
     }
 
     private void Move()

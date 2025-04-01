@@ -73,6 +73,7 @@ public class EnemyFactory : FactoryBase
         }
 
         enemy.enemyData = data;
+        enemy.transform.position = enemySpawner.spawnPoint.position;
         enemy.InitializeFromData(); // 초기화 호출 (Start에서 자동으로 하게 해도 OK)
 
         return obj;

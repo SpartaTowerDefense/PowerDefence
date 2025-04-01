@@ -29,7 +29,6 @@ public class TurretStatus
         this.Flinch = data.Flinch;
         this.Knockback = data.Knockback;
         this.Coin = data.Coin;
-        this.Duration = data.Duration;
     }
 
     public void LevelUp(float ratio)

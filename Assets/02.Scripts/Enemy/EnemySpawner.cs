@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private Transform spawnPoint; // 적 스폰 위치들
+    public Transform spawnPoint; // 적 스폰 위치들
     [SerializeField] private SpawnPatternData spawnPattern; //스크랩터블 오브젝트 스테이지 정보 사용
 
     private int currentSpawnIndex = 0;
@@ -37,7 +37,7 @@ public class EnemySpawner : MonoBehaviour
 
         if (obj.TryGetComponent(out Enemy enemy))
         {
-            enemy.transform.position = spawnPoint.position;
+            //enemy.transform.position = spawnPoint.position;
 
             // 죽음 콜백 등록
             enemy.OnDeath += HandleEnemyDeath;

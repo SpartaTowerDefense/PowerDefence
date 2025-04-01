@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,9 +23,6 @@ public class TurretData : ScriptableObject
     [field: Range(0, 5)][field: SerializeField] public float Flinch { get; private set; } = 1f;
     [field: Range(0, 5)][field: SerializeField] public float Knockback { get; private set; } = 1f;
     [field: Range(0, 5)][field: SerializeField] public float Coin { get; private set; } = 1f;
-
-    [field: Header("AbilityTimeDuration")]
-    [field:Range(0,5)][field: SerializeField] public float Duration { get; private set; } = 1f;
 
     [field:Header("CannonImg")]
     [field: SerializeField] public Sprite LEVEL0 { get; set; }
