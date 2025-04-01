@@ -6,12 +6,6 @@ using UnityEngine.Audio;
 
 public class AudioManager : Singleton<AudioManager>
 {
-    #region StringKey
-    private const string MusicClip = nameof(MusicClip);
-    private const string FireClip = nameof(FireClip);
-    private const string EnemyDie = nameof(EnemyDie);
-    #endregion
-
     private const string PATH = "AudioClips\\";
     
 
@@ -44,12 +38,13 @@ public class AudioManager : Singleton<AudioManager>
             SFXSource.transform.parent = this.transform;
         }
 
-        MusicClipSize = ResourceManager.Instance.LoadResourceAll<AudioClip>(MusicClip, $"{PATH}{MusicClip}"); // MusicClip1, MusicClip2...
-        FireClipSize = ResourceManager.Instance.LoadResourceAll<AudioClip>(FireClip, $"{PATH}{FireClip}"); // SFXClip1, SFXClip2...
-        ResourceManager.Instance.LoadResource<AudioClip>(EnemyDie, $"{PATH}{EnemyDie}");
+        MusicClipSize = ResourceManager.Instance.LoadResourceAll<AudioClip>(Enums.MusicClip, $"{PATH}{Enums.MusicClip}"); // MusicClip1, MusicClip2...
+        FireClipSize = ResourceManager.Instance.LoadResourceAll<AudioClip>(Enums.FireClip, $"{PATH}{Enums.FireClip}"); // SFXClip1, SFXClip2...
+        ResourceManager.Instance.LoadResource<AudioClip>(Enums.FireClip, $"{PATH}{Enums.FireClip}"); // SFXClip1, SFXClip2...
+        ResourceManager.Instance.LoadResource<AudioClip>(Enums.EnemyDie, $"{PATH}{Enums.EnemyDie}");
 
         MusicSource.loop = true;
-        MusicSource.clip = ResourceManager.Instance.LoadResource<AudioClip>($"{MusicClip}1");
+        MusicSource.clip = ResourceManager.Instance.LoadResource<AudioClip>($"{Enums.MusicClip}1");
         MusicSource.Play();
 
         // ResourceLoad
