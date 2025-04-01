@@ -15,7 +15,7 @@ MonoBehaviour:
   <Type>k__BackingField: 0
   <BodyImage>k__BackingField: {fileID: 21300000, guid: 6ec26fb806b257d4984d75600b34974d, type: 3}
   <Price>k__BackingField: 500
-  <Attack>k__BackingField: 1
+  <Attack>k__BackingField: 2
   <DotDamage>k__BackingField: 1
   <Flinch>k__BackingField: 1
   <Knockback>k__BackingField: 1
