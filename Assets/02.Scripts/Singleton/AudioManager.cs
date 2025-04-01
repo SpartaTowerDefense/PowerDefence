@@ -14,6 +14,11 @@ public class AudioManager : Singleton<AudioManager>
 
     public AudioMixer GameMixer { get; private set; }
 
+    // 볼륨
+    public float MasterVolume { get; private set; }
+    public float MusicVolume { get; private set; }
+    public float SFXVolume { get; private set; }
+
 
     public int MusicClipSize { get; private set; } = 0;
     public int FireClipSize { get; private set; } = 0;
@@ -45,6 +50,10 @@ public class AudioManager : Singleton<AudioManager>
         MusicSource.loop = true;
         MusicSource.clip = ResourceManager.Instance.LoadResource<AudioClip>($"{Enums.MusicClip}1");
         MusicSource.Play();
+
+        MasterVolume = (PlayerPrefs.HasKey(nameof(MasterVolume)) ? PlayerPrefs.GetFloat(nameof(MasterVolume)) : 0.1f);
+        MusicVolume = (PlayerPrefs.HasKey(nameof(MusicVolume)) ? PlayerPrefs.GetFloat(nameof(MusicVolume)) : 0.1f);
+        SFXVolume = (PlayerPrefs.HasKey(nameof(SFXVolume)) ? PlayerPrefs.GetFloat(nameof(SFXVolume)) : 0.1f);
 
         // ResourceLoad
         // TODO::

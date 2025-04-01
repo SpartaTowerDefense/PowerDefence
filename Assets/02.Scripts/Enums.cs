@@ -9,6 +9,7 @@ public static class Enums
     public const string MusicClip = nameof(MusicClip);
     public const string FireClip = nameof(FireClip);
     public const string EnemyDie = nameof(EnemyDie);
+
     #endregion
 
     public enum TurretType
