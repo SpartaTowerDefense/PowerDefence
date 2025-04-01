@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public enum EnemyState { Move, Knockback, Frozen, Burn, Dead }
 
@@ -20,7 +22,7 @@ public class Enemy : MonoBehaviour
     private float BurningTime; // 타는 시간
     private float Flammable; // 타고있을때 더 불이 적용되면 불 데미지가 얼마나 증가하는지 - 1 이면 불 데미지 그만큼 추가
     private int Reward;
-    public float RewardModifier { get; set; }
+    public float RewardModifier { get; set; } = 1f;
 
     //다중 상태 병렬 처리
     private bool isFrozen = false;
@@ -77,11 +79,7 @@ public class Enemy : MonoBehaviour
     {
         if (isDead) return;
 
-        if (Health <= 0)
-        {
-            Die();
-            return;
-        }
+        
 
         //상태 타이머 감소
         if (isFrozen)
@@ -197,12 +195,16 @@ public class Enemy : MonoBehaviour
         ChangeColorTemporarily(new Color(1f, 0.5f, 0.5f));
     }
 
-    private void Die()
+    private void Die(TurretData data)
     {
         isDead = true;
         Debug.Log("죽음");
         ObjectPoolManager.Instance.ReturnObject<EnemyFactory>(this.gameObject);
+        if (data != null)
+            RewardModifier = data.Coin;
         GameManager.Instance.commander.AddGold(GetRewardCoin(RewardModifier));
+        Debug.Log($"적을 처치하여 받은 돈 : {GetRewardCoin(RewardModifier)}");
+        Debug.Log($"게임매니저에 있는 돈 : {GameManager.Instance.commander.gold}");
         UIManager.Instance.UIDataBinder.SetUIText();
     }
 
@@ -210,8 +212,9 @@ public class Enemy : MonoBehaviour
     /// 넉백을 적용시키는 함수, 매개변수는 날아가는 거리
     /// </summary>
 
-    public void ApplyKnockback(float hittedKnockbackPower)
+    public void ApplyKnockback(float hittedKnockbackPower, float amount)
     {
+        TakeDamage(amount);
         isKnockback = true;
         knockbackPower = hittedKnockbackPower;
         knockbackTimer = KnockbackTime;
@@ -221,8 +224,9 @@ public class Enemy : MonoBehaviour
     /// 얼음을 적용시키는 함수, 매개변수는 얼리는 시간
     /// </summary>
 
-    public void ApplyFrozen(float freezePower)
+    public void ApplyFrozen(float freezePower, float amount)
     {
+        TakeDamage(amount);
         isFrozen = true;
         freezeTimer = FrozeTime * freezePower;
         ChangeColorTemporarily(new Color(0.5f, 0.5f, 1f), FrozeTime * freezePower);
@@ -232,8 +236,9 @@ public class Enemy : MonoBehaviour
     /// 불을 적용시키는 함수, 매개변수는 불타는 데미지
     /// </summary>
 
-    public void ApplyBurning(float fireDamage)
+    public void ApplyBurning(float fireDamage, float amount)
     {
+        TakeDamage(amount);
         isBurning = true;
         burningTimer = BurningTime;
         if (burningDamage == 0)
@@ -246,13 +251,23 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public void DefalutAttack(float amount, TurretData data = null)
+    {
+        TakeDamage(amount, data);
+        ChangeColorTemporarily(Color.magenta);
+    }
+
     /// <summary>
     /// 데미지 적용
     /// </summary>
 
-    public void TakeDamage(float amount)
+    public void TakeDamage(float amount, TurretData data = null)
     {
         Health -= amount;
+        if (Health <= 0)
+        {
+            Die(data);
+        }
     }
 
     public void GetOver()
