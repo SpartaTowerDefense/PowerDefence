@@ -6,6 +6,8 @@ using UnityEngine.Tilemaps;
 
 public class Placement : MonoBehaviour
 {
+    private List<GameObject> spawnedTurrets = new();
+
     [Header("Map")]
     [SerializeField] private List<Tilemap> roadTile; 
     [SerializeField] private List<Tilemap> groundTile;
@@ -51,6 +53,7 @@ public class Placement : MonoBehaviour
         int enumType = (int)bodyData.Type; //터렛 종류(enum)을 통해서 정수로 변환하고 ObjectPoolManager를 통해서 해당 오브젝트의 데이터를 로드
         Debug.Log(enumType);
         GameObject newTank = ObjectPoolManager.Instance.GetObject<TurretFactory>(enumType);  
+        spawnedTurrets.Add(newTank);
 
         if(newTank == null)
         {
@@ -95,7 +98,14 @@ public class Placement : MonoBehaviour
 
     public void SetStageIndex(int index)
     {
-        curStageIndex = index;
+        foreach(var turret in spawnedTurrets)
+        {
+            ObjectPoolManager.Instance.ReturnObject<TurretFactory>(turret);
+        }
+
+        spawnedTurrets.Clear();
         occupiedCell.Clear(); // 새 스테이지에서는 기존 설치 좌표 초기화
+
+        curStageIndex = index; 
     }
 }
