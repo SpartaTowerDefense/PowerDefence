@@ -9,7 +9,7 @@ public class SplashCannon : CannonBase
     private int count = 0;
     public SplashCannon(Sprite sprite, Transform tip, CannonController controller) : base(sprite, tip, controller)
     {
-        data.Inintionalize(3, 1f, false, 4f);
+        data.Inintionalize(3, 0.5f, false, 4f);
         tp = tip;
     }
 

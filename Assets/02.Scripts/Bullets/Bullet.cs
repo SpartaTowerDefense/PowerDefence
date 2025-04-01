@@ -71,19 +71,21 @@ public class Bullet : MonoBehaviour
                 break;
             case Enums.TurretType.Blue:
                 enemy.TakeDamage(controller.turretdata.Attack);
-                enemy.ApplyFrozen(controller.turretdata.Flinch); // turretdata에서 얼음 관련 스탯이 먼지 알아야함
+                enemy.ApplyFrozen(controller.turretdata.Flinch);
                 break;
             case Enums.TurretType.Red:
                 enemy.TakeDamage(controller.turretdata.Attack);
                 enemy.ApplyBurning(controller.turretdata.DotDamage);
                 break;
             case Enums.TurretType.Black:
-                enemy.TakeDamage(controller.turretdata.Attack); // 임시 변수
+                enemy.TakeDamage(controller.turretdata.Attack);
                 break;
             case Enums.TurretType.Green:
                 enemy.TakeDamage(controller.turretdata.Attack);
                 if (enemy.GetHealth() < 0)
                     enemy.RewardModifier = controller.turretdata.Coin;
+                Debug.Log($"초록이 처치하여 받은돈 : {enemy.GetRewardCoin(enemy.RewardModifier)}");
+                Debug.Log($"게임매니저에 있는 돈 : {GameManager.Instance.commander.gold}");
                 break;
             default:
                 Debug.Log("터렛타입이 잘못됨");
