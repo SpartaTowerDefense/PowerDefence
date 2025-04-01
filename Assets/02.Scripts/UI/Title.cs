@@ -51,6 +51,9 @@ public class Title : MonoBehaviour
                    test.StopToTarget();
            });
         StartCoroutine(ChangeSet());
+
+        //스포너 시작 연결 - 더 좋은 방법이 있을지도...
+        ((EnemyFactory)FactoryManager.Instance.path[nameof(EnemyFactory)]).Gamestart();
     }
 
     IEnumerator DisableNextFrame(MonoBehaviour target)
