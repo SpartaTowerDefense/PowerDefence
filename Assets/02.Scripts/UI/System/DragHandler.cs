@@ -72,7 +72,7 @@ public class DragHandler : MonoBehaviour
 
         TurretData selectedData = UIManager.Instance.Shop.curData;
 
-        if(!UIManager.Instance.Shop.CanBuy(selectedData)) //구매가 불가능하다면
+        if(!GameManager.Instance.commander.CanBuy(selectedData.Price)) //구매가 불가능하다면
         {
             Destroy(previewInstance); //미리보기 프리펩 삭제
             return;
@@ -82,8 +82,9 @@ public class DragHandler : MonoBehaviour
 
         if (isSuccess) 
         {
+            GameManager.Instance.commander.SubtractGold(selectedData.Price);
+            UIManager.Instance.UIDataBinder.SetUIText();
             isPlace = true; 
-            UIManager.Instance.Shop.BuyTurret(); //UI에서 구매로직을 호출
             gameObject.SetActive(true); //Ui와 함께 있기 때문에 활성화, 비활성화로 표시
         }
 
