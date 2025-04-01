@@ -47,11 +47,11 @@ public abstract class CannonBase
 
     protected ResourceManager resource;
     protected AudioClip clip;
-    protected const string FireClip = nameof(FireClip); 
 
     public CannonBase(Sprite sprite, Transform tip, CannonController controller)
     {
         resource = ResourceManager.Instance;
+        clip = resource.LoadResource<AudioClip>($"{Enums.FireClip}3"); // 공통 총기 사운드
         ChangeSprite(sprite);
         data.tip = tip;
         this.controller = controller;
