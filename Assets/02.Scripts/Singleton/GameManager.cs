@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     [SerializeField] private List<GameObject> stageMaps;
+    public List<GameObject> StageMaps => stageMaps;
     [SerializeField] private List<Placement> placements;
 
     private EnemySpawner enemySpawner;

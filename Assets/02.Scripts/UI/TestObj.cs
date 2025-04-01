@@ -1,10 +1,12 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class TestObj : MonoBehaviour
 {
-    [SerializeField] private GameObject obj;
-    private Transform[] trans;
+    [SerializeField] private List<GameObject> maps;
+    private GameObject curMap;
+    private Transform[] targetTransform;
     private Coroutine moveRoutine;
     public float speed = 1;
 
@@ -13,21 +15,28 @@ public class TestObj : MonoBehaviour
         if (UIManager.Instance.Title.obj == null)
             UIManager.Instance.Title.obj = gameObject;
 
-        trans = new Transform[obj.transform.childCount];
-        for (int i = 0; i < obj.transform.childCount; i++)
+        for(int i = 0; i < maps.Count; i++)
         {
-            trans[i] = obj.transform.GetChild(i);
+            if(i == GameManager.Instance.CurrentStage)  curMap = maps[i];
         }
+
+        targetTransform = new Transform[curMap.transform.childCount];
+
+        for (int i = 0; i < curMap.transform.childCount; i++)
+        {
+            targetTransform[i] = curMap.transform.GetChild(i);
+        }
+        transform.position = targetTransform[0].position;
 
         moveRoutine = StartCoroutine(ToTarget());
     }
 
     IEnumerator ToTarget()
     {
-        for (int i = 0; i < trans.Length; i++)
+        for (int i = 0; i < targetTransform.Length; i++)
         {
             Vector3 startPosition = transform.position;
-            Vector3 targetPosition = trans[i].position;
+            Vector3 targetPosition = targetTransform[i].position;
 
             float moveSpeed = speed;
             float distance = Vector3.Distance(startPosition, targetPosition);
