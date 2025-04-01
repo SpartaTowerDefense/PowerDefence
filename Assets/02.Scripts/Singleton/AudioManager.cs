@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,23 +6,25 @@ using UnityEngine.Audio;
 
 public class AudioManager : Singleton<AudioManager>
 {
-    private const string PATH = "AudioClips\\";
+    #region StringKey
     private const string MusicClip = nameof(MusicClip);
-    private const string SFXClip = nameof(SFXClip);
+    private const string FireClip = nameof(FireClip);
+    private const string EnemyDie = nameof(EnemyDie);
+    #endregion
+
+    private const string PATH = "AudioClips\\";
+    
 
     public AudioSource MusicSource { get; private set; }
     public AudioSource SFXSource { get; private set; }
 
     public AudioMixer GameMixer { get; private set; }
 
-    protected override void Awake()
-    {
-        base.Awake();
 
-        Initinalize();
-    }
+    public int MusicClipSize { get; private set; } = 0;
+    public int FireClipSize { get; private set; } = 0;
 
-    private void Initinalize()
+    public void Initinalize()
     {
         GameMixer = ResourceManager.Instance.LoadResource<AudioMixer>(nameof(GameMixer), nameof(GameMixer));
         
@@ -41,9 +44,23 @@ public class AudioManager : Singleton<AudioManager>
             SFXSource.transform.parent = this.transform;
         }
 
+        MusicClipSize = ResourceManager.Instance.LoadResourceAll<AudioClip>(MusicClip, $"{PATH}{MusicClip}"); // MusicClip1, MusicClip2...
+        FireClipSize = ResourceManager.Instance.LoadResourceAll<AudioClip>(FireClip, $"{PATH}{FireClip}"); // SFXClip1, SFXClip2...
+        ResourceManager.Instance.LoadResource<AudioClip>(EnemyDie, $"{PATH}{EnemyDie}");
+
+        MusicSource.loop = true;
+        MusicSource.clip = ResourceManager.Instance.LoadResource<AudioClip>($"{MusicClip}1");
+        MusicSource.Play();
+
         // ResourceLoad
         // TODO::
         /*ResourceManager.Instance.LoadResourceAll<AudioClip>(MusicClip, $"{PATH}{MusicClip}");
         ResourceManager.Instance.LoadResourceAll<AudioClip>(SFXClip, $"{PATH}{SFXClip}");*/
+    }
+
+    // 해당씬에서 어떤것을 살리고 해제할것인지 모르기에
+    private void ClearResource(Action clearMethod)
+    {
+        clearMethod?.Invoke();
     }
 }
