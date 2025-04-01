@@ -13,15 +13,29 @@ public class EnemyFactory : FactoryBase
     private const string Freeze = nameof(Freeze);
     private const string Small = nameof(Small);
     private const string Speed = nameof(Speed);
+    private const string Boss = nameof(Boss);
 
     private List<EnemyData> enemyDataList = new();
 
-    [SerializeField] public WaypointPath path;
+    [SerializeField] private List<WaypointPath> stagePaths = new();
+    public WaypointPath path;
     [SerializeField] public EnemySpawner enemySpawner;
 
     public void Gamestart()
     {
         enemySpawner.GameStart();
+    }
+
+    public void SetPathByStage(int stage)
+    {
+        if (stage >= 0 && stage < stagePaths.Count)
+        {
+            path = stagePaths[stage];
+        }
+        else
+        {
+            Debug.LogWarning($"EnemyFactory: 유효하지 않은 스테이지 인덱스 ({stage})입니다.");
+        }
     }
 
     private void Awake()
@@ -35,6 +49,7 @@ public class EnemyFactory : FactoryBase
         enemyDataList.Add(ResourceManager.Instance.LoadResource<EnemyData>(Freeze, $"{PATH}{Freeze}"));
         enemyDataList.Add(ResourceManager.Instance.LoadResource<EnemyData>(Small, $"{PATH}{Small}"));
         enemyDataList.Add(ResourceManager.Instance.LoadResource<EnemyData>(Speed, $"{PATH}{Speed}"));
+        enemyDataList.Add(ResourceManager.Instance.LoadResource<EnemyData>(Boss, $"{PATH}{Boss}"));
     }
 
     public override GameObject CreateObject(GameObject obj = null, int enumType = -1)

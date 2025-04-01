@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4d0bfdafcfd7bb4887a7f35f4e64bb3, type: 3}
-  m_Name: Small
+  m_Name: Boss
   m_EditorClassIdentifier: 
-  <SpriteImage>k__BackingField: {fileID: -300720953, guid: 7a174024bdb51eb4abcae19faa3681c2, type: 3}
-  <Health>k__BackingField: 20
-  <MovementSpeed>k__BackingField: 1
-  <FrozeTime>k__BackingField: 1
-  <KnockbackTime>k__BackingField: 0.8
-  <knockbackDistance>k__BackingField: 5
+  <SpriteImage>k__BackingField: {fileID: 891095478, guid: 7a174024bdb51eb4abcae19faa3681c2, type: 3}
+  <Health>k__BackingField: 300
+  <MovementSpeed>k__BackingField: 0.7
+  <FrozeTime>k__BackingField: 0.2
+  <KnockbackTime>k__BackingField: 0.1
+  <knockbackDistance>k__BackingField: 0.1
   <BurningTime>k__BackingField: 3
-  <Flammable>k__BackingField: 0.5
-  <RewardCoin>k__BackingField: 500
+  <Flammable>k__BackingField: 1
+  <RewardCoin>k__BackingField: 3000
