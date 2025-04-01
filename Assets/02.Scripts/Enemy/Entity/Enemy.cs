@@ -214,10 +214,10 @@ public class Enemy : MonoBehaviour
 
     public void ApplyKnockback(float hittedKnockbackPower, float amount)
     {
-        TakeDamage(amount);
         isKnockback = true;
         knockbackPower = hittedKnockbackPower;
         knockbackTimer = KnockbackTime;
+        TakeDamage(amount);
     }
 
     /// <summary>
@@ -226,10 +226,10 @@ public class Enemy : MonoBehaviour
 
     public void ApplyFrozen(float freezePower, float amount)
     {
-        TakeDamage(amount);
         isFrozen = true;
         freezeTimer = FrozeTime * freezePower;
         ChangeColorTemporarily(new Color(0.5f, 0.5f, 1f), FrozeTime * freezePower);
+        TakeDamage(amount);
     }
 
     /// <summary>
@@ -238,7 +238,6 @@ public class Enemy : MonoBehaviour
 
     public void ApplyBurning(float fireDamage, float amount)
     {
-        TakeDamage(amount);
         isBurning = true;
         burningTimer = BurningTime;
         if (burningDamage == 0)
@@ -249,12 +248,13 @@ public class Enemy : MonoBehaviour
         {
             burningDamage += fireDamage * Flammable;
         }
+        TakeDamage(amount);
     }
 
     public void DefalutAttack(float amount, TurretData data = null)
     {
-        TakeDamage(amount, data);
         ChangeColorTemporarily(Color.magenta);
+        TakeDamage(amount, data);
     }
 
     /// <summary>
