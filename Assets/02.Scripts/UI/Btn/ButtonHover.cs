@@ -42,11 +42,10 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerClickHan
     public void OnPointerClick(PointerEventData eventData)
     {
 
-        if (isHover)
-            buttonEffect.ClickEffectSquare(
-                () => buttonEffect.ChangeTransformSquare(rectTransform),
-                buttonEffect.ShakeSquare);
-
+        if (!isHover) return;
+        buttonEffect.ClickEffectSquare();
+        //buttonEffect.ChangeTransformSquare(rectTransform);
+        //buttonEffect.ShakeSquare();
     }
 
     public void OnPointerExit(PointerEventData eventData)

@@ -91,7 +91,7 @@ public class ButtonEffect : MonoBehaviour
         shakeSequence.SetLoops(-1, LoopType.Restart);
         shakeTweens.Add(shakeSequence);
     }
-    public void ClickEffectSquare(UnityAction baseaction = null,UnityAction action = null)
+    public void ClickEffectSquare()
     {
         KillTween(clickTweens);
 
@@ -102,8 +102,7 @@ public class ButtonEffect : MonoBehaviour
             clickSequence
                 .Append(rectTransformArray[i].DOScale(originRect.localScale * 0.5f, 0.2f))
                 .Append(rectTransformArray[i].DOScale(Vector3.one, 0.2f))
-                .SetEase(Ease.OutQuad)
-                .OnComplete(() => { baseaction?.Invoke(); action?.Invoke(); });
+                .SetEase(Ease.OutQuad);
             clickTweens.Add(clickSequence);
         }
     } 
