@@ -13,6 +13,10 @@ public class ButtonEffect : MonoBehaviour
     private RectTransform[] rectTransformArray;
     private Image[] imageArray;
 
+    private GameObject[] originSquareArray;
+    private RectTransform[] originRectTransformArray;
+    private Image[] originImageArray;
+
     private List<Tween> shakeTweens = new List<Tween>();
     private List<Tween> clickTweens = new List<Tween>();
 
@@ -24,9 +28,13 @@ public class ButtonEffect : MonoBehaviour
 
     void CreateSquare(int num)
     {
+        imageArray = new Image[num];
         squareArray = new GameObject[num];
         rectTransformArray = new RectTransform[num];
-        imageArray = new Image[num];
+
+        originImageArray = new Image[num];
+        originSquareArray = new GameObject[num];
+        originRectTransformArray = new RectTransform[num];
 
         for (int i = 0; i < squareArray.Length; i++)
         {
@@ -49,6 +57,13 @@ public class ButtonEffect : MonoBehaviour
             obj?.SetActive(square);
         }
         if (!square) KillTween(shakeTweens);
+    }
+
+    public void OriginUpdate()
+    {
+        originImageArray = imageArray;
+        originSquareArray = squareArray;
+        originRectTransformArray = rectTransformArray;
     }
 
     public void ChangeTransformSquare(RectTransform rectTransform)
@@ -91,21 +106,37 @@ public class ButtonEffect : MonoBehaviour
         shakeSequence.SetLoops(-1, LoopType.Restart);
         shakeTweens.Add(shakeSequence);
     }
-    public void ClickEffectSquare()
+
+    public void StopShakeSmooth()
+    {
+        KillTween(shakeTweens);
+
+        foreach (RectTransform trans in rectTransformArray)
+        {
+            trans.DOAnchorPos(trans.anchoredPosition, 0.2f).SetEase(Ease.OutSine);
+        }
+    }
+
+    public void ClickEffectSquare(UnityAction onComplete = null)
     {
         KillTween(clickTweens);
 
         for (int i = 0; i < squareArray.Length; i++)
         {
+            int index = i;
             Sequence clickSequence = DOTween.Sequence();
-            RectTransform originRect = rectTransformArray[i];
             clickSequence
-                .Append(rectTransformArray[i].DOScale(originRect.localScale * 0.5f, 0.2f))
-                .Append(rectTransformArray[i].DOScale(Vector3.one, 0.2f))
-                .SetEase(Ease.OutQuad);
+                .Append(rectTransformArray[index].DOScale(originRectTransformArray[index].localScale * 0.5f, 0.2f))
+                .Append(rectTransformArray[index].DOScale(Vector3.one, 0.2f))
+                .SetEase(Ease.OutQuad)
+                .OnComplete(() =>
+                {
+                    onComplete?.Invoke();
+                });
+
             clickTweens.Add(clickSequence);
         }
-    } 
+    }
 
     void KillTween(List<Tween> tween)
     {

@@ -33,6 +33,7 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerClickHan
             isHover = true;
             ChangeButtonInTextOrder();
             buttonEffect.OnActiveSquare(true);
+            buttonEffect.OriginUpdate();
             buttonEffect.ChangeTransformSquare(rectTransform);
             buttonEffect.ChangeColorSquare();
             buttonEffect.ShakeSquare();
@@ -41,11 +42,16 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerClickHan
 
     public void OnPointerClick(PointerEventData eventData)
     {
-
         if (!isHover) return;
-        buttonEffect.ClickEffectSquare();
-        //buttonEffect.ChangeTransformSquare(rectTransform);
-        //buttonEffect.ShakeSquare();
+        buttonEffect.StopShakeSmooth();
+        buttonEffect.ClickEffectSquare(() =>
+        {
+            if (isHover)
+            {
+                buttonEffect.ChangeTransformSquare(rectTransform);
+                buttonEffect.ShakeSquare();
+            }
+        });
     }
 
     public void OnPointerExit(PointerEventData eventData)
