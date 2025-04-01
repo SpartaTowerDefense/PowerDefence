@@ -83,7 +83,7 @@ public class DetectEnemy : MonoBehaviour
     //적 범위 벗어나는거 체크
     void RemoveSeletedEnemy()
     {
-        if (Mathf.Floor(Vector2.Distance(seletedEnemy.gameObject.transform.position, transform.position) * 10000f) / 10000f >= Range || !seletedEnemy.enabled)
+        if (Mathf.Floor(Vector2.Distance(seletedEnemy.gameObject.transform.position, transform.position) * 10000f) / 10000f >= Range || !seletedEnemy.gameObject.activeSelf)
         {
             seletedEnemy = null;
         }
