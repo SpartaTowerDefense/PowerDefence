@@ -1,3 +1,4 @@
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -43,15 +44,20 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerClickHan
     public void OnPointerClick(PointerEventData eventData)
     {
         if (!isHover) return;
-        buttonEffect.StopShakeSmooth();
-        buttonEffect.ClickEffectSquare(() =>
+
+        UIRayFindButton(pointerEventData, false);
+        if (gameObject.TryGetComponent<Button>(out Button button) && button.interactable)
         {
-            if (isHover)
+            buttonEffect.StopShakeSmooth();
+            buttonEffect.ClickEffectSquare(() =>
             {
-                buttonEffect.ChangeTransformSquare(rectTransform);
-                buttonEffect.ShakeSquare();
-            }
-        });
+                if (isHover)
+                {
+                    buttonEffect.ChangeTransformSquare(rectTransform);
+                    buttonEffect.ShakeSquare();
+                }
+            });
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -68,6 +74,7 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerClickHan
             if (!isHover) return;
             isHover = false;
             BackButtonInTextOrder();
+            DOTween.CompleteAll();
             buttonEffect.OnActiveSquare(false);
         }
     }
@@ -119,6 +126,7 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerClickHan
         }
         else return;
     }
+
 
 
 }
