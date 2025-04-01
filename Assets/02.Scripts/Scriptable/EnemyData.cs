@@ -10,7 +10,7 @@ public class EnemyData : ScriptableObject
 
     // 배율 설정
     [field: Header("Status")]
-    [field: Range(0, 50)][field: SerializeField] public float Health { get; private set; } = 5f;
+    [field: Range(0, 300)][field: SerializeField] public float Health { get; private set; } = 5f;
     [field: Range(0, 5)][field: SerializeField] public float MovementSpeed { get; private set; } = 1f;
     [field: Range(0, 5)][field: SerializeField] public float FrozeTime { get; private set; } = 1f;
     [field: Range(0, 1)][field: SerializeField] public float KnockbackTime { get; private set; } = 0.3f;

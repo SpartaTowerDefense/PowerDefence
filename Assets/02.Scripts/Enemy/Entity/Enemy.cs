@@ -42,6 +42,9 @@ public class Enemy : MonoBehaviour
     private Color originalColor;
     private Coroutine colorChangeCoroutine;
 
+    //죽음 관리
+    public System.Action<Enemy> OnDeath;
+
     //데이터 연결
     void Awake()
     {
@@ -68,7 +71,7 @@ public class Enemy : MonoBehaviour
         knockbackTimer = 0f;
         burningTimer = 0f;
 
-        // spriteRenderer.color = originalColor;
+        spriteRenderer.color = originalColor;
         if (colorChangeCoroutine != null)
         {
             colorChangeCoroutine = null;
@@ -79,7 +82,7 @@ public class Enemy : MonoBehaviour
     {
         if (isDead) return;
 
-        
+
 
         //상태 타이머 감소
         if (isFrozen)
@@ -199,6 +202,7 @@ public class Enemy : MonoBehaviour
     {
         isDead = true;
         AudioManager.Instance.SFXSource.PlayOneShot(ResourceManager.Instance.LoadResource<AudioClip>(Enums.EnemyDie));
+        OnDeath?.Invoke(this);
         Debug.Log("죽음");
         ObjectPoolManager.Instance.ReturnObject<EnemyFactory>(this.gameObject);
         if (data != null)
@@ -274,6 +278,8 @@ public class Enemy : MonoBehaviour
     {
         isDead = true;
         Debug.Log("적이 넘어감");
+        OnDeath?.Invoke(this);
+        GameManager.Instance.commander.SubtractHealth(1);
         ObjectPoolManager.Instance.ReturnObject<EnemyFactory>(this.gameObject);
     }
 
