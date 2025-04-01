@@ -18,8 +18,6 @@ public class Shop : MonoBehaviour
     [SerializeField] private TurretData[] bodySo;
     public TurretData curData;
 
-    [Header("배치시스템")]
-    [SerializeField] Placement placement;
     private void Start()
     {
         for (int i = 0; i < bodySo.Length; i++)
@@ -29,8 +27,8 @@ public class Shop : MonoBehaviour
             Slot slotComponent = obj.GetComponent<Slot>();
             DragHandler dragHandler = obj.GetComponent<DragHandler>();
 
-            dragHandler.Init(mainCanvas, mainCam, placement,previewPrefab);
-            slotComponent.SetData(bodySo[i], placement, dragHandler);
+            dragHandler.Init(mainCanvas, mainCam, UIManager.Instance.Placement,previewPrefab);
+            slotComponent.SetData(bodySo[i], UIManager.Instance.Placement, dragHandler);
         }
     }
 
