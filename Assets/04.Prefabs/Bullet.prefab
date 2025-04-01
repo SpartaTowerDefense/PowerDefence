@@ -162,7 +162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
-  bulletSpeed: 2
+  bulletSpeed: 8
   controller: {fileID: 0}
   enemyLayer:
     serializedVersion: 2

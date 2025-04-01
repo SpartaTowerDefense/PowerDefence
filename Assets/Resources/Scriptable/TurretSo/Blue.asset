@@ -17,7 +17,7 @@ MonoBehaviour:
   <Price>k__BackingField: 500
   <Attack>k__BackingField: 1
   <DotDamage>k__BackingField: 1
-  <Flinch>k__BackingField: 1
+  <Flinch>k__BackingField: 2
   <Knockback>k__BackingField: 1
   <Coin>k__BackingField: 1
   <Duration>k__BackingField: 1
