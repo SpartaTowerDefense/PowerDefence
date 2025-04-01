@@ -13,6 +13,7 @@ public class EnemySpawner : MonoBehaviour
 
     // 살아있는 적 리스트
     private List<Enemy> aliveEnemies = new();
+    public int AliveEnemyCount => aliveEnemies.Count;
 
     void Update()
     {
@@ -44,6 +45,7 @@ public class EnemySpawner : MonoBehaviour
 
             // 리스트에 추가
             aliveEnemies.Add(enemy);
+            UIManager.Instance.UIDataBinder.SetUIText();
         }
         else
         {
@@ -57,7 +59,7 @@ public class EnemySpawner : MonoBehaviour
         {
             aliveEnemies.Remove(deadEnemy);
             Debug.Log($"적 사망: 남은 적 {aliveEnemies.Count}");
-
+            UIManager.Instance.UIDataBinder.SetUIText();
             // 모두 죽었는지 확인
             if (aliveEnemies.Count == 0 && currentSpawnIndex >= spawnPattern.spawnSequence.Length)
             {
