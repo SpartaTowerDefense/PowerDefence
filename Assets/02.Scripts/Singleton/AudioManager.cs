@@ -23,6 +23,9 @@ public class AudioManager : Singleton<AudioManager>
     public int MusicClipSize { get; private set; } = 0;
     public int FireClipSize { get; private set; } = 0;
 
+    public float lastPlayTime = 0f;
+    public float soundCooldown = 0.1f;
+
     public void Initinalize()
     {
         GameMixer = ResourceManager.Instance.LoadResource<AudioMixer>(nameof(GameMixer), nameof(GameMixer));
@@ -54,6 +57,8 @@ public class AudioManager : Singleton<AudioManager>
         MasterVolume = (PlayerPrefs.HasKey(nameof(MasterVolume)) ? PlayerPrefs.GetFloat(nameof(MasterVolume)) : 0.1f);
         MusicVolume = (PlayerPrefs.HasKey(nameof(MusicVolume)) ? PlayerPrefs.GetFloat(nameof(MusicVolume)) : 0.1f);
         SFXVolume = (PlayerPrefs.HasKey(nameof(SFXVolume)) ? PlayerPrefs.GetFloat(nameof(SFXVolume)) : 0.1f);
+
+        SFXSource.ignoreListenerPause = true;
 
         // ResourceLoad
         // TODO::
