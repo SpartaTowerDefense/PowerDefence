@@ -9,7 +9,7 @@ public class TripleCannon : CannonBase
     private int count = 1;
     public TripleCannon(Sprite sprite, Transform tip, CannonController controller) : base(sprite, tip, controller)
     {
-        clip = resource.LoadResource<AudioClip>($"{FireClip}2");
+        clip = resource.LoadResource<AudioClip>($"{Enums.FireClip}2");
         data.Inintionalize(3, 0, false, 4f);
 
         tp = tip;

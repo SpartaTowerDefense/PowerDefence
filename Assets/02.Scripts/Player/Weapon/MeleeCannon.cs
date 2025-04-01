@@ -6,7 +6,6 @@ public class MeleeCannon : CannonBase
 {
     public MeleeCannon(Sprite sprite, Transform tip, CannonController controller) : base(sprite, tip, controller)
     {
-        clip = resource.LoadResource<AudioClip>($"{FireClip}3");
         data.Inintionalize(0, 0, false, 4f);
     }
     public override void Fire(Vector3 targetPos)

@@ -8,7 +8,7 @@ public class DefaultCannon : CannonBase
     private Transform tp;
     public DefaultCannon(Sprite sprite, Transform tip, CannonController controller) : base(sprite, tip, controller)
     {
-        clip = resource.LoadResource<AudioClip>($"{FireClip}1");
+        clip = resource.LoadResource<AudioClip>($"{Enums.FireClip}1");
         data.Inintionalize(1, 0, false, 3f);
         controller.DetectEnemy.SetRange(3f);
         tp = tip;
