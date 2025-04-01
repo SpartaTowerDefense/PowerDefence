@@ -9,6 +9,13 @@ public class GameManager : Singleton<GameManager>
 
     public Commander commander { get; private set; } = new(20, 5000);
 
+    protected override void Awake()
+    {
+        base.Awake();
+        AudioManager.Instance.Initinalize();
+    }
+
+
     public void StageClear()
     {
         currentStage++;

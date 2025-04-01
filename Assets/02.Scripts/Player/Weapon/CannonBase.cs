@@ -45,8 +45,13 @@ public abstract class CannonBase
     protected float meleeCoolDown = 3f;
     protected bool isContinousShooting = false;
 
+    protected ResourceManager resource;
+    protected AudioClip clip;
+    protected const string FireClip = nameof(FireClip); 
+
     public CannonBase(Sprite sprite, Transform tip, CannonController controller)
     {
+        resource = ResourceManager.Instance;
         ChangeSprite(sprite);
         data.tip = tip;
         this.controller = controller;
@@ -71,6 +76,9 @@ public abstract class CannonBase
     public virtual void Fire(Vector3 targetPos)
     {
         if (time < 0f && continous_Time < 0f)
+        {
+            AudioManager.Instance.SFXSource.PlayOneShot(clip);
             OnMuzzleFlash?.Invoke();
+        }
     }
 }
