@@ -18,6 +18,6 @@ MonoBehaviour:
   <FrozeTime>k__BackingField: 1
   <KnockbackTime>k__BackingField: 0.3
   <knockbackDistance>k__BackingField: 1
-  <BurningTime>k__BackingField: 1
+  <BurningTime>k__BackingField: 3
   <Flammable>k__BackingField: 0.5
   <RewardCoin>k__BackingField: 500

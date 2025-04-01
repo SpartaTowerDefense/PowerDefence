@@ -4254,25 +4254,13 @@ PrefabInstance:
     m_TransformParent: {fileID: 585096160}
     m_Modifications:
     - target: {fileID: 286904239621071102, guid: cd4ca66387fdf154188dba024f36c778, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 286904239621071102, guid: cd4ca66387fdf154188dba024f36c778, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 286904239621071102, guid: cd4ca66387fdf154188dba024f36c778, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 20.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 286904239621071102, guid: cd4ca66387fdf154188dba024f36c778, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1
+      value: 23.5
       objectReference: {fileID: 0}
     - target: {fileID: 1064331348761072719, guid: cd4ca66387fdf154188dba024f36c778, type: 3}
       propertyPath: spawnPattern
       value: 
-      objectReference: {fileID: 11400000, guid: 47adafa69ac65074c926a4fea1e6f4e7, type: 2}
+      objectReference: {fileID: 11400000, guid: a43332cea62659843ac637a581013ed6, type: 2}
     - target: {fileID: 2711055761498426427, guid: cd4ca66387fdf154188dba024f36c778, type: 3}
       propertyPath: m_Name
       value: EnemySpawner
@@ -4316,10 +4304,6 @@ PrefabInstance:
     - target: {fileID: 3873725776328475353, guid: cd4ca66387fdf154188dba024f36c778, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6027747637821652489, guid: cd4ca66387fdf154188dba024f36c778, type: 3}
-      propertyPath: m_SortingOrder
-      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

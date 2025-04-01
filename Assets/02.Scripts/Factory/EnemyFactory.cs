@@ -13,6 +13,7 @@ public class EnemyFactory : FactoryBase
     private const string Freeze = nameof(Freeze);
     private const string Small = nameof(Small);
     private const string Speed = nameof(Speed);
+    private const string Boss = nameof(Boss);
 
     private List<EnemyData> enemyDataList = new();
 
@@ -35,6 +36,7 @@ public class EnemyFactory : FactoryBase
         enemyDataList.Add(ResourceManager.Instance.LoadResource<EnemyData>(Freeze, $"{PATH}{Freeze}"));
         enemyDataList.Add(ResourceManager.Instance.LoadResource<EnemyData>(Small, $"{PATH}{Small}"));
         enemyDataList.Add(ResourceManager.Instance.LoadResource<EnemyData>(Speed, $"{PATH}{Speed}"));
+        enemyDataList.Add(ResourceManager.Instance.LoadResource<EnemyData>(Boss, $"{PATH}{Boss}"));
     }
 
     public override GameObject CreateObject(GameObject obj = null, int enumType = -1)
