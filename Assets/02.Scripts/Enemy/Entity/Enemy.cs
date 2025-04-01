@@ -198,6 +198,7 @@ public class Enemy : MonoBehaviour
     private void Die(TurretData data)
     {
         isDead = true;
+        AudioManager.Instance.SFXSource.PlayOneShot(ResourceManager.Instance.LoadResource<AudioClip>(Enums.EnemyDie));
         Debug.Log("죽음");
         ObjectPoolManager.Instance.ReturnObject<EnemyFactory>(this.gameObject);
         if (data != null)
