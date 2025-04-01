@@ -6545,7 +6545,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Prefab: {fileID: 6408032268656530051, guid: 4a8a547af758fc445abf6d42ce9d51b1, type: 3}
-  path: {fileID: 1673260115675775494, guid: 2bbfee1d0e9866c4e9e9aac373b28612, type: 3}
+  stagePaths:
+  - {fileID: 1673260115675775494, guid: 912b6ebb10b2c7644bd666eff7a7a7c2, type: 3}
+  - {fileID: 1673260115675775494, guid: 9fc47b7947b0cee439c2d3e59ca93ac5, type: 3}
+  path: {fileID: 0}
   enemySpawner: {fileID: 1758816512}
 --- !u!1 &598458121
 GameObject:

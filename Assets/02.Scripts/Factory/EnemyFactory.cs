@@ -17,12 +17,25 @@ public class EnemyFactory : FactoryBase
 
     private List<EnemyData> enemyDataList = new();
 
-    [SerializeField] public WaypointPath path;
+    [SerializeField] private List<WaypointPath> stagePaths = new();
+    public WaypointPath path;
     [SerializeField] public EnemySpawner enemySpawner;
 
     public void Gamestart()
     {
         enemySpawner.GameStart();
+    }
+
+    public void SetPathByStage(int stage)
+    {
+        if (stage >= 0 && stage < stagePaths.Count)
+        {
+            path = stagePaths[stage];
+        }
+        else
+        {
+            Debug.LogWarning($"EnemyFactory: 유효하지 않은 스테이지 인덱스 ({stage})입니다.");
+        }
     }
 
     private void Awake()
