@@ -10,7 +10,7 @@ public class DefaultCannon : CannonBase
     {
         clip = resource.LoadResource<AudioClip>($"{Enums.FireClip}1");
         data.Inintionalize(1, 0, false, 3f);
-        controller.DetectEnemy.SetRange(3f);
+        controller.DetectEnemy.SetRange(2f);
         tp = tip;
     }
 

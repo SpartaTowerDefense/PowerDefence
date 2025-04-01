@@ -10,7 +10,7 @@ public class TripleCannon : CannonBase
     public TripleCannon(Sprite sprite, Transform tip, CannonController controller) : base(sprite, tip, controller)
     {
         clip = resource.LoadResource<AudioClip>($"{Enums.FireClip}2");
-        data.Inintionalize(3, 0, false, 4f);
+        data.Inintionalize(3, 0, false, 2f);
 
         tp = tip;
     }
