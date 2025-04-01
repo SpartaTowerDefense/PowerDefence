@@ -20,7 +20,7 @@ public class Enemy : MonoBehaviour
     private float BurningTime; // 타는 시간
     private float Flammable; // 타고있을때 더 불이 적용되면 불 데미지가 얼마나 증가하는지 - 1 이면 불 데미지 그만큼 추가
     private int Reward;
-    public float RewardModifier { get; set; }
+    public float RewardModifier { get; set; } = 1f;
 
     //다중 상태 병렬 처리
     private bool isFrozen = false;

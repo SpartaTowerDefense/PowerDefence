@@ -65,8 +65,8 @@ public class CannonController : MonoBehaviour
         }
 
         cannonList = new CannonBase[] { DefaultCannon, TripleCannon, SplashCannon, PenetrationCannon, MeleeCannon };
-        level = 0;
-        ChangeCannon();
+        level = 1;
+        ChangeSprite();
         Price = InitPrice;
         //ChangeCannon(TripleCannon);
     }
@@ -90,17 +90,12 @@ public class CannonController : MonoBehaviour
     {
         Commander commander = GameManager.Instance.commander;
 
-        if (!commander.CanBuy(Price) && level > 1)
-            return;
-
-        if(level < cannonList.Length)
+        if(level < cannonList.Length && commander.CanBuy(Price))
         {
             level++;
-            CurrentCannon = cannonList[level - 1];
-            CurrentCannon.OnMuzzleFlash = OnMuzzleFlash;
-            spr.sprite = CurrentCannon.data.cannonSprite;
+            ChangeSprite();
 
-            if(level > 1)
+            if (level > 1)
             {
                 commander.SubtractGold(Price); // 먼저 차감
                 UIManager.Instance.UIDataBinder.SetUIText();
@@ -110,6 +105,13 @@ public class CannonController : MonoBehaviour
             Debug.Log($"선택된 캐논 : {CurrentCannon}");
 
         }
+    }
+
+    private void ChangeSprite()
+    {
+        CurrentCannon = cannonList[level - 1];
+        CurrentCannon.OnMuzzleFlash = OnMuzzleFlash;
+        spr.sprite = CurrentCannon.data.cannonSprite;
     }
 
     public void Fire()

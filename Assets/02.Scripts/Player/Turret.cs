@@ -111,10 +111,8 @@ public class Turret : MonoBehaviour
     public void LevelUp()
     {
         Commander commander = GameManager.Instance.commander;
-        if (!commander.CanBuy(TurretStat.Price) && Level > 1)
-            return;
 
-        if(Level < maxLevel)
+        if(Level < maxLevel && commander.CanBuy(TurretStat.Price))
         {
             if (TurretStat == null)
                 return;
