@@ -5,6 +5,10 @@ using UnityEngine.Audio;
 
 public class AudioManager : Singleton<AudioManager>
 {
+    private const string PATH = "AudioClips\\";
+    private const string MusicClip = nameof(MusicClip);
+    private const string SFXClip = nameof(SFXClip);
+
     public AudioSource MusicSource { get; private set; }
     public AudioSource SFXSource { get; private set; }
 
@@ -23,22 +27,23 @@ public class AudioManager : Singleton<AudioManager>
         
         if (MusicSource == null)
         {
-            GameObject music = new GameObject(nameof(MusicSource));
-            music.transform.parent = transform;
-
-            MusicSource = music.AddComponent<AudioSource>();
+            GameObject prefab = ResourceManager.Instance.LoadResource<GameObject>(nameof(MusicSource), nameof(MusicSource));
+            MusicSource = Instantiate(prefab, this.transform).GetComponent<AudioSource>();
             MusicSource.playOnAwake = false;
-            //MusicSource.outputAudioMixerGroup = GameMixer.
+            MusicSource.transform.parent = this.transform;
         }
 
         if (SFXSource == null)
         {
-            GameObject sfx = new GameObject(nameof(SFXSource));
-            sfx.transform.parent = transform;
-
-            SFXSource = sfx.AddComponent<AudioSource>();
+            GameObject prefab = ResourceManager.Instance.LoadResource<GameObject>(nameof(SFXSource), nameof(SFXSource));
+            SFXSource = Instantiate(prefab, this.transform).GetComponent<AudioSource>();
             SFXSource.playOnAwake = false;
+            SFXSource.transform.parent = this.transform;
         }
 
+        // ResourceLoad
+        // TODO::
+        /*ResourceManager.Instance.LoadResourceAll<AudioClip>(MusicClip, $"{PATH}{MusicClip}");
+        ResourceManager.Instance.LoadResourceAll<AudioClip>(SFXClip, $"{PATH}{SFXClip}");*/
     }
 }

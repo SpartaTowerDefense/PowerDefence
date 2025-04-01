@@ -9,8 +9,7 @@ public class TripleCannon : CannonBase
     private int count = 1;
     public TripleCannon(Sprite sprite, Transform tip, CannonController controller) : base(sprite, tip, controller)
     {
-        data.Inintionalize(3, 0, false);
-        controller.DetectEnemy.SetRange(4f);
+        data.Inintionalize(3, 0, false, 4f);
         tp = tip;
     }
 

@@ -10,18 +10,18 @@ public class UIDataBinder : MonoBehaviour
     [SerializeField] private TextMeshProUGUI waveNum;
     [SerializeField] private TextMeshProUGUI enemyCount;
 
-    private Commander commander;
+    //private Commander commander;
 
     public void Init()
     {
-        commander = UIManager.Instance.Commander;
+        //commander = UIManager.Instance.Commander;
         SetUIText();
     }
     public void SetUIText()
     {
+        Commander commander = GameManager.Instance.commander;
         healthValue.text = commander.health.ToString();
         goldValue.text = commander.gold.ToString();
         waveNum.text = commander.wave.ToString();
-        //enemyCount.text = 
     }
 }

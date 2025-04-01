@@ -202,7 +202,8 @@ public class Enemy : MonoBehaviour
         isDead = true;
         Debug.Log("죽음");
         ObjectPoolManager.Instance.ReturnObject<EnemyFactory>(this.gameObject);
-        GetRewardCoin(RewardModifier);
+        GameManager.Instance.commander.AddGold(GetRewardCoin(RewardModifier));
+        UIManager.Instance.UIDataBinder.SetUIText();
     }
 
     /// <summary>
@@ -283,8 +284,8 @@ public class Enemy : MonoBehaviour
         return Health;
     }
 
-    public float GetRewardCoin(float Coin)
+    public int GetRewardCoin(float Coin)
     {
-        return Reward * Coin;
+        return Mathf.CeilToInt(Reward * Coin);
     }
 }

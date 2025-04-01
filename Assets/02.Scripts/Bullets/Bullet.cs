@@ -11,6 +11,7 @@ public class Bullet : MonoBehaviour
     public CannonController controller;
     private Collider2D[] splashColiders;
     [SerializeField] LayerMask enemyLayer;
+    [SerializeField] private bool hasHit = false;
     public float SplashRatio { get; set; }
 
     private void Awake()
@@ -20,11 +21,26 @@ public class Bullet : MonoBehaviour
         splashColiders = new Collider2D[5];
     }
 
+    private void OnEnable()
+    {
+        hasHit = false;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        //만약 탄환이 맵의 경계선을 만나면
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Boundary"))
+        {
+            //오브젝트 풀에 반납한다
+            ObjectPoolManager.Instance.ReturnObject<BulletFactory>(this.gameObject);
+        }
+
+        if (hasHit) return;
+
         if (collision.gameObject.tag.Equals("Enemy"))
         {
             CannonData currentData = controller.CurrentCannon.GetData();
+            hasHit = true;
             //적 정보를 가져온다
             if (collision.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
             {//적 정보를 가져와서 turret에 잇는 body head에 따른 데미지를 준다  
@@ -35,19 +51,11 @@ public class Bullet : MonoBehaviour
                     DefaultAttack(enemy, controller.turretdata.Type);
             }
 
-
             if (!currentData.CanPenetration) // 만약 관통속성이 false라면
             {
                 //오브젝트풀에 반납한다.
                 ObjectPoolManager.Instance.ReturnObject<BulletFactory>(this.gameObject);
             }
-        }
-
-        //만약 탄환이 맵의 경계선을 만나면
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Boundary"))
-        {
-            //오브젝트 풀에 반납한다
-            ObjectPoolManager.Instance.ReturnObject<BulletFactory>(this.gameObject);
         }
 
     }
@@ -63,19 +71,21 @@ public class Bullet : MonoBehaviour
                 break;
             case Enums.TurretType.Blue:
                 enemy.TakeDamage(controller.turretdata.Attack);
-                enemy.ApplyFrozen(controller.turretdata.Flinch); // turretdata에서 얼음 관련 스탯이 먼지 알아야함
+                enemy.ApplyFrozen(controller.turretdata.Flinch);
                 break;
             case Enums.TurretType.Red:
                 enemy.TakeDamage(controller.turretdata.Attack);
                 enemy.ApplyBurning(controller.turretdata.DotDamage);
                 break;
             case Enums.TurretType.Black:
-                enemy.TakeDamage(controller.turretdata.Attack); // 임시 변수
+                enemy.TakeDamage(controller.turretdata.Attack);
                 break;
             case Enums.TurretType.Green:
                 enemy.TakeDamage(controller.turretdata.Attack);
                 if (enemy.GetHealth() < 0)
                     enemy.RewardModifier = controller.turretdata.Coin;
+                Debug.Log($"초록이 처치하여 받은돈 : {enemy.GetRewardCoin(enemy.RewardModifier)}");
+                Debug.Log($"게임매니저에 있는 돈 : {GameManager.Instance.commander.gold}");
                 break;
             default:
                 Debug.Log("터렛타입이 잘못됨");

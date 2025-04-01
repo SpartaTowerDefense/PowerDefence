@@ -10,20 +10,22 @@ public class CannonData
     public int BulletCount { get; set; }
     public float SplashRatio { get; set; }
     public bool CanPenetration { get; set; }
+    public float Range { get; set; }
 
     public Sprite cannonSprite;
     public Transform tip;
 
-    public CannonData(int bulletCount, float splashRatio, bool canPenetration)
+    public CannonData(int bulletCount, float splashRatio, bool canPenetration, float range)
     {
-        Inintionalize(bulletCount, splashRatio, canPenetration);
+        Inintionalize(bulletCount, splashRatio, canPenetration, range);
     }
 
-    public void Inintionalize(int bulletCount, float splashRatio, bool canPenetration)
+    public void Inintionalize(int bulletCount, float splashRatio, bool canPenetration, float range)
     {
         BulletCount = bulletCount;
         SplashRatio = splashRatio;
         CanPenetration = canPenetration;
+        Range = range;
     }
 }
 
@@ -31,7 +33,7 @@ public abstract class CannonBase
 {
     public Action OnMuzzleFlash;
 
-    public CannonData data = new(1,0,false);
+    public CannonData data = new(1,0,false,3f);
     public Transform tip; // 총알 나가는 위치
     public CannonController controller;
     // public AudioClip clip; 총알 발사시 소리
