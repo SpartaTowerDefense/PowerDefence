@@ -18,7 +18,7 @@ MonoBehaviour:
   <Attack>k__BackingField: 1
   <DotDamage>k__BackingField: 1
   <Flinch>k__BackingField: 1
-  <Knockback>k__BackingField: 1
+  <Knockback>k__BackingField: 1.5
   <Coin>k__BackingField: 1
   <Duration>k__BackingField: 1
   <LEVEL0>k__BackingField: {fileID: 21300000, guid: cfbcf28334ed5314692d019d4d5eb73d, type: 3}
