@@ -19,9 +19,10 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
+        SaveGame();
         LoadGame();
     }
-    
+
     public void StageClear()
     {
         currentStage++;
@@ -37,16 +38,18 @@ public class GameManager : Singleton<GameManager>
         }
         Placement placement = FindObjectOfType<Placement>();
         placements[stage].SetStageIndex(stage); // 타일맵 인덱스 갱신
+
+        ((EnemyFactory)FactoryManager.Instance.path[nameof(EnemyFactory)]).SetPathByStage(stage);
     }
 
     public void SaveGame()
     {
-        DataManager.Instance.Save(commander,currentStage);
+        DataManager.Instance.Save(commander, currentStage);
     }
     public void LoadGame()
     {
         SaveData data = DataManager.Instance.Load();
-        if(data != null)
+        if (data != null)
         {
             commander = new Commander(20, data.gold); // 체력은 항상 20으로 고정
             currentStage = data.stage;
