@@ -7,9 +7,15 @@ using UnityEngine.Tilemaps;
 public class Placement : MonoBehaviour
 {
     [Header("Map")]
-    [SerializeField] private Tilemap roadTile; 
-    [SerializeField] private Tilemap groundTile;
-    [SerializeField] private Tilemap obstacleTile;
+    [SerializeField] private List<Tilemap> roadTile; 
+    [SerializeField] private List<Tilemap> groundTile;
+    [SerializeField] private List<Tilemap> obstacleTile;
+
+    private Tilemap GroundTile => groundTile[curStageIndex];
+    private Tilemap RoadTile => roadTile[curStageIndex];
+    private Tilemap ObstacleTile => obstacleTile[curStageIndex];
+
+    private int curStageIndex = 0;
 
     [Header("Object")]
     [SerializeField] private TurretFactory turretFactory; //터렛을 생성하는 기본적인 팩토리
@@ -19,14 +25,23 @@ public class Placement : MonoBehaviour
 
     private HashSet<Vector3Int> occupiedCell = new(); // 터렛이 같은 위치에 배치되지 않도록 만들기 위해 저장하기 위한 Collection
 
+    public Vector3Int WorldToCell(Vector3 worldPos) //주어진 월드좌표가 TileMap의 셀좌표로 변환
+    {
+        return GroundTile.WorldToCell(worldPos);
+    }
+
+    public Vector3 SnapToCenter(Vector3Int cellPos) //다시 받은 셀좌표를 통해 다시 월드좌표 및 Tile의 포지션에 맞게 정렬
+    {
+        return GroundTile.CellToWorld(cellPos) + new Vector3(0.5f, 0.5f, 0);
+    }
+
     /// <summary>
     /// 터렛 배치를 시도
     /// </summary>
     public bool TryPlaceTurret(Vector3 worldPos, TurretData bodyData)
     {
-        Vector3Int cellPos = groundTile.WorldToCell(worldPos); // 주어진 월드좌표가 TileMap의 셀좌표로 변환
-        Vector3 capturedPos = groundTile.CellToWorld(cellPos); // 다시 받은 셀좌표를 통해 다시 월드좌표로 변환
-        capturedPos += new Vector3(0.5f, 0.5f, 0);
+        Vector3Int cellPos = WorldToCell(worldPos); 
+        Vector3 capturedPos = SnapToCenter(cellPos);
         
         if (!CanPlaceTurret(cellPos)) //설치 못하는 타일이라면
         {
@@ -54,9 +69,9 @@ public class Placement : MonoBehaviour
     /// </summary>
     public bool CanPlaceTurret(Vector3Int cellPos) 
     {
-        bool isGround = groundTile.GetTile(cellPos) != null;
-        bool isRoad = roadTile.GetTile(cellPos) != null;
-        bool isObstacle = obstacleTile.GetTile(cellPos) != null;
+        bool isGround = GroundTile.GetTile(cellPos) != null;
+        bool isRoad = RoadTile.GetTile(cellPos) != null;
+        bool isObstacle = ObstacleTile.GetTile(cellPos) != null;
         bool isOccupied = occupiedCell.Contains(cellPos);
 
         return isGround && !isRoad && !isOccupied &&!isObstacle;  // ground 타일이 존재하고, 도로도 아니고, 장애물도 아니고, 이미 사용된 셀도 아니어야 함
@@ -76,5 +91,11 @@ public class Placement : MonoBehaviour
     public Quaternion GetCurrentRotation()
     {
         return currentRot;
+    }
+
+    public void SetStageIndex(int index)
+    {
+        curStageIndex = index;
+        occupiedCell.Clear(); // 새 스테이지에서는 기존 설치 좌표 초기화
     }
 }
