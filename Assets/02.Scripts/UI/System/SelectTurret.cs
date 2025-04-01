@@ -39,6 +39,7 @@ public class SelectTurret : MonoBehaviour
                 turret.GetComponent<CannonController>().ChangeCannon,
                 turret.LevelUp
             );
+            selectTurretUI.UpdateUI(turret);
         }
         else
         {

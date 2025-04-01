@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using static UnityEngine.GraphicsBuffer;
 
 public class SelectTurretUI : MonoBehaviour
 {
@@ -45,9 +46,12 @@ public class SelectTurretUI : MonoBehaviour
         _camera.transform.position = new Vector3(turret.transform.position.x, turret.transform.position.y, -10f);
         _cameraMask.color = visible;
 
-        BindButton(uiButtonHandler.SetCannonUpBtn(), onCannonUpgrade);
-        BindButton(uiButtonHandler.SetBodyUpBtn(), onBodyUpgrade);
+        BindButton(uiButtonHandler.SetCannonUpBtn(), onCannonUpgrade, turret);
+        BindButton(uiButtonHandler.SetBodyUpBtn(), onBodyUpgrade, turret);
+    }
 
+    public void UpdateUI(Turret turret)
+    {
         var cannon = turret.GetComponent<CannonController>();
         textPanel.SetActive(true);
         cannonLv.text = cannon.level.ToString();
@@ -71,14 +75,13 @@ public class SelectTurretUI : MonoBehaviour
 
         uiButtonHandler.SetInteractable(uiButtonHandler.SetCannonUpBtn(), false);
         uiButtonHandler.SetInteractable(uiButtonHandler.SetBodyUpBtn(), false);
-        //uiButtonHandler.SetCannonUpBtn().interactable = false;
-        //uiButtonHandler.SetBodyUpBtn().interactable = false;
     }
 
-    private void BindButton(Button button, UnityAction action)
+    private void BindButton(Button button, UnityAction action, Turret turret)
     {
-        uiButtonHandler.BindButton(button, action, () =>
+        uiButtonHandler.BindButton(button, action,() =>
         {
+            UpdateUI(turret);
             OnRequestClearSelection?.Invoke();
         });
         uiButtonHandler.SetInteractable(button, true);
