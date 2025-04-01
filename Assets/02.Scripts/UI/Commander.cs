@@ -8,6 +8,8 @@ public class Commander
     public int gold { get; private set; }
     public int wave { get; private set; } = 1;
 
+    public System.Action buyAction;
+
     public Commander(int health, int gold)
     {
         this.health = health;
@@ -40,6 +42,12 @@ public class Commander
 
     public bool CanBuy(int gold)
     {
-        return this.gold >= gold;
+        if(this.gold > gold)
+            return true;
+        else
+        {
+            buyAction?.Invoke();
+            return false;
+        }
     }
 }

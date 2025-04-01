@@ -1,4 +1,5 @@
 
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -7,6 +8,8 @@ using static UnityEngine.GraphicsBuffer;
 
 public class SelectTurretUI : MonoBehaviour
 {
+    [SerializeField] TextMeshProUGUI canUpgradeText;
+
     [SerializeField] private GameObject textPanel;
     [SerializeField] private TextMeshProUGUI cannonLv;
     [SerializeField] private TextMeshProUGUI cannonUpgradePrice;
@@ -24,6 +27,7 @@ public class SelectTurretUI : MonoBehaviour
 
     private void Start()
     {
+        GameManager.Instance.commander.buyAction += StartOnPanel;
         uiButtonHandler = UIManager.Instance.UIButtonHandler;
 
         textPanel.SetActive(false);
@@ -85,6 +89,17 @@ public class SelectTurretUI : MonoBehaviour
             OnRequestClearSelection?.Invoke();
         });
         uiButtonHandler.SetInteractable(button, true);
+    }
+
+    void StartOnPanel()
+    {
+        StartCoroutine(OnPanel());
+    }
+    IEnumerator OnPanel()
+    {
+        canUpgradeText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        canUpgradeText.gameObject.SetActive(false);
     }
 }
 
