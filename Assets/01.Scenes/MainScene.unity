@@ -13205,7 +13205,7 @@ GameObject:
   - component: {fileID: 1823962451}
   - component: {fileID: 1823962452}
   m_Layer: 5
-  m_Name: WaveNum
+  m_Name: StageNum
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14257,7 +14257,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthValue: {fileID: 446203022}
   goldValue: {fileID: 1555748699}
-  waveNum: {fileID: 1823962452}
+  stageNum: {fileID: 1823962452}
   enemyCount: {fileID: 226329184}
 --- !u!1 &2118961012
 GameObject:

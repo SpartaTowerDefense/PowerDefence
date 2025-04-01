@@ -7,7 +7,7 @@ public class UIDataBinder : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI healthValue;
     [SerializeField] private TextMeshProUGUI goldValue;
-    [SerializeField] private TextMeshProUGUI waveNum;
+    [SerializeField] private TextMeshProUGUI stageNum;
     [SerializeField] private TextMeshProUGUI enemyCount;
 
     //private Commander commander;
@@ -22,6 +22,11 @@ public class UIDataBinder : MonoBehaviour
         Commander commander = GameManager.Instance.commander;
         healthValue.text = commander.health.ToString();
         goldValue.text = commander.gold.ToString();
-        waveNum.text = commander.wave.ToString();
+        stageNum.text = GameManager.Instance.CurrentStage.ToString();
+
+        var spawner = GameManager.Instance.EnemySpawner;
+        enemyCount.text = spawner != null
+            ? spawner.AliveEnemyCount.ToString()
+            : "-";
     }
 }

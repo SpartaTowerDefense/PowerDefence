@@ -6,7 +6,6 @@ public class Commander
 {
     public int health { get; private set; }
     public int gold { get; private set; }
-    public int wave { get; private set; } = 1;
 
     public System.Action buyAction;
 

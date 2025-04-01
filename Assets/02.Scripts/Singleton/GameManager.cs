@@ -7,8 +7,11 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private List<GameObject> stageMaps;
     [SerializeField] private List<Placement> placements;
 
-    private int currentStage = 0;
+    private EnemySpawner enemySpawner;
+    public EnemySpawner EnemySpawner => enemySpawner;
 
+    private int currentStage = 0;
+    public int CurrentStage => currentStage;
     public Commander commander { get; private set; } = new(20, 5000);
 
     protected override void Awake()
@@ -40,6 +43,7 @@ public class GameManager : Singleton<GameManager>
         placements[stage].SetStageIndex(stage); // 타일맵 인덱스 갱신
 
         ((EnemyFactory)FactoryManager.Instance.path[nameof(EnemyFactory)]).SetPathByStage(stage);
+        enemySpawner = FindObjectOfType<EnemySpawner>();
     }
 
     public void SaveGame()
