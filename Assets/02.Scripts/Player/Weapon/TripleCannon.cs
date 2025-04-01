@@ -10,6 +10,7 @@ public class TripleCannon : CannonBase
     public TripleCannon(Sprite sprite, Transform tip, CannonController controller) : base(sprite, tip, controller)
     {
         data.Inintionalize(3, 0, false, 4f);
+
         tp = tip;
     }
 
