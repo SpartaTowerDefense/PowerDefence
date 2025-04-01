@@ -25,6 +25,8 @@ public class SelectTurretUI : MonoBehaviour
 
     public UnityAction OnRequestClearSelection;
 
+    Coroutine moneycoroutine;
+
     private void Start()
     {
         GameManager.Instance.commander.buyAction += StartOnPanel;
@@ -93,7 +95,9 @@ public class SelectTurretUI : MonoBehaviour
 
     void StartOnPanel()
     {
-        StartCoroutine(OnPanel());
+        if (moneycoroutine != null)
+            StopCoroutine(moneycoroutine);
+        moneycoroutine = StartCoroutine(OnPanel());
     }
     IEnumerator OnPanel()
     {
