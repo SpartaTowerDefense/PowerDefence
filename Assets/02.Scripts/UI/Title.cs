@@ -18,7 +18,7 @@ public class Title : MonoBehaviour
         uIButtonHandler = UIManager.Instance.UIButtonHandler;
         _camera = Camera.main;
         uIButtonHandler.BindButton(uIButtonHandler.SetStartBtn(), GameStart);
-
+        uIButtonHandler.BindButton(uIButtonHandler.SetLoadBtn(), GameStart,Load);
         childs = GetComponentsInChildren<ButtonHover>();
     }
 
@@ -54,6 +54,11 @@ public class Title : MonoBehaviour
 
         //스포너 시작 연결 - 더 좋은 방법이 있을지도...
         ((EnemyFactory)FactoryManager.Instance.path[nameof(EnemyFactory)]).Gamestart();
+    }
+
+    void Load()
+    {
+        GameManager.Instance.LoadGame();
     }
 
     IEnumerator DisableNextFrame(MonoBehaviour target)
