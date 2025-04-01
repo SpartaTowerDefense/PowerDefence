@@ -206,7 +206,6 @@ public class Enemy : MonoBehaviour
         GameManager.Instance.commander.AddGold(GetRewardCoin(RewardModifier));
         Debug.Log($"적을 처치하여 받은 돈 : {GetRewardCoin(RewardModifier)}");
         Debug.Log($"게임매니저에 있는 돈 : {GameManager.Instance.commander.gold}");
-        UIManager.Instance.UIDataBinder.SetUIText();
     }
 
     /// <summary>
