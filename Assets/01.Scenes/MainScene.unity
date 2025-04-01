@@ -9242,6 +9242,7 @@ MonoBehaviour:
   pauseBtn: {fileID: 1547592125}
   speedBtn: {fileID: 86109115}
   startBtn: {fileID: 370487695}
+  loadBtn: {fileID: 1650632644}
   cannonUpBtn: {fileID: 1256017184}
   bodyUpBtn: {fileID: 1366312477}
 --- !u!114 &1257178770

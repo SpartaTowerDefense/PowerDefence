@@ -7,7 +7,7 @@ public class UIButtonHandler : MonoBehaviour
     [SerializeField] private Button pauseBtn;
     [SerializeField] private Button speedBtn;
     [SerializeField] private Button startBtn;
-
+    [SerializeField] private Button loadBtn;
     [SerializeField] private Button cannonUpBtn;
     [SerializeField] private Button bodyUpBtn;
 
@@ -16,6 +16,7 @@ public class UIButtonHandler : MonoBehaviour
     public Button SetStartBtn() => startBtn;
     public Button SetCannonUpBtn() => cannonUpBtn;
     public Button SetBodyUpBtn() => bodyUpBtn;
+    public Button SetLoadBtn() => loadBtn;
 
     public void SetInteractable(Button btn, bool enable)
     {

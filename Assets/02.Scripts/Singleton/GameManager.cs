@@ -22,7 +22,7 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
-        // SaveGame();
+        SaveGame();
         LoadGame();
     }
 
