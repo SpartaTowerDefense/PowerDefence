@@ -4254,8 +4254,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 585096160}
     m_Modifications:
     - target: {fileID: 286904239621071102, guid: cd4ca66387fdf154188dba024f36c778, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 286904239621071102, guid: cd4ca66387fdf154188dba024f36c778, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 286904239621071102, guid: cd4ca66387fdf154188dba024f36c778, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 23.5
+      value: 20.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 286904239621071102, guid: cd4ca66387fdf154188dba024f36c778, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1064331348761072719, guid: cd4ca66387fdf154188dba024f36c778, type: 3}
       propertyPath: spawnPattern
@@ -4304,6 +4316,10 @@ PrefabInstance:
     - target: {fileID: 3873725776328475353, guid: cd4ca66387fdf154188dba024f36c778, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6027747637821652489, guid: cd4ca66387fdf154188dba024f36c778, type: 3}
+      propertyPath: m_SortingOrder
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6529,7 +6545,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Prefab: {fileID: 6408032268656530051, guid: 4a8a547af758fc445abf6d42ce9d51b1, type: 3}
-  path: {fileID: 1673260115675775494, guid: 2bbfee1d0e9866c4e9e9aac373b28612, type: 3}
+  stagePaths:
+  - {fileID: 1673260115675775494, guid: 912b6ebb10b2c7644bd666eff7a7a7c2, type: 3}
+  - {fileID: 1673260115675775494, guid: 9fc47b7947b0cee439c2d3e59ca93ac5, type: 3}
+  path: {fileID: 0}
   enemySpawner: {fileID: 1758816512}
 --- !u!1 &598458121
 GameObject:

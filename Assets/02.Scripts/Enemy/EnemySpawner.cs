@@ -63,6 +63,7 @@ public class EnemySpawner : MonoBehaviour
             {
                 Debug.Log("이번 웨이브 모든 적 제거 완료!");
                 GameManager.Instance.StageClear();
+                GameStart();
             }
         }
     }

@@ -57,6 +57,8 @@ public class Enemy : MonoBehaviour
 
     void OnEnable()
     {
+        path = ((EnemyFactory)FactoryManager.Instance.path[nameof(EnemyFactory)]).path;
+
         currentWaypointIndex = 0;
 
         isDead = false;
