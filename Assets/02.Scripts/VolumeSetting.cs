@@ -12,7 +12,7 @@ public class VolumeSetting : MonoBehaviour
 
 
     private AudioMixer mixer;
-    [SerializeField] private Slider masterSlider, musicSlider, sfxSlider;
+    [SerializeField] private Scrollbar masterSlider, musicSlider, sfxSlider;
 
     private bool isMaterMute;
     private bool isMusicMute;
@@ -26,25 +26,29 @@ public class VolumeSetting : MonoBehaviour
         mixer = audioManager.GameMixer;
 
         masterSlider.value = audioManager.MasterVolume;
-        musicSlider.value = audioManager.MusicVolume;
-        sfxSlider.value = audioManager.SFXVolume;
+        /*musicSlider.value = audioManager.MusicVolume;
+        sfxSlider.value = audioManager.SFXVolume;*/
     }
 
     public void SetMasterVolume()
     {
         isMaterMute = false;
-        float volume = masterSlider.value;
-        mixer.SetFloat("master", Mathf.Log10(volume) * 20);
 
-        if(audioManager)
+        masterSlider.value = Mathf.Max(masterSlider.value, 0.0001f);
+        float volume = masterSlider.value;
+        mixer.SetFloat(masterMixer, Mathf.Log10(volume) * 20);
+
+        if (audioManager)
             PlayerPrefs.SetFloat(nameof(audioManager.MasterVolume), volume);
     }
 
     public void SetMusicVolume()
     {
         isMusicMute = false;
+
+        musicSlider.value = Mathf.Max(musicSlider.value, 0.0001f);
         float volume = musicSlider.value;
-        mixer.SetFloat("music", Mathf.Log10(volume) * 20);
+        mixer.SetFloat(musicMixer, Mathf.Log10(volume) * 20);
 
         if (audioManager)
             PlayerPrefs.SetFloat(nameof(audioManager.MusicVolume), volume);
@@ -53,8 +57,10 @@ public class VolumeSetting : MonoBehaviour
     public void SetSFXVolume()
     {
         isSFXMute = false;
-        float volume = sfxSlider.value;
-        mixer.SetFloat("sfx", Mathf.Log10(volume) * 20);
+
+        musicSlider.value = Mathf.Max(musicSlider.value, 0.0001f);
+        float volume = musicSlider.value;
+        mixer.SetFloat(sfxMixer, Mathf.Log10(volume) * 20);
 
         if (audioManager)
             PlayerPrefs.SetFloat(nameof(audioManager.SFXVolume), volume);
