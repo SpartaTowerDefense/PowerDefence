@@ -9,12 +9,17 @@ public class GameManager : Singleton<GameManager>
 
     public Commander commander { get; private set; } = new(20, 5000);
 
+    private void Start()
+    {
+        //SaveGame();
+        LoadGame();
+    }
     public void StageClear()
     {
         currentStage++;
         ActiveStage(currentStage);
 
-        // Json으로 저장하는 메서드 호출
+        SaveGame();
     }
     private void ActiveStage(int stage)
     {
@@ -22,6 +27,21 @@ public class GameManager : Singleton<GameManager>
         {
             stageMaps[i].SetActive(i == stage); //i번째가 해당 stage와 일치하는 것만 SetActive시키기
         }
+    }
 
+    public void SaveGame()
+    {
+        DataManager.Instance.Save(commander,currentStage);
+    }
+    public void LoadGame()
+    {
+        SaveData data = DataManager.Instance.Load();
+        if(data != null)
+        {
+            commander = new Commander(20, data.gold); // 체력은 항상 20
+            currentStage = data.stage;
+
+            ActiveStage(currentStage);
+        }
     }
 }

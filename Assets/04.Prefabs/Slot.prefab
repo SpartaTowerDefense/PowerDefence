@@ -112,9 +112,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 7791865557006086125}
-          m_TargetAssemblyTypeName: Slot, Assembly-CSharp
-          m_MethodName: SetCurDataAndStartDrag
+        - m_Target: {fileID: 8941587420961740878}
+          m_TargetAssemblyTypeName: DragHandler, Assembly-CSharp
+          m_MethodName: OnBeginDrag
           m_Mode: 0
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -156,8 +156,6 @@ MonoBehaviour:
   placement: {fileID: 0}
   tankPreviewPrefab: {fileID: 8710440442959217692, guid: dcd70ee573c0ac0419e4817f4b2c18b7, type: 3}
   maincam: {fileID: 0}
-  roadTile: {fileID: 0}
-  groundTile: {fileID: 0}
 --- !u!114 &-934030402963170429
 MonoBehaviour:
   m_ObjectHideFlags: 0
