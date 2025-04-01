@@ -77,7 +77,12 @@ public abstract class CannonBase
     {
         if (time < 0f && continous_Time < 0f)
         {
-            AudioManager.Instance.SFXSource.PlayOneShot(clip);
+            if(Time.unscaledTime - AudioManager.Instance.lastPlayTime > AudioManager.Instance.soundCooldown)
+            {
+                AudioManager.Instance.SFXSource.PlayOneShot(clip);
+                AudioManager.Instance.lastPlayTime = Time.unscaledTime;
+            }
+            
             OnMuzzleFlash?.Invoke();
         }
     }

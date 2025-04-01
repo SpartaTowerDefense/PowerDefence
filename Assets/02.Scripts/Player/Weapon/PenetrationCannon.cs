@@ -8,7 +8,7 @@ public class PenetrationCannon : CannonBase
     private int count = 0;
     public PenetrationCannon(Sprite sprite, Transform tip, CannonController controller) : base(sprite, tip, controller)
     {
-        data.Inintionalize(3, 1f, true, 4f);
+        data.Inintionalize(3, 1f, true, 3f);
         tp = tip;
     }
 

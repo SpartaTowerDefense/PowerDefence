@@ -31,7 +31,7 @@ public class UIManager : Singleton<UIManager>
         commander = new Commander(20, 0);
         DOTween.Init(true, true);
         uiDataBinder.Init();
-        ActiveCnavasChild(true, title.gameObject.transform.parent.gameObject);
+        ActiveCnavasChild(true, title.gameObject.transform.parent.gameObject,shop.gameObject);
     }
 
     public void ActiveCnavasChild(bool enable, params GameObject[] onActive)
