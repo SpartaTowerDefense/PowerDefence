@@ -32,7 +32,7 @@ public class TestBullet : MonoBehaviour
         {
             hasHit = true;
 
-            if (isKnockback)
+            /*if (isKnockback)
             {
                 enemy.ApplyKnockback(2);
             }
@@ -43,7 +43,7 @@ public class TestBullet : MonoBehaviour
             else if (isBurning)
             {
                 enemy.ApplyBurning(3);
-            }
+            }*/
 
             enemy.TakeDamage(1);
             Destroy(gameObject);

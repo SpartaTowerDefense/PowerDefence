@@ -34,24 +34,19 @@ public class MeleeCannon : CannonBase
         switch (turretType)
         {
             case Enums.TurretType.White:
-                enemy.TakeDamage(controller.turretdata.Attack);
-                enemy.ApplyKnockback(controller.turretdata.Knockback);
+                enemy.ApplyKnockback(controller.turretdata.Knockback, controller.turretdata.Attack);
                 break;
             case Enums.TurretType.Blue:
-                enemy.TakeDamage(controller.turretdata.Attack);
-                enemy.ApplyFrozen(controller.turretdata.Flinch); // turretdata에서 얼음 관련 스탯이 먼지 알아야함
+                enemy.ApplyFrozen(controller.turretdata.Flinch, controller.turretdata.Attack);
                 break;
             case Enums.TurretType.Red:
-                enemy.TakeDamage(controller.turretdata.Attack);
-                enemy.ApplyBurning(controller.turretdata.DotDamage);
+                enemy.ApplyBurning(controller.turretdata.DotDamage, controller.turretdata.Attack);
                 break;
             case Enums.TurretType.Black:
-                enemy.TakeDamage(controller.turretdata.Attack); // 임시 변수
+                enemy.DefalutAttack(controller.turretdata.Attack);
                 break;
             case Enums.TurretType.Green:
-                enemy.TakeDamage(controller.turretdata.Attack);
-                if (enemy.GetHealth() < 0)
-                    enemy.RewardModifier = controller.turretdata.Coin;
+                enemy.DefalutAttack(controller.turretdata.Attack,controller.turretdata);
                 break;
             default:
                 Debug.Log("터렛타입이 잘못됨");

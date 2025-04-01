@@ -11,6 +11,7 @@ public class TripleCannon : CannonBase
     {
         clip = resource.LoadResource<AudioClip>($"{FireClip}2");
         data.Inintionalize(3, 0, false, 4f);
+
         tp = tip;
     }
 

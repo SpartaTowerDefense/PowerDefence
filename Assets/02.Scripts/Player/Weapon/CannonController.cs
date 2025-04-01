@@ -100,6 +100,7 @@ public class CannonController : MonoBehaviour
                 commander.SubtractGold(Price); // 먼저 차감
                 UIManager.Instance.UIDataBinder.SetUIText();
                 SetPriceRatio(1.2f); // 현재 가격에서 증가
+                SetRange(CurrentCannon.data.Range);
             }
 
             Debug.Log($"선택된 캐논 : {CurrentCannon}");
@@ -138,5 +139,10 @@ public class CannonController : MonoBehaviour
     public void SetPriceRatio(float ratio)
     {
         this.Price = Mathf.FloorToInt(this.Price * ratio);
+    }
+
+    public void SetRange(float range)
+    {
+        DetectEnemy.SetRange(range);
     }
 }

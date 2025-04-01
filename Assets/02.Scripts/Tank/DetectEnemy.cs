@@ -93,6 +93,7 @@ public class DetectEnemy : MonoBehaviour
     public void SetRange(float range)
     {
         Range = range;
+        Debug.Log($"사거리 : {Range}");
     }
     
 }
