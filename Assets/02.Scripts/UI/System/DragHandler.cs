@@ -12,8 +12,6 @@ public class DragHandler : MonoBehaviour
     public Placement placement; //실제 유닛을 배치하는 스크립트
     [SerializeField] private GameObject tankPreviewPrefab;  // 
     [SerializeField] private Camera maincam; // 스크린 좌표에서 월드 좌표로 변환하는 메인카메라
-    [SerializeField] private Tilemap roadTile;
-    [SerializeField] private Tilemap groundTile;
 
     private GameObject previewInstance; //드래그할 때 보이는 미리보기 
 
@@ -24,13 +22,11 @@ public class DragHandler : MonoBehaviour
     /// <summary>
     /// 외부에서 초기화 (Shop에서 초기화)
     /// </summary>
-    public void Init(Canvas canvas, Camera mainCam, Placement placement, Tilemap roadTile, Tilemap groundTile, GameObject previewPrefab)
+    public void Init(Canvas canvas, Camera mainCam, Placement placement, GameObject previewPrefab)
     {
         this.canvas = canvas;
         this.maincam = mainCam;
         this.placement = placement;
-        this.roadTile = roadTile;
-        this.groundTile = groundTile;
         this.tankPreviewPrefab = previewPrefab;
     }
 
@@ -85,7 +81,7 @@ public class DragHandler : MonoBehaviour
             GameManager.Instance.commander.SubtractGold(selectedData.Price);
             UIManager.Instance.UIDataBinder.SetUIText();
             isPlace = true; 
-            gameObject.SetActive(true); //Ui와 함께 있기 때문에 활성화, 비활성화로 표시
+            //gameObject.SetActive(true); //Ui와 함께 있기 때문에 활성화, 비활성화로 표시
         }
 
     }
@@ -101,9 +97,8 @@ public class DragHandler : MonoBehaviour
             Vector3 worldPos = maincam.ScreenToWorldPoint(mousePos);
             worldPos.z = 0f;
 
-            Vector3Int cellPos = groundTile.WorldToCell(worldPos); //마우스의 가장 가까운 Cell좌표를 계산 (int형으로 만들기)
-            Vector3 snappedPos = groundTile.CellToWorld(cellPos); // 셀의 중심에 오도록 만들기 위한 좌표설정
-            snappedPos += new Vector3(0.5f, 0.5f, 0);
+            Vector3Int cellPos = placement.WorldToCell(worldPos); //마우스의 가장 가까운 Cell좌표를 계산 (int형으로 만들기)
+            Vector3 snappedPos = placement.SnapToCenter(cellPos); // 셀의 중심에 오도록 만들기 위한 좌표설정
 
             previewInstance.transform.position = snappedPos;
             previewInstance.transform.rotation = placement.GetCurrentRotation(); // 회전값 적용
