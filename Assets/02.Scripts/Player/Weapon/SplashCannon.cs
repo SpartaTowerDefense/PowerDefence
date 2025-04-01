@@ -10,7 +10,7 @@ public class SplashCannon : CannonBase
     public SplashCannon(Sprite sprite, Transform tip, CannonController controller) : base(sprite, tip, controller)
     {
         clip = resource.LoadResource<AudioClip>($"{FireClip}3");
-        data.Inintionalize(3, 0.5f, false, 4f);
+        data.Inintionalize(3, 2f, false, 4f);
         tp = tip;
     }
 

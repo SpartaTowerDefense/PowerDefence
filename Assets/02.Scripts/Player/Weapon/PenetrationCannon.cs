@@ -9,7 +9,7 @@ public class PenetrationCannon : CannonBase
     public PenetrationCannon(Sprite sprite, Transform tip, CannonController controller) : base(sprite, tip, controller)
     {
         clip = resource.LoadResource<AudioClip>($"{FireClip}3");
-        data.Inintionalize(3, 0.5f, true, 4f);
+        data.Inintionalize(3, 2f, true, 4f);
         tp = tip;
     }
 
