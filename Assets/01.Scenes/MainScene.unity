@@ -14539,7 +14539,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 675b6836767a2484da44fb9d6a36364d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  obj: {fileID: 1384640019}
+  maps:
+  - {fileID: 975924464825673442, guid: 912b6ebb10b2c7644bd666eff7a7a7c2, type: 3}
+  - {fileID: 975924464825673442, guid: 9fc47b7947b0cee439c2d3e59ca93ac5, type: 3}
   speed: 1
 --- !u!1 &8674335168388523439
 GameObject:
