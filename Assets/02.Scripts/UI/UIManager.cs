@@ -26,7 +26,6 @@ public class UIManager : Singleton<UIManager>
 
     public Turret curTurret;
 
-
     private void Start()
     {
         commander = new Commander(20, 0);

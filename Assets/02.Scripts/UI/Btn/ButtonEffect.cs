@@ -2,6 +2,7 @@ using DG.Tweening;
 
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class ButtonEffect : MonoBehaviour
@@ -50,13 +51,19 @@ public class ButtonEffect : MonoBehaviour
         if (!square) KillTween(shakeTweens);
     }
 
-    public void ChangeSquare(RectTransform rectTransform)
+    public void ChangeTransformSquare(RectTransform rectTransform)
     {
         for (int i = 0; i < squareArray.Length; i++)
         {
             rectTransformArray[i].sizeDelta = rectTransform.sizeDelta * rectTransform.localScale * Random.Range(1f, 1.2f);
             rectTransformArray[i].position = rectTransform.position;
+        }
+    }
 
+    public void ChangeColorSquare()
+    {
+        for (int i = 0; i < squareArray.Length; i++)
+        {
             imageArray[i].color = ChangeColor(0.6f);
         }
     }
@@ -84,21 +91,22 @@ public class ButtonEffect : MonoBehaviour
         shakeSequence.SetLoops(-1, LoopType.Restart);
         shakeTweens.Add(shakeSequence);
     }
-
-    public void ClickEffectSquare()
+    public void ClickEffectSquare(UnityAction baseaction = null,UnityAction action = null)
     {
+        KillTween(clickTweens);
+
         for (int i = 0; i < squareArray.Length; i++)
         {
             Sequence clickSequence = DOTween.Sequence();
             RectTransform originRect = rectTransformArray[i];
             clickSequence
                 .Append(rectTransformArray[i].DOScale(originRect.localScale * 0.5f, 0.2f))
-                .Append(rectTransformArray[i].DOScale(originRect.localScale, 0.2f))
+                .Append(rectTransformArray[i].DOScale(Vector3.one, 0.2f))
                 .SetEase(Ease.OutQuad)
-                 .OnComplete(() => clickSequence.Kill());
+                .OnComplete(() => { baseaction?.Invoke(); action?.Invoke(); });
             clickTweens.Add(clickSequence);
         }
-    }
+    } 
 
     void KillTween(List<Tween> tween)
     {

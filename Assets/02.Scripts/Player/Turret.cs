@@ -43,7 +43,7 @@ public class TurretStatus
 
     public void SetPriceRatio(float ratio)
     {
-        this.Price *= Mathf.FloorToInt(this.Price * ratio);
+        this.Price = Mathf.FloorToInt(this.Price * ratio);
     }
 
     /*public void LevelUp(int price, float attack, float dotDamage, float flinch,
@@ -110,6 +110,10 @@ public class Turret : MonoBehaviour
 
     public void LevelUp()
     {
+        Commander commander = GameManager.Instance.commander;
+        if (!commander.CanBuy(TurretStat.Price) && Level > 1)
+            return;
+
         if(Level < maxLevel)
         {
             if (TurretStat == null)
@@ -117,7 +121,10 @@ public class Turret : MonoBehaviour
 
             Level++;
             TurretStat.LevelUp(1.2f);
-            TurretStat.SetPriceRatio(2);
+            commander.SubtractGold(TurretStat.Price); // 차감 후
+            TurretStat.SetPriceRatio(2); // 가격 증가
+
+            UIManager.Instance.UIDataBinder.SetUIText();
         }
     }
 }

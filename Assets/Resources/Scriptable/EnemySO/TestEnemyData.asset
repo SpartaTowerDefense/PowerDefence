@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TestEnemyData
   m_EditorClassIdentifier: 
   <SpriteImage>k__BackingField: {fileID: 952252299, guid: 7a174024bdb51eb4abcae19faa3681c2, type: 3}
-  <Health>k__BackingField: 20
+  <Health>k__BackingField: 10.2
   <MovementSpeed>k__BackingField: 2
   <FrozeTime>k__BackingField: 1
   <KnockbackTime>k__BackingField: 0.3
