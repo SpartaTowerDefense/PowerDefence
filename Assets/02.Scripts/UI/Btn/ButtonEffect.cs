@@ -138,6 +138,21 @@ public class ButtonEffect : MonoBehaviour
         }
     }
 
+    public void AllCompleteEffect()
+    {
+        foreach (var t in shakeTweens)
+        {
+            t.Play();
+            t.Complete();
+        }
+            
+        foreach (var t in clickTweens)
+        {
+            t.Play();
+            t.Complete();
+        }
+    }
+
     void KillTween(List<Tween> tween)
     {
         foreach (Tween t in tween)
