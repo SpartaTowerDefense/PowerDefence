@@ -19,10 +19,12 @@ public class GameManager : Singleton<GameManager>
     {
         base.Awake();
         AudioManager.Instance.Initinalize();
+        
     }
 
     private void Start()
     {
+        Application.targetFrameRate = 60;
         ActiveStage(0);
     }
 
