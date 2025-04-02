@@ -54,6 +54,11 @@ public class GameManager : Singleton<GameManager>
     public void StageClear()
     {
         currentStage++;
+        if(currentStage >= 2)
+        {
+            UIManager.Instance.EndPanel.SetActive(true);
+            return;
+        }
         ActiveStage(currentStage);
 
         SaveGame();
@@ -99,7 +104,7 @@ public class GameManager : Singleton<GameManager>
             stageMaps.Add(GameObject.Find("Stage1"));
             stageMaps.Add(GameObject.Find("Stage2"));
         }
-
+        currentStage = 0;
         commander.health = 20;
         ActiveStage(0);
     }
