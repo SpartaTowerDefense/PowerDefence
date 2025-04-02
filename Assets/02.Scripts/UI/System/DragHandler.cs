@@ -69,7 +69,7 @@ public class DragHandler : MonoBehaviour
         }
 
         PointerEventData ped = data as PointerEventData; // Unity 이벤트 시스템을 활용하여 마우스의 정보가 담긴 데이터로 변환과정
-        Vector3 worldPos = maincam.ScreenToWorldPoint(ped.position);
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(ped.position);
         worldPos.z = 0f;
 
         TurretData selectedData = UIManager.Instance.Shop.curData;
@@ -98,7 +98,7 @@ public class DragHandler : MonoBehaviour
         while (isDrag)
         {
             Vector2 mousePos = Pointer.current.position.ReadValue();
-            Vector3 worldPos = maincam.ScreenToWorldPoint(mousePos);
+            Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
             worldPos.z = 0f;
 
             Vector3Int cellPos = UIManager.Instance.Placement.WorldToCell(worldPos); //마우스의 가장 가까운 Cell좌표를 계산 (int형으로 만들기)
