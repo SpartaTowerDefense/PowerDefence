@@ -42,6 +42,7 @@ public class GameManager : Singleton<GameManager>
         placements[stage].SetStageIndex(stage); // 타일맵 인덱스 갱신
 
         ((EnemyFactory)FactoryManager.Instance.path[nameof(EnemyFactory)]).SetPathByStage(stage);
+        enemySpawner = FindObjectOfType<EnemySpawner>();    
     }
 
     public void SaveGame()
