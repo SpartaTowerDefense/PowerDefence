@@ -293,7 +293,8 @@ public class Enemy : MonoBehaviour
         if (colorChangeCoroutine != null)
             return;
 
-        colorChangeCoroutine = StartCoroutine(ChangeColorRoutine(newColor, duration));
+        if(this.gameObject.activeSelf)
+            colorChangeCoroutine = StartCoroutine(ChangeColorRoutine(newColor, duration));
     }
 
     private IEnumerator ChangeColorRoutine(Color color, float duration)
