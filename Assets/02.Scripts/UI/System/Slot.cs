@@ -24,7 +24,7 @@ public class Slot : MonoBehaviour
     public void SetData(TurretData data, Placement placement, DragHandler dragHandler)
     {
         TurretData = data;
-        UIManager.Instance.Placement = placement;
+        //UIManager.Instance.Placement = placement;
         this.dragHandler = dragHandler;
         if (TurretData.BodyImage)
             image.sprite = TurretData.BodyImage;
@@ -32,7 +32,7 @@ public class Slot : MonoBehaviour
 
     public void SetCurDataAndStartDrag(BaseEventData data)
     {
-        UIManager.Instance.Shop.curData = TurretData;
+        //UIManager.Instance.Shop.curData = TurretData;
         dragHandler.OnBeginDrag(data);
     }
    public void GetTurretPlace(BaseEventData data)
