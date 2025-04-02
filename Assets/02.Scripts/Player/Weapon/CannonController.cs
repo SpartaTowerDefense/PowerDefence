@@ -54,6 +54,7 @@ public class CannonController : MonoBehaviour
             PenetrationCannon = new PenetrationCannon(sprites[1], tip, this);
 
             MeleeCannon = new MeleeCannon(sprites[2], tip, this);
+            cannonList = new CannonBase[] { DefaultCannon, TripleCannon, SplashCannon, PenetrationCannon, MeleeCannon };
         }
         else
         {
@@ -64,9 +65,8 @@ public class CannonController : MonoBehaviour
             MeleeCannon.ChangeSprite(sprites[2]);
         }
 
-        cannonList = new CannonBase[] { DefaultCannon, TripleCannon, SplashCannon, PenetrationCannon, MeleeCannon };
         level = 1;
-        ChangeSprite();
+        ChangeSprite(); // 스프라이트만 변경
         Price = InitPrice;
     }
 

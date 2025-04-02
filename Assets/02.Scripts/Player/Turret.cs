@@ -14,7 +14,6 @@ public class TurretStatus
     public float Flinch { get; set; }
     public float Knockback { get; set; }
     public float Coin { get; set; } // 코인 획득량 배율
-    public float Duration { get; set; }
 
     public TurretStatus(TurretData data)
     {
