@@ -34,7 +34,7 @@ public class DragHandler : MonoBehaviour
     public void OnBeginDrag(BaseEventData data)
     {
 
-        if (UIManager.Instance.Shop.curData == null) return; //현재선택한 정보가 없다면 반환
+        //if (UIManager.Instance.Shop.curData == null) return; //현재선택한 정보가 없다면 반환
 
         isDrag = true; //드래그 상태
         previewInstance = Instantiate(tankPreviewPrefab); //미리보기 프리펩 생성
@@ -74,7 +74,7 @@ public class DragHandler : MonoBehaviour
 
         TurretData selectedData = UIManager.Instance.Shop.curData;
 
-        if(!GameManager.Instance.commander.CanBuy(selectedData.Price)) //구매가 불가능하다면
+        if (!GameManager.Instance.commander.CanBuy(selectedData.Price)) //구매가 불가능하다면
         {
             Destroy(previewInstance); //미리보기 프리펩 삭제
             return;
@@ -82,7 +82,7 @@ public class DragHandler : MonoBehaviour
         bool isSuccess = UIManager.Instance.Placement.TryPlaceTurret(worldPos, selectedData); //worldPos에 원하는 Data의 Turret을 배치하기 위한 bool변수
         Destroy(previewInstance);  //미리보기 프리펩은 삭제
 
-        if (isSuccess) 
+        if (isSuccess)
         {
             GameManager.Instance.commander.SubtractGold(selectedData.Price);
             UIManager.Instance.UIDataBinder.SetUIText();

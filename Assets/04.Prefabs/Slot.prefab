@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 8800784237413853331}
   - component: {fileID: 1695066317628490869}
   - component: {fileID: 3125799350860367997}
-  - component: {fileID: 7791865557006086125}
   - component: {fileID: 241365411887341920}
+  - component: {fileID: 7791865557006086125}
   - component: {fileID: 8941587420961740878}
   - component: {fileID: -934030402963170429}
   m_Layer: 5
@@ -79,22 +79,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7791865557006086125
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2477639005887596335}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfa6e1593cc6d4e4fbcba4c99f722b1c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  placement: {fileID: 0}
-  dragHandler: {fileID: 0}
-  curTurret: {fileID: 0}
-  curButton: {fileID: 0}
 --- !u!114 &241365411887341920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,6 +124,21 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &7791865557006086125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2477639005887596335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfa6e1593cc6d4e4fbcba4c99f722b1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dragHandler: {fileID: 0}
+  curTurret: {fileID: 0}
+  curButton: {fileID: 0}
 --- !u!114 &8941587420961740878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,11 +152,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 0}
-  placement: {fileID: 0}
   tankPreviewPrefab: {fileID: 8710440442959217692, guid: dcd70ee573c0ac0419e4817f4b2c18b7, type: 3}
   maincam: {fileID: 0}
-  roadTile: {fileID: 0}
-  groundTile: {fileID: 0}
 --- !u!114 &-934030402963170429
 MonoBehaviour:
   m_ObjectHideFlags: 0

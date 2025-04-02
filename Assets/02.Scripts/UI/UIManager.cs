@@ -9,38 +9,38 @@ using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
 {
-    private Commander commander;
-    public Commander Commander { get => commander; }
-    [SerializeField] private UIDataBinder uiDataBinder;
-    public UIDataBinder UIDataBinder { get => uiDataBinder; }
-    [SerializeField] private Shop shop;
-    public Shop Shop { get => shop; set => shop = value; }
-    [SerializeField] private UIButtonHandler uiButtonHandler;
-    public UIButtonHandler UIButtonHandler { get => uiButtonHandler; }
-    [SerializeField] private Title title;
-    public Title Title { get => title; }
-    [SerializeField] private ButtonEffect buttonEffect;
-    public ButtonEffect ButtonEffect { get => buttonEffect; }
-    [SerializeField] private Placement placement;
-    public Placement Placement { get => placement; set => placement = value; }
+    [field: SerializeField] public Canvas MainCanvas { get; private set; }
+    [field: SerializeField] public UIDataBinder UIDataBinder { get; private set; }
+    [field: SerializeField] public Shop Shop { get; private set; }
+    [field: SerializeField] public UIButtonHandler UIButtonHandler { get; private set; }
+    [field: SerializeField] public Title Title { get; private set; }
+    [field: SerializeField] public ButtonEffect ButtonEffect { get; private set; }
+    [field: SerializeField] public Placement Placement { get; set; }
+
+
+
 
     [SerializeField] private List<GameObject> alwaysActiveObjects;
-
     public Turret curTurret;
 
     private void Start()
     {
-        commander = new Commander(20, 0);
+        ActiveCnavasChild(true, Title.gameObject.transform.parent.gameObject, Shop.gameObject);
+        Init();
+    }
+
+    private void Init()
+    {
         DOTween.Init(true, true);
-        uiDataBinder.Init();
-        ActiveCnavasChild(true, title.gameObject.transform.parent.gameObject,shop.gameObject);
+        UIDataBinder.Init();
+        Shop.Init();
     }
 
     public void ActiveCnavasChild(bool enable, params GameObject[] onActive)
     {
-        for (int i = 0; i < transform.childCount; i++)
+        for (int i = 0; i < MainCanvas.transform.childCount; i++)
         {
-            GameObject child = transform.GetChild(i).gameObject;
+            GameObject child = MainCanvas.transform.GetChild(i).gameObject;
 
             if (alwaysActiveObjects.Contains(child))
             {
