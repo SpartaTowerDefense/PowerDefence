@@ -6,7 +6,8 @@ public class BulletFactory : FactoryBase
 {
     private void Awake()
     {
-        FactoryManager.Instance.path.Add(typeof(BulletFactory).Name, this);
+        if(!FactoryManager.Instance.path.ContainsKey(typeof(BulletFactory).Name))
+            FactoryManager.Instance.path.Add(typeof(BulletFactory).Name, this);
     }
     public override GameObject CreateObject(GameObject obj = null, int enumType = -1)
     {

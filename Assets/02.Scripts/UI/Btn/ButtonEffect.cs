@@ -7,15 +7,20 @@ using UnityEngine.UI;
 
 public class ButtonEffect : MonoBehaviour
 {
+    [Header("Square 설정")]
     [SerializeField] private int createNum = 3;
+    [SerializeField] private Color squareColor = new Color(1, 1, 1, 0.5f);
+
+    [Header("Shake 설정")]
+    [SerializeField] private float shakeDuration = 0.5f;
+    [SerializeField] private float shakeStrength = 10f;
+    [SerializeField] private int shakeVibrato = 10;
+    [SerializeField] private float shakeRandomness = 90f;
 
     private GameObject[] squareArray;
     private RectTransform[] rectTransformArray;
     private Image[] imageArray;
-
-    private GameObject[] originSquareArray;
-    private RectTransform[] originRectTransformArray;
-    private Image[] originImageArray;
+    private Vector3[] originScales;
 
     private List<Tween> shakeTweens = new List<Tween>();
     private List<Tween> clickTweens = new List<Tween>();
@@ -28,137 +33,152 @@ public class ButtonEffect : MonoBehaviour
 
     void CreateSquare(int num)
     {
-        imageArray = new Image[num];
         squareArray = new GameObject[num];
         rectTransformArray = new RectTransform[num];
+        imageArray = new Image[num];
+        originScales = new Vector3[num];
 
-        originImageArray = new Image[num];
-        originSquareArray = new GameObject[num];
-        originRectTransformArray = new RectTransform[num];
-
-        for (int i = 0; i < squareArray.Length; i++)
+        for (int i = 0; i < num; i++)
         {
-            squareArray[i] = new GameObject("Square");
-            squareArray[i].AddComponent<RectTransform>();
-            squareArray[i].AddComponent<Image>();
-            squareArray[i].GetComponent<RectTransform>().SetParent(transform, false);
-            Image image = squareArray[i].GetComponent<Image>();
-            image.raycastTarget = false;
+            GameObject square = new GameObject($"Square_{i}", typeof(RectTransform), typeof(Image));
+            square.transform.SetParent(transform, false);
 
-            rectTransformArray[i] = squareArray[i].GetComponent<RectTransform>();
-            imageArray[i] = squareArray[i].GetComponent<Image>();
+            RectTransform rt = square.GetComponent<RectTransform>();
+            Image img = square.GetComponent<Image>();
+
+            img.color = squareColor;
+            img.raycastTarget = false;
+
+            squareArray[i] = square;
+            rectTransformArray[i] = rt;
+            imageArray[i] = img;
+            originScales[i] = rt.localScale;
         }
     }
 
-    public void OnActiveSquare(bool square)
+    public void OnActiveSquare(bool isActive)
     {
-        foreach (GameObject obj in this.squareArray)
+        foreach (GameObject obj in squareArray)
         {
-            obj?.SetActive(square);
+            obj?.SetActive(isActive);
         }
-        if (!square) KillTween(shakeTweens);
+
+        if (!isActive)
+            AllKillTween();
     }
 
-    public void OriginUpdate()
+    public void ChangeTransformSquare(RectTransform target)
     {
-        originImageArray = imageArray;
-        originSquareArray = squareArray;
-        originRectTransformArray = rectTransformArray;
-    }
-
-    public void ChangeTransformSquare(RectTransform rectTransform)
-    {
-        for (int i = 0; i < squareArray.Length; i++)
+        for (int i = 0; i < rectTransformArray.Length; i++)
         {
-            rectTransformArray[i].sizeDelta = rectTransform.sizeDelta * rectTransform.localScale * Random.Range(1f, 1.2f);
-            rectTransformArray[i].position = rectTransform.position;
+            float scaleMultiplier = Random.Range(1f, 1.2f);
+            rectTransformArray[i].sizeDelta = target.sizeDelta * scaleMultiplier;
+            rectTransformArray[i].position = target.position;
         }
     }
 
     public void ChangeColorSquare()
     {
-        for (int i = 0; i < squareArray.Length; i++)
+        for (int i = 0; i < imageArray.Length; i++)
         {
-            imageArray[i].color = ChangeColor(0.6f);
+            imageArray[i].color = GetRandomColor(0.6f);
         }
     }
 
-    //채도 높은 색만 뽑아 알파값 조절
-    Color ChangeColor(float alpha)
+    Color GetRandomColor(float alpha)
     {
         float h = Random.Range(0f, 1f);
         float s = Random.Range(0.7f, 1f);
         float v = Random.Range(0.8f, 1f);
         Color color = Color.HSVToRGB(h, s, v);
         color.a = alpha;
-
         return color;
     }
 
     public void ShakeSquare()
     {
+        CompleteEffect(shakeTweens);
         KillTween(shakeTweens);
+
         Sequence shakeSequence = DOTween.Sequence();
-        foreach (RectTransform trans in rectTransformArray)
+
+        foreach (RectTransform rt in rectTransformArray)
         {
-            shakeSequence.Join(trans.DOShakePosition(10, 10, 10, 90, false, false));
+            shakeSequence.Join(
+                rt.DOShakePosition(
+                    shakeDuration,
+                    shakeStrength,
+                    shakeVibrato,
+                    shakeRandomness,
+                    false,
+                    false
+                )
+            );
         }
+
         shakeSequence.SetLoops(-1, LoopType.Restart);
         shakeTweens.Add(shakeSequence);
     }
 
-    public void StopShakeSmooth()
-    {
-        KillTween(shakeTweens);
-
-        foreach (RectTransform trans in rectTransformArray)
-        {
-            trans.DOAnchorPos(trans.anchoredPosition, 0.2f).SetEase(Ease.OutSine);
-        }
-    }
-
     public void ClickEffectSquare(UnityAction onComplete = null)
     {
+        CompleteEffect(clickTweens);
         KillTween(clickTweens);
 
-        for (int i = 0; i < squareArray.Length; i++)
+        bool invoked = false;
+
+        for (int i = 0; i < rectTransformArray.Length; i++)
         {
-            int index = i;
             Sequence clickSequence = DOTween.Sequence();
+
             clickSequence
-                .Append(rectTransformArray[index].DOScale(originRectTransformArray[index].localScale * 0.5f, 0.2f))
-                .Append(rectTransformArray[index].DOScale(Vector3.one, 0.2f))
+                .Append(rectTransformArray[i].DOScale(originScales[i] * 0.5f, 0.2f))
+                .Append(rectTransformArray[i].DOScale(originScales[i], 0.2f))
                 .SetEase(Ease.OutQuad)
                 .OnComplete(() =>
                 {
-                    onComplete?.Invoke();
+                    if (!invoked)
+                    {
+                        invoked = true;
+                        onComplete?.Invoke();
+                    }
                 });
 
             clickTweens.Add(clickSequence);
         }
     }
 
-    public void AllCompleteEffect()
+    public void AllCompleteTween()
     {
-        foreach (var t in shakeTweens)
+        CompleteEffect(shakeTweens);
+        CompleteEffect(clickTweens);
+    }
+
+    public void CompleteEffect(List<Tween> tweenList)
+    {
+        if (tweenList == null) return;
+
+        foreach (var tween in tweenList)
         {
-            t.Play();
-            t.Complete();
-        }
-            
-        foreach (var t in clickTweens)
-        {
-            t.Play();
-            t.Complete();
+            tween.Play();
+            tween.Complete();
         }
     }
 
-    void KillTween(List<Tween> tween)
+    public void AllKillTween()
     {
-        foreach (Tween t in tween)
+        KillTween(shakeTweens);
+        KillTween(clickTweens);
+    }
+
+    public void KillTween(List<Tween> tweenList)
+    {
+        foreach (Tween t in tweenList)
         {
-            t.Kill();
+            t?.Kill();
         }
-        tween.Clear();
+
+        tweenList.Clear();
     }
 }
+

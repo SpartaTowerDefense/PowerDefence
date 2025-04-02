@@ -13,7 +13,7 @@ public class DataManager : Singleton<DataManager>
             stage = stage
 
         };
-        string Json = JsonUtility.ToJson(saveData, true); 
+        string Json = JsonUtility.ToJson(saveData, true);
         File.WriteAllText(savePath, Json);
 
         Debug.Log(savePath);

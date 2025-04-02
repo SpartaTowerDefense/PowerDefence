@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Commander
 {
-    public int health { get; private set; }
+    public int health { get; set; }
     public int gold { get; private set; }
 
     public System.Action buyAction;
+    public System.Action die;
 
     public Commander(int health, int gold)
     {
@@ -18,6 +19,12 @@ public class Commander
     public void SubtractHealth(int damage)
     {
         health = Mathf.Max(0, health - damage);
+        if(health == 0)
+        {
+            UIManager.Instance.EndPanel.GetComponent<EndPanel>().isClear = false;
+            UIManager.Instance.EndPanel.gameObject.SetActive(true);
+        }
+            
 
         if (UIManager.Instance)
             UIManager.Instance.UIDataBinder.SetUIText();
@@ -35,13 +42,13 @@ public class Commander
     {
         this.gold = Mathf.Max(0, this.gold - gold);
 
-        if(UIManager.Instance)
+        if (UIManager.Instance)
             UIManager.Instance.UIDataBinder.SetUIText();
     }
 
     public bool CanBuy(int gold)
     {
-        if(this.gold >= gold)
+        if (this.gold > gold)
             return true;
         else
         {

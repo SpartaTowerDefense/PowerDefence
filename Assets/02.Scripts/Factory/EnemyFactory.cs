@@ -41,7 +41,8 @@ public class EnemyFactory : FactoryBase
     private void Awake()
     {
         // 팩토리 매니저에 등록 (선택 사항)
-        FactoryManager.Instance.path.Add(typeof(EnemyFactory).Name, this);
+        if(!FactoryManager.Instance.path.ContainsKey(typeof(EnemyFactory).Name))
+            FactoryManager.Instance.path.Add(typeof(EnemyFactory).Name, this);
 
         // EnemyData ScriptableObject 로드
         enemyDataList.Add(ResourceManager.Instance.LoadResource<EnemyData>(Normal, $"{PATH}{Normal}"));

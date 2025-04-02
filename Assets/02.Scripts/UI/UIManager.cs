@@ -1,60 +1,68 @@
 using DG.Tweening;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIManager : Singleton<UIManager>
 {
-    private Commander commander;
-    public Commander Commander { get => commander; }
-    [SerializeField] private UIDataBinder uiDataBinder;
-    public UIDataBinder UIDataBinder { get => uiDataBinder; }
-    [SerializeField] private Shop shop;
-    public Shop Shop { get => shop; set => shop = value; }
-    [SerializeField] private UIButtonHandler uiButtonHandler;
-    public UIButtonHandler UIButtonHandler { get => uiButtonHandler; }
-    [SerializeField] private Title title;
-    public Title Title { get => title; }
-    [SerializeField] private ButtonEffect buttonEffect;
-    public ButtonEffect ButtonEffect { get => buttonEffect; }
-    [SerializeField] private Placement placement;
-    public Placement Placement { get => placement; set => placement = value; }
-
-    [SerializeField] private List<GameObject> alwaysActiveObjects;
+    public UICanvas MainCanvas { get; private set; }
+    public UIDataBinder UIDataBinder { get; private set; }
+    public Shop Shop { get; private set; }
+    public UIButtonHandler UIButtonHandler { get; private set; }
+    public Title Title { get; private set; }
+    public ButtonEffect ButtonEffect { get; private set; }
+    public Placement Placement { get; set; }
+    public SelectTurretUI SelectTurretUI { get; private set; }
+    public GameObject EndPanel { get; private set; }
 
     public Turret curTurret;
 
+    GameObject uiCanvas;
+    GameObject mainCanvas;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        uiCanvas = Resources.Load<GameObject>("UI");
+        mainCanvas = Instantiate(uiCanvas);
+        DontDestroyOnLoad(mainCanvas);
+        InjectReferences(mainCanvas);
+    }
+
     private void Start()
     {
-        commander = new Commander(20, 0);
-        DOTween.Init(true, true);
-        uiDataBinder.Init();
-        ActiveCnavasChild(true, title.gameObject.transform.parent.gameObject,shop.gameObject);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        Init();
     }
 
-    public void ActiveCnavasChild(bool enable, params GameObject[] onActive)
+    public void InjectReferences(GameObject obj)
     {
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            GameObject child = transform.GetChild(i).gameObject;
 
-            if (alwaysActiveObjects.Contains(child))
-            {
-                continue;
-            }
-            else if (onActive.Where(n => n != null).Any(n => n == child))
-            {
-                child.SetActive(enable);
-            }
-            else
-            {
-                child.SetActive(!enable);
-            }
-        }
+        MainCanvas = obj.GetComponentInChildren<UICanvas>();
+        UIDataBinder = obj.GetComponentInChildren<UIDataBinder>(true);
+        Shop = obj.GetComponentInChildren<Shop>();
+        UIButtonHandler = obj.GetComponentInChildren<UIButtonHandler>(true);
+        Title = obj.GetComponentInChildren<Title>(true);
+        ButtonEffect = obj.GetComponentInChildren<ButtonEffect>(true);
+        //Placement = obj.GetComponentInChildren<Placement>(true);
+        Placement = obj.transform.GetComponentInChildrenEX<Placement>("SlotMask");
+        EndPanel = obj.GetComponentInChildren<EndPanel>(true).gameObject;
+        SelectTurretUI = obj.GetComponentInChildren<SelectTurretUI>(true);
+        SelectTurretUI._camera = GameObject.Find("PreviewCam")?.GetComponent<Camera>();
     }
 
+    private void Init()
+    {
+        DOTween.Init(true, true);
+        UIDataBinder.Init();
+        MainCanvas.Init();
+        Shop.Init();
+    }
+
+    public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Title.gameObject.SetActive(true);
+        EndPanel.SetActive(false);
+
+    }
 }
