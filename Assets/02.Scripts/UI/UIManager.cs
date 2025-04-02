@@ -1,5 +1,7 @@
 using DG.Tweening;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UIManager : Singleton<UIManager>
 {
@@ -15,16 +17,21 @@ public class UIManager : Singleton<UIManager>
 
     public Turret curTurret;
 
+    GameObject uiCanvas;
+    GameObject mainCanvas;
+
     protected override void Awake()
     {
         base.Awake();
-        GameObject uiCanvas = Resources.Load<GameObject>("UI");
-        GameObject mainCanvas = Instantiate(uiCanvas);
+        uiCanvas = Resources.Load<GameObject>("UI");
+        mainCanvas = Instantiate(uiCanvas);
+        DontDestroyOnLoad(mainCanvas);
         InjectReferences(mainCanvas);
     }
 
     private void Start()
     {
+        SceneManager.sceneLoaded += OnSceneLoaded;
         Init();
     }
 
@@ -37,7 +44,8 @@ public class UIManager : Singleton<UIManager>
         UIButtonHandler = obj.GetComponentInChildren<UIButtonHandler>(true);
         Title = obj.GetComponentInChildren<Title>(true);
         ButtonEffect = obj.GetComponentInChildren<ButtonEffect>(true);
-        Placement = obj.GetComponentInChildren<Placement>(true);
+        //Placement = obj.GetComponentInChildren<Placement>(true);
+        Placement = obj.transform.GetComponentInChildrenEX<Placement>("SlotMask");
         EndPanel = obj.GetComponentInChildren<EndPanel>(true).gameObject;
         SelectTurretUI = obj.GetComponentInChildren<SelectTurretUI>(true);
         SelectTurretUI._camera = GameObject.Find("PreviewCam")?.GetComponent<Camera>();
@@ -49,5 +57,12 @@ public class UIManager : Singleton<UIManager>
         UIDataBinder.Init();
         MainCanvas.Init();
         Shop.Init();
+    }
+
+    public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Title.gameObject.SetActive(true);
+        EndPanel.SetActive(false);
+
     }
 }

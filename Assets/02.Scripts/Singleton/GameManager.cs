@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -24,22 +27,24 @@ public class GameManager : Singleton<GameManager>
         base.Awake();
         
         stageMaps = new List<GameObject>();
+        stageMaps.Add(GameObject.Find("Stage1"));
+        stageMaps.Add(GameObject.Find("Stage2"));
 
         //GameObject prefab = ResourceManager.Instance.LoadResource<GameObject>("Stage1", $"{path}stage1");
         //stageMaps.Add(ResourceManager.Instance.LoadResource<GameObject>("Stage1", $"{path}stage1"));
         //stageMaps.Add(ResourceManager.Instance.LoadResource<GameObject>("Stage2", $"{path}stage2"));
         //Instantiate(stageMaps[0]);
         //Instantiate(stageMaps[1]);
-        stageMaps.Add(GameObject.Find("Stage1"));
-        stageMaps.Add(GameObject.Find("Stage2"));
+
         Application.targetFrameRate = 60;
         
     }
 
     private void Start()
     {
-       placement = FindObjectOfType<Placement>();
-       ActiveStage(0);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        placement = FindObjectOfType<Placement>();
+        ActiveStage(0);
     }
 
     public void StageClear()
@@ -75,5 +80,22 @@ public class GameManager : Singleton<GameManager>
 
             ActiveStage(currentStage);
         }
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (stageMaps.Count>=2)
+        {
+            stageMaps.Clear();
+            stageMaps.Add(GameObject.Find("Stage1"));
+            stageMaps.Add(GameObject.Find("Stage2"));
+        }
+        else
+        {
+            stageMaps.Add(GameObject.Find("Stage1"));
+            stageMaps.Add(GameObject.Find("Stage2"));
+        }
+        
+        ActiveStage(0);
     }
 }

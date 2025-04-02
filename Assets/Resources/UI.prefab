@@ -2428,7 +2428,7 @@ MonoBehaviour:
   loadBtn: {fileID: 8215804783748208255}
   cannonUpBtn: {fileID: 8422462368825000874}
   bodyUpBtn: {fileID: 4550318442458862217}
-  reStartBtn: {fileID: 0}
+  reStartBtn: {fileID: 8787681555435915567}
 --- !u!114 &5654946917445428874
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -32,6 +32,11 @@ public class Title : MonoBehaviour
         uIButtonHandler.BindButton(uIButtonHandler.SetLoadBtn(), Load,GameStart);
         childs = GetComponentsInChildren<ButtonHover>();
     }
+    private void OnEnable()
+    {
+        transform.position = originPosition;
+        transform.rotation = originRotation;
+    }
 
     private void LateUpdate()
     {
@@ -66,6 +71,8 @@ public class Title : MonoBehaviour
         //스포너 시작 연결 - 더 좋은 방법이 있을지도...
         ((EnemyFactory)FactoryManager.Instance.path[nameof(EnemyFactory)]).Gamestart();
         GameManager.Instance.SaveGame();
+
+        
     }
 
     void Load()
@@ -90,9 +97,8 @@ public class Title : MonoBehaviour
     void CameraFollow()
     {
         if (obj == null || onStart) return;
-        _camera.orthographicSize = 2;
-        _camera.transform.position = new Vector3(obj.transform.position.x + 2, obj.transform.position.y, _camera.transform.position.z);
-
+        Camera.main.orthographicSize = 2;
+        Camera.main.transform.position = new Vector3(obj.transform.position.x + 2, obj.transform.position.y, Camera.main.transform.position.z);
     }
 
 }
