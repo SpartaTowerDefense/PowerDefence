@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class GameManager : Singleton<GameManager>
 {
-    [SerializeField] private List<GameObject> stageMaps;
-    public List<GameObject> StageMaps => stageMaps;
-    [SerializeField] private List<Placement> placements;
+    private List<GameObject> stageMaps;
+    //public List<GameObject> StageMaps => stageMaps;
+    //[SerializeField] private List<Placement> placements;
+    Placement placement;
 
     private EnemySpawner enemySpawner;
     public EnemySpawner EnemySpawner => enemySpawner;
@@ -19,40 +22,36 @@ public class GameManager : Singleton<GameManager>
     {
         base.Awake();
         AudioManager.Instance.Initinalize();
+        stageMaps = new List<GameObject>();
     }
 
     private void Start()
     {
-        UIManager.Instance.EndPanel.GameEnd();
-        SaveGame();
-        //LoadGame();
+        placement = FindObjectOfType<Placement>();
+        GameObject prefab = ResourceManager.Instance.LoadResource<GameObject>("Stage/Stage1");
+        stageMaps.Add(ResourceManager.Instance.LoadResource<GameObject>("Stage/Stage1"));
+        stageMaps.Add(ResourceManager.Instance.LoadResource<GameObject>("Stage/Stage2"));
+        Application.targetFrameRate = 60;
+        ActiveStage(0);
     }
 
     public void StageClear()
     {
-        if (currentStage < stageMaps.Count)
-        {
-            currentStage++;
-            ActiveStage(currentStage);
-            SaveGame();
-        }
-        else
-        {
-            UIManager.Instance.EndPanel.GameEnd();
-        }
-        
+        currentStage++;
+        ActiveStage(currentStage);
+
+        SaveGame();
     }
-    private void ActiveStage(int stage)
+    public void ActiveStage(int stage)
     {
         for (int i = 0; i < stageMaps.Count; i++)
         {
             stageMaps[i].SetActive(i == stage); //i번째가 해당 stage와 일치하는 것만 SetActive시키기
         }
-        Placement placement = FindObjectOfType<Placement>();
-        placements[stage].SetStageIndex(stage); // 타일맵 인덱스 갱신
+        placement.SetStageIndex(stage); // 타일맵 인덱스 갱신
 
         ((EnemyFactory)FactoryManager.Instance.path[nameof(EnemyFactory)]).SetPathByStage(stage);
-        enemySpawner = FindObjectOfType<EnemySpawner>();
+        enemySpawner = FindObjectOfType<EnemySpawner>();    
     }
 
     public void SaveGame()

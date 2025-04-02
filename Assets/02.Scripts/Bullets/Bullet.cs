@@ -28,6 +28,8 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        CannonData currentData = controller.CurrentCannon.GetData();
+
         //만약 탄환이 맵의 경계선을 만나면
         if (collision.gameObject.layer == LayerMask.NameToLayer("Boundary"))
         {
@@ -35,11 +37,10 @@ public class Bullet : MonoBehaviour
             ObjectPoolManager.Instance.ReturnObject<BulletFactory>(this.gameObject);
         }
 
-        if (hasHit) return;
+        if (hasHit && !currentData.CanPenetration) return;
 
         if (collision.gameObject.tag.Equals("Enemy"))
-        {
-            CannonData currentData = controller.CurrentCannon.GetData();
+        {    
             hasHit = true;
             //적 정보를 가져온다
             if (collision.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
@@ -91,7 +92,6 @@ public class Bullet : MonoBehaviour
         splashColiders = Utils.OverlapCircleAllSorted(enemy.transform.position, SplashRatio, enemyLayer, this.transform.position);
         foreach (Collider2D collider in splashColiders)
         {
-            Debug.Log($"스플래시 공격 받은 적 {collider}");
             if (collider.TryGetComponent<Enemy>(out Enemy enemies))
             {
                 DefaultAttack(enemies, turretType);

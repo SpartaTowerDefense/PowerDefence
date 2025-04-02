@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 public class DragHandler : MonoBehaviour
 {
     [Header("참조")]
     [SerializeField] private Canvas canvas; // 마우스의 좌표를 UI로 변환할 때 사용하는 캔버스 
-    public Placement placement; //실제 유닛을 배치하는 스크립트
+
     [SerializeField] private GameObject tankPreviewPrefab;  // 
     [SerializeField] private Camera maincam; // 스크린 좌표에서 월드 좌표로 변환하는 메인카메라
 
@@ -17,7 +16,6 @@ public class DragHandler : MonoBehaviour
 
     private Coroutine dragCoroutine;
     private bool isDrag = false; // 현재 드래그상태인지
-    private bool isPlace = false; // 현재 배치완료상태인지
 
     /// <summary>
     /// 외부에서 초기화 (Shop에서 초기화)
@@ -26,7 +24,7 @@ public class DragHandler : MonoBehaviour
     {
         this.canvas = canvas;
         this.maincam = mainCam;
-        this.placement = placement;
+        UIManager.Instance.Placement = placement;
         this.tankPreviewPrefab = previewPrefab;
     }
 
@@ -35,7 +33,8 @@ public class DragHandler : MonoBehaviour
     /// </summary>
     public void OnBeginDrag(BaseEventData data)
     {
-        if (UIManager.Instance.Shop.curData == null) return; //현재선택한 정보가 없다면 반환
+
+        //if (UIManager.Instance.Shop.curData == null) return; //현재선택한 정보가 없다면 반환
 
         isDrag = true; //드래그 상태
         previewInstance = Instantiate(tankPreviewPrefab); //미리보기 프리펩 생성
@@ -60,7 +59,14 @@ public class DragHandler : MonoBehaviour
     public void EndDrag(BaseEventData data)
     {
         isDrag = false; //드래그상태 해제
-        StopCoroutine(dragCoroutine);
+
+        if (IsPointerOverUI())
+        {
+            if (previewInstance != null)
+                Destroy(previewInstance);
+
+            return; 
+        }
 
         PointerEventData ped = data as PointerEventData; // Unity 이벤트 시스템을 활용하여 마우스의 정보가 담긴 데이터로 변환과정
         Vector3 worldPos = maincam.ScreenToWorldPoint(ped.position);
@@ -68,20 +74,18 @@ public class DragHandler : MonoBehaviour
 
         TurretData selectedData = UIManager.Instance.Shop.curData;
 
-        if(!GameManager.Instance.commander.CanBuy(selectedData.Price)) //구매가 불가능하다면
+        if (!GameManager.Instance.commander.CanBuy(selectedData.Price)) //구매가 불가능하다면
         {
             Destroy(previewInstance); //미리보기 프리펩 삭제
             return;
         }
-        bool isSuccess = placement.TryPlaceTurret(worldPos, selectedData); //worldPos에 원하는 Data의 Turret을 배치하기 위한 bool변수
+        bool isSuccess = UIManager.Instance.Placement.TryPlaceTurret(worldPos, selectedData); //worldPos에 원하는 Data의 Turret을 배치하기 위한 bool변수
         Destroy(previewInstance);  //미리보기 프리펩은 삭제
 
-        if (isSuccess) 
+        if (isSuccess)
         {
             GameManager.Instance.commander.SubtractGold(selectedData.Price);
             UIManager.Instance.UIDataBinder.SetUIText();
-            isPlace = true; 
-            //gameObject.SetActive(true); //Ui와 함께 있기 때문에 활성화, 비활성화로 표시
         }
 
     }
@@ -93,17 +97,17 @@ public class DragHandler : MonoBehaviour
     {
         while (isDrag)
         {
-            Vector2 mousePos = Mouse.current.position.ReadValue();
+            Vector2 mousePos = Pointer.current.position.ReadValue();
             Vector3 worldPos = maincam.ScreenToWorldPoint(mousePos);
             worldPos.z = 0f;
 
-            Vector3Int cellPos = placement.WorldToCell(worldPos); //마우스의 가장 가까운 Cell좌표를 계산 (int형으로 만들기)
-            Vector3 snappedPos = placement.SnapToCenter(cellPos); // 셀의 중심에 오도록 만들기 위한 좌표설정
+            Vector3Int cellPos = UIManager.Instance.Placement.WorldToCell(worldPos); //마우스의 가장 가까운 Cell좌표를 계산 (int형으로 만들기)
+            Vector3 snappedPos = UIManager.Instance.Placement.SnapToCenter(cellPos); // 셀의 중심에 오도록 만들기 위한 좌표설정
 
             previewInstance.transform.position = snappedPos;
-            previewInstance.transform.rotation = placement.GetCurrentRotation(); // 회전값 적용
+            previewInstance.transform.rotation = UIManager.Instance.Placement.GetCurrentRotation(); // 회전값 적용
             
-            bool canPlace = placement.CanPlaceTurret(cellPos); //배치 가능한지 확인
+            bool canPlace = UIManager.Instance.Placement.CanPlaceTurret(cellPos); //배치 가능한지 확인
             controller?.SetPlacementColor(canPlace); //가능하다면 색깔 변경
 
             bool isOverUI = IsPointerOverUI(); //마우스가 UI에 존재한다면 미리보기 프리펩 숨기기
@@ -120,7 +124,7 @@ public class DragHandler : MonoBehaviour
     {
         PointerEventData eventData = new(EventSystem.current)
         {
-            position = Mouse.current.position.ReadValue()
+            position = Pointer.current.position.ReadValue()
         };
 
         var results = new List<RaycastResult>();

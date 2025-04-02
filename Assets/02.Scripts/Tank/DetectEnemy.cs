@@ -59,13 +59,12 @@ public class DetectEnemy : MonoBehaviour
     }
 
     // 공격할 적 선택
-    public void SelectEnemy(int mode = 0, int count = 0)
+    public void SelectEnemy()
     {
         enemyColliders = Utils.OverlapCircleAllSorted(transform.position, Range, enemyLayer, this.transform.position);
         if (enemyColliders.Length > 0)
         {
             seletedEnemy = enemyColliders[0];
-            Debug.Log($"선택된 적 : {seletedEnemy}");
         }
 
     }
@@ -93,7 +92,6 @@ public class DetectEnemy : MonoBehaviour
     public void SetRange(float range)
     {
         Range = range;
-        Debug.Log($"사거리 : {Range}");
     }
     
 }

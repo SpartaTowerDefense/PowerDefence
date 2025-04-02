@@ -8,7 +8,7 @@ public class RotateInputHandler : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.R))
         {
-            dragHandler.placement.Rotate();
+            UIManager.Instance.Placement.Rotate();
         }
     }
 }

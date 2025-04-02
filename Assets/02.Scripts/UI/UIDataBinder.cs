@@ -10,11 +10,8 @@ public class UIDataBinder : MonoBehaviour
     [SerializeField] private TextMeshProUGUI stageNum;
     [SerializeField] private TextMeshProUGUI enemyCount;
 
-    //private Commander commander;
-
     public void Init()
     {
-        //commander = UIManager.Instance.Commander;
         SetUIText();
     }
     public void SetUIText()

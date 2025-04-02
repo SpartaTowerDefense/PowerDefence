@@ -200,7 +200,6 @@ public class Enemy : MonoBehaviour
 
     private void Burning()
     {
-        Debug.Log($"불탐 : {Health}");
         Health -= burningDamage;
         ChangeColorTemporarily(new Color(1f, 0.5f, 0.5f));
     }
@@ -215,8 +214,6 @@ public class Enemy : MonoBehaviour
         if (data != null)
             RewardModifier = data.Coin;
         GameManager.Instance.commander.AddGold(GetRewardCoin(RewardModifier));
-        Debug.Log($"적을 처치하여 받은 돈 : {GetRewardCoin(RewardModifier)}");
-        Debug.Log($"게임매니저에 있는 돈 : {GameManager.Instance.commander.gold}");
     }
 
     /// <summary>

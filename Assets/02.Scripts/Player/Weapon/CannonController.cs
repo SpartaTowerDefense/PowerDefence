@@ -68,7 +68,6 @@ public class CannonController : MonoBehaviour
         level = 1;
         ChangeSprite();
         Price = InitPrice;
-        //ChangeCannon(TripleCannon);
     }
 
     public void Update()
@@ -101,9 +100,6 @@ public class CannonController : MonoBehaviour
                 SetPriceRatio(1.2f); // 현재 가격에서 증가
                 SetRange(CurrentCannon.data.Range);
             }
-
-            Debug.Log($"선택된 캐논 : {CurrentCannon}");
-
         }
     }
 
