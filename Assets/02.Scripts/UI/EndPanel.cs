@@ -30,6 +30,7 @@ public class EndPanel : MonoBehaviour
 
     void RestartBtn()
     {
+        Time.timeScale = 1f;
         FactoryManager.Instance.ClearPath();
         ObjectPoolManager.Instance.ClearObjectPool();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
