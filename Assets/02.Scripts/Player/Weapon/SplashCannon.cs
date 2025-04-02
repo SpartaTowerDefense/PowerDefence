@@ -45,20 +45,14 @@ public class SplashCannon : CannonBase
             {
                 //한발씩 쏘기
                 controller.DetectEnemy.seletedEnemy = controller.DetectEnemy.enemyColliders[count - 1];
-                Debug.Log(controller.DetectEnemy.seletedEnemy);
-                Debug.Log($"count : {count}");
             }
             else if (controller.DetectEnemy.enemyColliders.Length < data.BulletCount && controller.DetectEnemy.enemyColliders.Length > 1)
             {
                 controller.DetectEnemy.seletedEnemy = controller.DetectEnemy.enemyColliders[Mathf.FloorToInt(count / 2)];
-                Debug.Log(controller.DetectEnemy.seletedEnemy);
-                Debug.Log($"count : {count}");
             }
             else
             {
                 controller.DetectEnemy.SelectEnemy();
-                Debug.Log(controller.DetectEnemy.seletedEnemy);
-                Debug.Log($"count : {count}");
             }
             continous_Time = continous_CoolDown;
             return;
@@ -68,7 +62,7 @@ public class SplashCannon : CannonBase
             isContinousShooting = false;
             count = 1;
             time = fireColldown;
-            controller.DetectEnemy.SelectEnemy(1);
+            controller.DetectEnemy.SelectEnemy();
             return;
         }
 
