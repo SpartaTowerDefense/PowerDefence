@@ -1,61 +1,53 @@
 using DG.Tweening;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
 {
-    [field: SerializeField] public Canvas MainCanvas { get; private set; }
-    [field: SerializeField] public UIDataBinder UIDataBinder { get; private set; }
-    [field: SerializeField] public Shop Shop { get; private set; }
-    [field: SerializeField] public UIButtonHandler UIButtonHandler { get; private set; }
-    [field: SerializeField] public Title Title { get; private set; }
-    [field: SerializeField] public ButtonEffect ButtonEffect { get; private set; }
-    [field: SerializeField] public Placement Placement { get; set; }
-    [field: SerializeField] public GameObject EndPanel { get; private set; }
+    public UICanvas MainCanvas { get; private set; }
+    public UIDataBinder UIDataBinder { get; private set; }
+    public Shop Shop { get; private set; }
+    public UIButtonHandler UIButtonHandler { get; private set; }
+    public Title Title { get; private set; }
+    public ButtonEffect ButtonEffect { get; private set; }
+    public Placement Placement { get; set; }
+    public SelectTurretUI SelectTurretUI { get; private set; }
+    public GameObject EndPanel { get; private set; }
 
-
-
-
-    [SerializeField] private List<GameObject> alwaysActiveObjects;
     public Turret curTurret;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        GameObject uiCanvas = Resources.Load<GameObject>("UI");
+        GameObject mainCanvas = Instantiate(uiCanvas);
+        InjectReferences(mainCanvas);
+    }
 
     private void Start()
     {
-        ActiveCnavasChild(true, Title.gameObject, Shop.gameObject);
         Init();
+    }
+
+    public void InjectReferences(GameObject obj)
+    {
+
+        MainCanvas = obj.GetComponentInChildren<UICanvas>();
+        UIDataBinder = obj.GetComponentInChildren<UIDataBinder>(true);
+        Shop = obj.GetComponentInChildren<Shop>();
+        UIButtonHandler = obj.GetComponentInChildren<UIButtonHandler>(true);
+        Title = obj.GetComponentInChildren<Title>(true);
+        ButtonEffect = obj.GetComponentInChildren<ButtonEffect>(true);
+        Placement = obj.GetComponentInChildren<Placement>(true);
+        EndPanel = obj.GetComponentInChildren<EndPanel>(true).gameObject;
+        SelectTurretUI = obj.GetComponentInChildren<SelectTurretUI>(true);
+        SelectTurretUI._camera = GameObject.Find("PreviewCam")?.GetComponent<Camera>();
     }
 
     private void Init()
     {
         DOTween.Init(true, true);
         UIDataBinder.Init();
+        MainCanvas.Init();
         Shop.Init();
     }
-
-    public void ActiveCnavasChild(bool enable, params GameObject[] onActive)
-    {
-        for (int i = 0; i < MainCanvas.transform.childCount; i++)
-        {
-            GameObject child = MainCanvas.transform.GetChild(i).gameObject;
-
-            if (alwaysActiveObjects.Contains(child))
-            {
-                continue;
-            }
-            else if (onActive.Where(n => n != null).Any(n => n == child))
-            {
-                child.SetActive(enable);
-            }
-            else
-            {
-                child.SetActive(!enable);
-            }
-        }
-    }
-
 }

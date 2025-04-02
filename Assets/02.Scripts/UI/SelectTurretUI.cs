@@ -17,7 +17,7 @@ public class SelectTurretUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI bodyUpgradePrice;
     [SerializeField] private GameObject grid;
     [SerializeField] private Image _cameraMask;
-    [SerializeField] private Camera _camera;
+    public Camera _camera;
 
     private UIButtonHandler uiButtonHandler;
     private readonly Color visible = new Color(1, 1, 1, 1);

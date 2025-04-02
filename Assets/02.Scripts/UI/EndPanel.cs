@@ -14,7 +14,7 @@ public class EndPanel : MonoBehaviour
 
     public void GameEnd()
     {
-        UIManager.Instance.ActiveCnavasChild(true, UIManager.Instance.EndPanel.gameObject);
+        UIManager.Instance.MainCanvas.ActiveCnavasChild(true, UIManager.Instance.EndPanel.gameObject);
         Sequence seq = DOTween.Sequence();
 
         seq.Append(transform.DORotate(new Vector3(0, 0, 10), 0.1f).SetEase(Ease.OutSine));

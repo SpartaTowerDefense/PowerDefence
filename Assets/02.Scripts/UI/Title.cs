@@ -56,7 +56,7 @@ public class Title : MonoBehaviour
            .Append(transform.DORotate(new Vector3(0, 0, -90), 1f))
            .OnComplete(() =>
            {
-               uiManager.ActiveCnavasChild(false, gameObject.transform.parent.gameObject);
+               uiManager.MainCanvas.ActiveCnavasChild(false, gameObject.transform.parent.gameObject);
                TestObj test = obj.GetComponent<TestObj>();
                if (test != null)
                    test.StopToTarget();

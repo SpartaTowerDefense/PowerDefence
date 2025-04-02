@@ -39,7 +39,7 @@ public class GameManager : Singleton<GameManager>
     private void Start()
     {
        
-        ActiveStage(0);
+        //ActiveStage(0);
     }
 
     public void StageClear()
