@@ -8,6 +8,7 @@ public class Commander
     public int gold { get; private set; }
 
     public System.Action buyAction;
+    public System.Action die;
 
     public Commander(int health, int gold)
     {
@@ -18,6 +19,8 @@ public class Commander
     public void SubtractHealth(int damage)
     {
         health = Mathf.Max(0, health - damage);
+        if(health == 0)
+            UIManager.Instance.EndPanel.gameObject.SetActive(true);
 
         if (UIManager.Instance)
             UIManager.Instance.UIDataBinder.SetUIText();

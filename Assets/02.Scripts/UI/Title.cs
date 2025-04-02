@@ -90,8 +90,8 @@ public class Title : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         obj.GetComponent<SpriteRenderer>().DOFade(0, 0.9f);
-        _camera.transform.DOMove(new Vector3(0, 0, -10), 1f);
-        _camera.DOOrthoSize(5, 1);
+        Camera.main.transform.DOMove(new Vector3(0, 0, -10), 1f);
+        Camera.main.DOOrthoSize(5, 1);
         onStart = true;
     }
     void CameraFollow()
