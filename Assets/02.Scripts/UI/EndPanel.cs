@@ -1,13 +1,17 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class EndPanel : MonoBehaviour
 {
+    [SerializeField] public TextMeshProUGUI text;
+    public bool isClear = false;
     private void OnEnable()
     {
+        text.text = isClear ? "Clear" : "GameOver";
         UIManager.Instance.UIButtonHandler.BindButton(UIManager.Instance.UIButtonHandler.SetReStartBtn(), RestartBtn);
         GameEnd();
     }

@@ -21,6 +21,7 @@ public class Commander
         health = Mathf.Max(0, health - damage);
         if(health == 0)
         {
+            UIManager.Instance.EndPanel.GetComponent<EndPanel>().isClear = false;
             UIManager.Instance.EndPanel.gameObject.SetActive(true);
         }
             

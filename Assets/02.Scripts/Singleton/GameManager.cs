@@ -56,6 +56,7 @@ public class GameManager : Singleton<GameManager>
         currentStage++;
         if(currentStage >= 2)
         {
+            UIManager.Instance.EndPanel.GetComponent<EndPanel>().isClear = true; 
             UIManager.Instance.EndPanel.SetActive(true);
             return;
         }
