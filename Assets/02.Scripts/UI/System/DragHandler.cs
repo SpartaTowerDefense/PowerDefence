@@ -86,7 +86,6 @@ public class DragHandler : MonoBehaviour
         {
             GameManager.Instance.commander.SubtractGold(selectedData.Price);
             UIManager.Instance.UIDataBinder.SetUIText();
-            //gameObject.SetActive(true); //Ui와 함께 있기 때문에 활성화, 비활성화로 표시
         }
 
     }
