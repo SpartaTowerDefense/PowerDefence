@@ -35,13 +35,13 @@ public class Commander
     {
         this.gold = Mathf.Max(0, this.gold - gold);
 
-        if(UIManager.Instance)
+        if (UIManager.Instance)
             UIManager.Instance.UIDataBinder.SetUIText();
     }
 
     public bool CanBuy(int gold)
     {
-        if(this.gold >= gold)
+        if (this.gold > gold)
             return true;
         else
         {

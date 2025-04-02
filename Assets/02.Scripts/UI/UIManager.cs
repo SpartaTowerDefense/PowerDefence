@@ -11,11 +11,11 @@ public class UIManager : Singleton<UIManager>
 {
     [field: SerializeField] public Canvas MainCanvas { get; private set; }
     [field: SerializeField] public UIDataBinder UIDataBinder { get; private set; }
-    [field: SerializeField] public Shop shop { get; private set; }
+    [field: SerializeField] public Shop Shop { get; private set; }
     [field: SerializeField] public UIButtonHandler UIButtonHandler { get; private set; }
     [field: SerializeField] public Title Title { get; private set; }
     [field: SerializeField] public ButtonEffect ButtonEffect { get; private set; }
-    [field: SerializeField] public Placement Placement { get; private set; }
+    [field: SerializeField] public Placement Placement { get; set; }
 
 
 
@@ -25,7 +25,7 @@ public class UIManager : Singleton<UIManager>
 
     private void Start()
     {
-        ActiveCnavasChild(true, Title.gameObject.transform.parent.gameObject, shop.gameObject);
+        ActiveCnavasChild(true, Title.gameObject.transform.parent.gameObject, Shop.gameObject);
         Init();
     }
 
@@ -33,13 +33,14 @@ public class UIManager : Singleton<UIManager>
     {
         DOTween.Init(true, true);
         UIDataBinder.Init();
+        Shop.Init();
     }
 
     public void ActiveCnavasChild(bool enable, params GameObject[] onActive)
     {
-        for (int i = 0; i < transform.childCount; i++)
+        for (int i = 0; i < MainCanvas.transform.childCount; i++)
         {
-            GameObject child = transform.GetChild(i).gameObject;
+            GameObject child = MainCanvas.transform.GetChild(i).gameObject;
 
             if (alwaysActiveObjects.Contains(child))
             {

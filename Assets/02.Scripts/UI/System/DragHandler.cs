@@ -24,7 +24,7 @@ public class DragHandler : MonoBehaviour
     {
         this.canvas = canvas;
         this.maincam = mainCam;
-        //UIManager.Instance.Placement = placement;
+        UIManager.Instance.Placement = placement;
         this.tankPreviewPrefab = previewPrefab;
     }
 
@@ -42,7 +42,7 @@ public class DragHandler : MonoBehaviour
         var controller = previewInstance.GetComponent<PreviewTurretController>();
         if(controller != null)
         {
-            //controller.SetBodySprite(UIManager.Instance.Shop.curData.BodyImage); //선택한 Turret의 Body로 입히기
+            controller.SetBodySprite(UIManager.Instance.Shop.curData.BodyImage); //선택한 Turret의 Body로 입히기
         }
 
         dragCoroutine = StartCoroutine(HandleDragPreview(controller)); //드래그를 통해 계속 미리보기 인스턴스를 따라가도록 만든 코루틴
@@ -72,21 +72,21 @@ public class DragHandler : MonoBehaviour
         Vector3 worldPos = maincam.ScreenToWorldPoint(ped.position);
         worldPos.z = 0f;
 
-        //TurretData selectedData = UIManager.Instance.Shop.curData;
+        TurretData selectedData = UIManager.Instance.Shop.curData;
 
-        //if(!GameManager.Instance.commander.CanBuy(selectedData.Price)) //구매가 불가능하다면
-        //{
-        //    Destroy(previewInstance); //미리보기 프리펩 삭제
-        //    return;
-        //}
-        //bool isSuccess = UIManager.Instance.Placement.TryPlaceTurret(worldPos, selectedData); //worldPos에 원하는 Data의 Turret을 배치하기 위한 bool변수
-        //Destroy(previewInstance);  //미리보기 프리펩은 삭제
+        if (!GameManager.Instance.commander.CanBuy(selectedData.Price)) //구매가 불가능하다면
+        {
+            Destroy(previewInstance); //미리보기 프리펩 삭제
+            return;
+        }
+        bool isSuccess = UIManager.Instance.Placement.TryPlaceTurret(worldPos, selectedData); //worldPos에 원하는 Data의 Turret을 배치하기 위한 bool변수
+        Destroy(previewInstance);  //미리보기 프리펩은 삭제
 
-        //if (isSuccess) 
-        //{
-        //    GameManager.Instance.commander.SubtractGold(selectedData.Price);
-        //    UIManager.Instance.UIDataBinder.SetUIText();
-        //}
+        if (isSuccess)
+        {
+            GameManager.Instance.commander.SubtractGold(selectedData.Price);
+            UIManager.Instance.UIDataBinder.SetUIText();
+        }
 
     }
 
