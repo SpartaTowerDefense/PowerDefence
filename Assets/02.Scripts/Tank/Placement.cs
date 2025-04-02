@@ -33,7 +33,7 @@ public class Placement : MonoBehaviour
         for(int i = 0; i < GameManager.Instance.stageMaps.Count; i++)
         {
             roadTile[i] = GameManager.Instance.stageMaps[i].transform.Find("Road").gameObject.GetComponent<Tilemap>();
-            groundTile[i] = GameManager.Instance.stageMaps[i].transform.Find($"Stage{i+1}Ground").gameObject.GetComponent<Tilemap>();
+            groundTile[i] = GameManager.Instance.stageMaps[i].transform.Find($"Ground").gameObject.GetComponent<Tilemap>();
             obstacleTile[i] = GameManager.Instance.stageMaps[i].transform.Find("Obstacle").gameObject.GetComponent<Tilemap>();
         }
         
