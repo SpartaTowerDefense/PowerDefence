@@ -35,6 +35,7 @@ public class DragHandler : MonoBehaviour
     /// </summary>
     public void OnBeginDrag(BaseEventData data)
     {
+
         if (UIManager.Instance.Shop.curData == null) return; //현재선택한 정보가 없다면 반환
 
         isDrag = true; //드래그 상태
@@ -60,7 +61,14 @@ public class DragHandler : MonoBehaviour
     public void EndDrag(BaseEventData data)
     {
         isDrag = false; //드래그상태 해제
-        StopCoroutine(dragCoroutine);
+
+        if (IsPointerOverUI())
+        {
+            if (previewInstance != null)
+                Destroy(previewInstance);
+
+            return; 
+        }
 
         PointerEventData ped = data as PointerEventData; // Unity 이벤트 시스템을 활용하여 마우스의 정보가 담긴 데이터로 변환과정
         Vector3 worldPos = maincam.ScreenToWorldPoint(ped.position);
