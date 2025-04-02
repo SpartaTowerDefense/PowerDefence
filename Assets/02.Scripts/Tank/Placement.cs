@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -26,6 +28,16 @@ public class Placement : MonoBehaviour
     private Quaternion currentRot = Quaternion.identity; // 현재 배치할 터렛의 회전값
 
     private HashSet<Vector3Int> occupiedCell = new(); // 터렛이 같은 위치에 배치되지 않도록 만들기 위해 저장하기 위한 Collection
+    private void Start()
+    {
+        for(int i = 0; i < GameManager.Instance.stageMaps.Count; i++)
+        {
+            roadTile[i] = GameManager.Instance.stageMaps[i].transform.Find("Road").gameObject.GetComponent<Tilemap>();
+            groundTile[i] = GameManager.Instance.stageMaps[i].transform.Find($"Stage{i+1}Ground").gameObject.GetComponent<Tilemap>();
+            obstacleTile[i] = GameManager.Instance.stageMaps[i].transform.Find("Obstacle").gameObject.GetComponent<Tilemap>();
+        }
+        
+    }
 
     public Vector3Int WorldToCell(Vector3 worldPos) //주어진 월드좌표가 TileMap의 셀좌표로 변환
     {

@@ -6,10 +6,11 @@ using UnityEngine.Audio;
 
 public class GameManager : Singleton<GameManager>
 {
-    private List<GameObject> stageMaps;
+    public List<GameObject> stageMaps { get; set; }
     //public List<GameObject> StageMaps => stageMaps;
     //[SerializeField] private List<Placement> placements;
     Placement placement;
+    string path = "Stage\\";
 
     private EnemySpawner enemySpawner;
     public EnemySpawner EnemySpawner => enemySpawner;
@@ -21,17 +22,23 @@ public class GameManager : Singleton<GameManager>
     protected override void Awake()
     {
         base.Awake();
-        AudioManager.Instance.Initinalize();
+        
         stageMaps = new List<GameObject>();
+
+        //GameObject prefab = ResourceManager.Instance.LoadResource<GameObject>("Stage1", $"{path}stage1");
+        //stageMaps.Add(ResourceManager.Instance.LoadResource<GameObject>("Stage1", $"{path}stage1"));
+        //stageMaps.Add(ResourceManager.Instance.LoadResource<GameObject>("Stage2", $"{path}stage2"));
+        //Instantiate(stageMaps[0]);
+        //Instantiate(stageMaps[1]);
+        stageMaps.Add(GameObject.Find("Stage1"));
+        stageMaps.Add(GameObject.Find("Stage2"));
+        Application.targetFrameRate = 60;
+        placement = FindObjectOfType<Placement>();
     }
 
     private void Start()
     {
-        placement = FindObjectOfType<Placement>();
-        GameObject prefab = ResourceManager.Instance.LoadResource<GameObject>("Stage/Stage1");
-        stageMaps.Add(ResourceManager.Instance.LoadResource<GameObject>("Stage/Stage1"));
-        stageMaps.Add(ResourceManager.Instance.LoadResource<GameObject>("Stage/Stage2"));
-        Application.targetFrameRate = 60;
+       
         ActiveStage(0);
     }
 
