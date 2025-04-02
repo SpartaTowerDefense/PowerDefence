@@ -101,7 +101,7 @@ public class DragHandler : MonoBehaviour
     {
         while (isDrag)
         {
-            Vector2 mousePos = Mouse.current.position.ReadValue();
+            Vector2 mousePos = Pointer.current.position.ReadValue();
             Vector3 worldPos = maincam.ScreenToWorldPoint(mousePos);
             worldPos.z = 0f;
 
@@ -128,7 +128,7 @@ public class DragHandler : MonoBehaviour
     {
         PointerEventData eventData = new(EventSystem.current)
         {
-            position = Mouse.current.position.ReadValue()
+            position = Pointer.current.position.ReadValue()
         };
 
         var results = new List<RaycastResult>();

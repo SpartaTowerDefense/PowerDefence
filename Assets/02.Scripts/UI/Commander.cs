@@ -41,7 +41,7 @@ public class Commander
 
     public bool CanBuy(int gold)
     {
-        if(this.gold > gold)
+        if(this.gold >= gold)
             return true;
         else
         {
