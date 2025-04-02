@@ -4,6 +4,7 @@ using System.Linq;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
 public class Placement : MonoBehaviour
@@ -30,13 +31,13 @@ public class Placement : MonoBehaviour
     private HashSet<Vector3Int> occupiedCell = new(); // 터렛이 같은 위치에 배치되지 않도록 만들기 위해 저장하기 위한 Collection
     private void Start()
     {
-        for(int i = 0; i < GameManager.Instance.stageMaps.Count; i++)
+        
+        for (int i = 0; i < GameManager.Instance.stageMaps.Count; i++)
         {
             roadTile[i] = GameManager.Instance.stageMaps[i].transform.Find("Road").gameObject.GetComponent<Tilemap>();
             groundTile[i] = GameManager.Instance.stageMaps[i].transform.Find($"Ground").gameObject.GetComponent<Tilemap>();
             obstacleTile[i] = GameManager.Instance.stageMaps[i].transform.Find("Obstacle").gameObject.GetComponent<Tilemap>();
         }
-        
     }
 
     public Vector3Int WorldToCell(Vector3 worldPos) //주어진 월드좌표가 TileMap의 셀좌표로 변환
@@ -119,5 +120,16 @@ public class Placement : MonoBehaviour
         occupiedCell.Clear(); // 새 스테이지에서는 기존 설치 좌표 초기화
 
         curStageIndex = index; 
+    }
+
+    public void OnSceneLoadedSeccond (Scene scene, LoadSceneMode mode)
+    {
+        for (int i = 0; i < GameManager.Instance.stageMaps.Count; i++)
+        {
+            roadTile[i] = GameManager.Instance.stageMaps[i].transform.Find("Road").gameObject.GetComponent<Tilemap>();
+            groundTile[i] = GameManager.Instance.stageMaps[i].transform.Find($"Ground").gameObject.GetComponent<Tilemap>();
+            obstacleTile[i] = GameManager.Instance.stageMaps[i].transform.Find("Obstacle").gameObject.GetComponent<Tilemap>();
+        }
+
     }
 }

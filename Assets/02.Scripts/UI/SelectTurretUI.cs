@@ -33,7 +33,7 @@ public class SelectTurretUI : MonoBehaviour
         uiButtonHandler = UIManager.Instance.UIButtonHandler;
 
         textPanel.SetActive(false);
-        grid = Instantiate(grid);
+        grid = Instantiate(grid, this.transform);
         grid.SetActive(false);
         _camera.enabled = false;
         _cameraMask.color = invisible;

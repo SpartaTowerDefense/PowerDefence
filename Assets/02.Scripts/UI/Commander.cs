@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Commander
 {
-    public int health { get; private set; }
+    public int health { get; set; }
     public int gold { get; private set; }
 
     public System.Action buyAction;
@@ -20,7 +20,10 @@ public class Commander
     {
         health = Mathf.Max(0, health - damage);
         if(health == 0)
+        {
             UIManager.Instance.EndPanel.gameObject.SetActive(true);
+        }
+            
 
         if (UIManager.Instance)
             UIManager.Instance.UIDataBinder.SetUIText();

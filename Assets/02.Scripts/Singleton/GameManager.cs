@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+
 
 public class GameManager : Singleton<GameManager>
 {
@@ -25,7 +27,7 @@ public class GameManager : Singleton<GameManager>
     protected override void Awake()
     {
         base.Awake();
-        
+
         stageMaps = new List<GameObject>();
         stageMaps.Add(GameObject.Find("Stage1"));
         stageMaps.Add(GameObject.Find("Stage2"));
@@ -37,13 +39,15 @@ public class GameManager : Singleton<GameManager>
         //Instantiate(stageMaps[1]);
 
         Application.targetFrameRate = 60;
-        
+
     }
 
     private void Start()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
+        
         placement = FindObjectOfType<Placement>();
+        SceneManager.sceneLoaded += placement.OnSceneLoadedSeccond;
         ActiveStage(0);
     }
 
@@ -63,7 +67,7 @@ public class GameManager : Singleton<GameManager>
         placement.SetStageIndex(stage); // 타일맵 인덱스 갱신
 
         ((EnemyFactory)FactoryManager.Instance.path[nameof(EnemyFactory)]).SetPathByStage(stage);
-        enemySpawner = FindObjectOfType<EnemySpawner>();    
+        enemySpawner = FindObjectOfType<EnemySpawner>();
     }
 
     public void SaveGame()
@@ -84,7 +88,7 @@ public class GameManager : Singleton<GameManager>
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (stageMaps.Count>=2)
+        if (stageMaps.Count >= 2)
         {
             stageMaps.Clear();
             stageMaps.Add(GameObject.Find("Stage1"));
@@ -95,7 +99,8 @@ public class GameManager : Singleton<GameManager>
             stageMaps.Add(GameObject.Find("Stage1"));
             stageMaps.Add(GameObject.Find("Stage2"));
         }
-        
+
+        commander.health = 20;
         ActiveStage(0);
     }
 }

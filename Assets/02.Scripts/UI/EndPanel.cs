@@ -26,8 +26,9 @@ public class EndPanel : MonoBehaviour
 
     void RestartBtn()
     {
+        FactoryManager.Instance.ClearPath();
+        ObjectPoolManager.Instance.ClearObjectPool();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
     }
 
     
