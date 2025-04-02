@@ -23,16 +23,24 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
+        UIManager.Instance.EndPanel.GameEnd();
         SaveGame();
-        LoadGame();
+        //LoadGame();
     }
 
     public void StageClear()
     {
-        currentStage++;
-        ActiveStage(currentStage);
-
-        SaveGame();
+        if (currentStage < stageMaps.Count)
+        {
+            currentStage++;
+            ActiveStage(currentStage);
+            SaveGame();
+        }
+        else
+        {
+            UIManager.Instance.EndPanel.GameEnd();
+        }
+        
     }
     private void ActiveStage(int stage)
     {

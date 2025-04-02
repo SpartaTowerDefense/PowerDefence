@@ -18,7 +18,8 @@ public class TurretFactory : FactoryBase
 
     private void Awake()
     {
-        FactoryManager.Instance.path.Add(typeof(TurretFactory).Name, this);
+        if (!FactoryManager.Instance.path.ContainsKey(typeof(TurretFactory).Name))
+            FactoryManager.Instance.path.Add(typeof(TurretFactory).Name, this);
 
         bodyList.Add(ResourceManager.Instance.LoadResource<TurretData>(Black, $"{PATH}{Black}"));
         bodyList.Add(ResourceManager.Instance.LoadResource<TurretData>(Blue, $"{PATH}{Blue}"));

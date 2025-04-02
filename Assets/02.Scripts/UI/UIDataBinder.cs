@@ -22,7 +22,7 @@ public class UIDataBinder : MonoBehaviour
         Commander commander = GameManager.Instance.commander;
         healthValue.text = commander.health.ToString();
         goldValue.text = commander.gold.ToString();
-        stageNum.text = GameManager.Instance.CurrentStage.ToString();
+        stageNum.text = (GameManager.Instance.CurrentStage+1).ToString();
 
         var spawner = GameManager.Instance.EnemySpawner;
         enemyCount.text = spawner != null

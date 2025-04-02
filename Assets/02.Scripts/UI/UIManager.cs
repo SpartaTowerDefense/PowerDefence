@@ -21,6 +21,8 @@ public class UIManager : Singleton<UIManager>
     public Title Title { get => title; }
     [SerializeField] private ButtonEffect buttonEffect;
     public ButtonEffect ButtonEffect { get => buttonEffect; }
+    [SerializeField] private EndPanel endPanel;
+    public EndPanel EndPanel { get => endPanel; }
 
     [SerializeField] private List<GameObject> alwaysActiveObjects;
 
