@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 public class DragHandler : MonoBehaviour
 {
@@ -17,7 +16,6 @@ public class DragHandler : MonoBehaviour
 
     private Coroutine dragCoroutine;
     private bool isDrag = false; // 현재 드래그상태인지
-    private bool isPlace = false; // 현재 배치완료상태인지
 
     /// <summary>
     /// 외부에서 초기화 (Shop에서 초기화)
@@ -88,8 +86,6 @@ public class DragHandler : MonoBehaviour
         {
             GameManager.Instance.commander.SubtractGold(selectedData.Price);
             UIManager.Instance.UIDataBinder.SetUIText();
-            isPlace = true; 
-            //gameObject.SetActive(true); //Ui와 함께 있기 때문에 활성화, 비활성화로 표시
         }
 
     }
