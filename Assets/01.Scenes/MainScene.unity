@@ -9204,6 +9204,7 @@ MonoBehaviour:
   uiButtonHandler: {fileID: 1257178769}
   title: {fileID: 1162059888}
   buttonEffect: {fileID: 261442293}
+  placement: {fileID: 0}
   alwaysActiveObjects:
   - {fileID: 261442291}
   curTurret: {fileID: 0}
@@ -14995,7 +14996,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 320c96341e8d89a4f9c0ddd4f2633b93, type: 2}
   - {fileID: 11400000, guid: 2111f4fe7d167714ba33582944985813, type: 2}
   curData: {fileID: 0}
-  placement: {fileID: 150822748}
 --- !u!114 &1678959533
 MonoBehaviour:
   m_ObjectHideFlags: 0

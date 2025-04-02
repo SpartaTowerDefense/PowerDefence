@@ -23,8 +23,7 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
-        SaveGame();
-        LoadGame();
+        ActiveStage(0);
     }
 
     public void StageClear()
@@ -34,17 +33,15 @@ public class GameManager : Singleton<GameManager>
 
         SaveGame();
     }
-    private void ActiveStage(int stage)
+    public void ActiveStage(int stage)
     {
         for (int i = 0; i < stageMaps.Count; i++)
         {
             stageMaps[i].SetActive(i == stage); //i번째가 해당 stage와 일치하는 것만 SetActive시키기
         }
-        Placement placement = FindObjectOfType<Placement>();
         placements[stage].SetStageIndex(stage); // 타일맵 인덱스 갱신
 
         ((EnemyFactory)FactoryManager.Instance.path[nameof(EnemyFactory)]).SetPathByStage(stage);
-        enemySpawner = FindObjectOfType<EnemySpawner>();
     }
 
     public void SaveGame()
