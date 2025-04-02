@@ -32,12 +32,6 @@ public class GameManager : Singleton<GameManager>
         stageMaps.Add(GameObject.Find("Stage1"));
         stageMaps.Add(GameObject.Find("Stage2"));
 
-        //GameObject prefab = ResourceManager.Instance.LoadResource<GameObject>("Stage1", $"{path}stage1");
-        //stageMaps.Add(ResourceManager.Instance.LoadResource<GameObject>("Stage1", $"{path}stage1"));
-        //stageMaps.Add(ResourceManager.Instance.LoadResource<GameObject>("Stage2", $"{path}stage2"));
-        //Instantiate(stageMaps[0]);
-        //Instantiate(stageMaps[1]);
-
         Application.targetFrameRate = 60;
 
     }
