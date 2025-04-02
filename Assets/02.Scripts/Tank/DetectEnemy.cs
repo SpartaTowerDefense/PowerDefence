@@ -59,7 +59,7 @@ public class DetectEnemy : MonoBehaviour
     }
 
     // 공격할 적 선택
-    public void SelectEnemy(int mode = 0, int count = 0)
+    public void SelectEnemy()
     {
         enemyColliders = Utils.OverlapCircleAllSorted(transform.position, Range, enemyLayer, this.transform.position);
         if (enemyColliders.Length > 0)

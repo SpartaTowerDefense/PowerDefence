@@ -91,7 +91,6 @@ public class Bullet : MonoBehaviour
         splashColiders = Utils.OverlapCircleAllSorted(enemy.transform.position, SplashRatio, enemyLayer, this.transform.position);
         foreach (Collider2D collider in splashColiders)
         {
-            Debug.Log($"스플래시 공격 받은 적 {collider}");
             if (collider.TryGetComponent<Enemy>(out Enemy enemies))
             {
                 DefaultAttack(enemies, turretType);

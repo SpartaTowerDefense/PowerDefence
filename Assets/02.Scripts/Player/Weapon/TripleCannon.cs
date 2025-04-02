@@ -69,7 +69,7 @@ public class TripleCannon : CannonBase
         {
             count = 1;
             time = fireColldown;
-            controller.DetectEnemy.SelectEnemy(1);
+            controller.DetectEnemy.SelectEnemy();
             return;
         }
         
