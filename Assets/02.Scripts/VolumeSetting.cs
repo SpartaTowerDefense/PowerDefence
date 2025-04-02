@@ -19,10 +19,13 @@ public class VolumeSetting : MonoBehaviour
     private bool isSFXMute;
 
     private AudioManager audioManager;
+    private void Awake()
+    {
+        audioManager = AudioManager.Instance;
+    }
 
     private void Start()
     {
-        audioManager = AudioManager.Instance;
         mixer = audioManager.GameMixer;
 
         masterSlider.value = audioManager.MasterVolume;

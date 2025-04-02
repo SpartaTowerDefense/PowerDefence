@@ -13,13 +13,29 @@ public class Title : MonoBehaviour
 
     private ButtonHover[] childs;
 
+    private Vector3 originPosition;
+    private Quaternion originRotation;
+
+    private void Awake()
+    {
+        originPosition = transform.position;
+        originRotation = transform.rotation;
+    }
     private void Start()
     {
+        transform.position = originPosition;
+        transform.rotation = originRotation;
+
         uIButtonHandler = UIManager.Instance.UIButtonHandler;
         _camera = Camera.main;
         uIButtonHandler.BindButton(uIButtonHandler.SetStartBtn(), GameStart);
         uIButtonHandler.BindButton(uIButtonHandler.SetLoadBtn(), Load,GameStart);
         childs = GetComponentsInChildren<ButtonHover>();
+    }
+    private void OnEnable()
+    {
+        transform.position = originPosition;
+        transform.rotation = originRotation;
     }
 
     private void LateUpdate()
@@ -45,7 +61,7 @@ public class Title : MonoBehaviour
            .Append(transform.DORotate(new Vector3(0, 0, -90), 1f))
            .OnComplete(() =>
            {
-               uiManager.ActiveCnavasChild(false, gameObject.transform.parent.gameObject);
+               uiManager.MainCanvas.ActiveCnavasChild(false, gameObject.transform.parent.gameObject);
                TestObj test = obj.GetComponent<TestObj>();
                if (test != null)
                    test.StopToTarget();
@@ -55,6 +71,8 @@ public class Title : MonoBehaviour
         //스포너 시작 연결 - 더 좋은 방법이 있을지도...
         ((EnemyFactory)FactoryManager.Instance.path[nameof(EnemyFactory)]).Gamestart();
         GameManager.Instance.SaveGame();
+
+        
     }
 
     void Load()
@@ -72,16 +90,15 @@ public class Title : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         obj.GetComponent<SpriteRenderer>().DOFade(0, 0.9f);
-        _camera.transform.DOMove(new Vector3(0, 0, -10), 1f);
-        _camera.DOOrthoSize(5, 1);
+        Camera.main.transform.DOMove(new Vector3(0, 0, -10), 1f);
+        Camera.main.DOOrthoSize(5, 1);
         onStart = true;
     }
     void CameraFollow()
     {
         if (obj == null || onStart) return;
-        _camera.orthographicSize = 2;
-        _camera.transform.position = new Vector3(obj.transform.position.x + 2, obj.transform.position.y, _camera.transform.position.z);
-
+        Camera.main.orthographicSize = 2;
+        Camera.main.transform.position = new Vector3(obj.transform.position.x + 2, obj.transform.position.y, Camera.main.transform.position.z);
     }
 
 }

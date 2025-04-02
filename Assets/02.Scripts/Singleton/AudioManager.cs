@@ -26,6 +26,12 @@ public class AudioManager : Singleton<AudioManager>
     public float lastPlayTime = 0f;
     public float soundCooldown = 0.1f;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        AudioManager.Instance.Initinalize();
+    }
+
     public void Initinalize()
     {
         GameMixer = ResourceManager.Instance.LoadResource<AudioMixer>(nameof(GameMixer), nameof(GameMixer));

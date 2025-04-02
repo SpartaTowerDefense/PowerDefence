@@ -34,7 +34,6 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerClickHan
             isHover = true;
             ChangeButtonInTextOrder();
             buttonEffect.OnActiveSquare(true);
-            buttonEffect.OriginUpdate();
             buttonEffect.ChangeTransformSquare(rectTransform);
             buttonEffect.ChangeColorSquare();
             buttonEffect.ShakeSquare();
@@ -48,13 +47,11 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerClickHan
         UIRayFindButton(pointerEventData, false);
         if (gameObject.TryGetComponent<Button>(out Button button) && button.interactable)
         {
-            buttonEffect.StopShakeSmooth();
             buttonEffect.ClickEffectSquare(() =>
             {
                 if (isHover)
                 {
                     buttonEffect.ChangeTransformSquare(rectTransform);
-                    buttonEffect.ShakeSquare();
                 }
             });
         }
@@ -74,7 +71,8 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerClickHan
             if (!isHover) return;
             isHover = false;
             BackButtonInTextOrder();
-            DOTween.CompleteAll();
+            buttonEffect.AllCompleteTween();
+            buttonEffect.AllKillTween();
             buttonEffect.OnActiveSquare(false);
         }
     }
@@ -90,8 +88,8 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerClickHan
             text.color = Color.white;
 
             Vector3 curPos = text.transform.position;
-            text.rectTransform.SetParent(UIManager.Instance.transform, false);
-            text.rectTransform.anchoredPosition = UIManager.Instance.transform.InverseTransformPoint(curPos);
+            text.rectTransform.SetParent(UIManager.Instance.ButtonEffect.transform, false);
+            text.rectTransform.anchoredPosition = UIManager.Instance.MainCanvas.transform.InverseTransformPoint(curPos);
         }
     }
 

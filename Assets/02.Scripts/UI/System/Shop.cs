@@ -16,32 +16,28 @@ public class Shop : MonoBehaviour
 
     [Header("정보")]
     [SerializeField] private TurretData[] bodySo;
+    
+    private GameObject[] obj;
+
     public TurretData curData;
 
-    private void Start()
+    public void Init()
     {
-        for (int i = 0; i < bodySo.Length; i++)
+        for (int i = 0; i < obj.Length; i++)
         {
-            GameObject obj = Instantiate(slot, slotTransform);
+            Slot slotComponent = obj[i].GetComponent<Slot>();
+            DragHandler dragHandler = obj[i].GetComponent<DragHandler>();
 
-            Slot slotComponent = obj.GetComponent<Slot>();
-            DragHandler dragHandler = obj.GetComponent<DragHandler>();
-
-            dragHandler.Init(mainCanvas, mainCam, UIManager.Instance.Placement,previewPrefab);
+            dragHandler.Init(mainCanvas, mainCam, UIManager.Instance.Placement, previewPrefab);
             slotComponent.SetData(bodySo[i], UIManager.Instance.Placement, dragHandler);
         }
     }
-
-    public bool BuyTurret()
+    private void Awake()
     {
-        if (!curData) return false;
-        if (!CanBuy(curData)) return false ;
-        GameManager.Instance.commander.SubtractGold(curData.Price); // 선택된 터렛의 정보를 넘겨야됨 @bsy
-        UIManager.Instance.UIDataBinder.SetUIText();
-        return true;
-    }
-    public bool CanBuy(TurretData data) //살 수 있는지 확인하고 반환해주는 메서드
-    {
-        return data && GameManager.Instance.commander.gold >= data.Price;
+        obj = new GameObject[bodySo.Length];
+        for (int i = 0; i < bodySo.Length; i++)
+        {
+            obj[i] = Instantiate(slot, slotTransform);
+        }
     }
 }

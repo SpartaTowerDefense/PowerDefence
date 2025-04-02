@@ -1,12 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
+using System.Linq;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+
 
 public class GameManager : Singleton<GameManager>
 {
-    [SerializeField] private List<GameObject> stageMaps;
-    public List<GameObject> StageMaps => stageMaps;
-    [SerializeField] private List<Placement> placements;
+    public List<GameObject> stageMaps { get; set; }
+    //public List<GameObject> StageMaps => stageMaps;
+    //[SerializeField] private List<Placement> placements;
+    Placement placement;
+    string path = "Stage\\";
 
     private EnemySpawner enemySpawner;
     public EnemySpawner EnemySpawner => enemySpawner;
@@ -18,19 +27,33 @@ public class GameManager : Singleton<GameManager>
     protected override void Awake()
     {
         base.Awake();
-        AudioManager.Instance.Initinalize();
-        
+
+        stageMaps = new List<GameObject>();
+        stageMaps.Add(GameObject.Find("Stage1"));
+        stageMaps.Add(GameObject.Find("Stage2"));
+
+        Application.targetFrameRate = 60;
+
     }
 
     private void Start()
     {
-        Application.targetFrameRate = 60;
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        
+        placement = FindObjectOfType<Placement>();
+        SceneManager.sceneLoaded += placement.OnSceneLoadedSeccond;
         ActiveStage(0);
     }
 
     public void StageClear()
     {
         currentStage++;
+        if(currentStage >= 2)
+        {
+            UIManager.Instance.EndPanel.GetComponent<EndPanel>().isClear = true; 
+            UIManager.Instance.EndPanel.SetActive(true);
+            return;
+        }
         ActiveStage(currentStage);
 
         SaveGame();
@@ -41,10 +64,10 @@ public class GameManager : Singleton<GameManager>
         {
             stageMaps[i].SetActive(i == stage); //i번째가 해당 stage와 일치하는 것만 SetActive시키기
         }
-        placements[stage].SetStageIndex(stage); // 타일맵 인덱스 갱신
+        placement.SetStageIndex(stage); // 타일맵 인덱스 갱신
 
         ((EnemyFactory)FactoryManager.Instance.path[nameof(EnemyFactory)]).SetPathByStage(stage);
-        enemySpawner = FindObjectOfType<EnemySpawner>();    
+        enemySpawner = FindObjectOfType<EnemySpawner>();
     }
 
     public void SaveGame()
@@ -61,5 +84,23 @@ public class GameManager : Singleton<GameManager>
 
             ActiveStage(currentStage);
         }
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (stageMaps.Count >= 2)
+        {
+            stageMaps.Clear();
+            stageMaps.Add(GameObject.Find("Stage1"));
+            stageMaps.Add(GameObject.Find("Stage2"));
+        }
+        else
+        {
+            stageMaps.Add(GameObject.Find("Stage1"));
+            stageMaps.Add(GameObject.Find("Stage2"));
+        }
+        currentStage = 0;
+        commander.health = 20;
+        ActiveStage(0);
     }
 }
