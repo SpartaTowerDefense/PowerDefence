@@ -32,7 +32,7 @@ public class GameManager : Singleton<GameManager>
         stageMaps.Add(ResourceManager.Instance.LoadResource<GameObject>("Stage/Stage1"));
         stageMaps.Add(ResourceManager.Instance.LoadResource<GameObject>("Stage/Stage2"));
         Application.targetFrameRate = 60;
-        ActiveStage(0);
+        //ActiveStage(0);
     }
 
     public void StageClear()

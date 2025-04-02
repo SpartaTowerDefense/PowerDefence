@@ -88,7 +88,7 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerClickHan
             text.color = Color.white;
 
             Vector3 curPos = text.transform.position;
-            text.rectTransform.SetParent(UIManager.Instance.transform, false);
+            text.rectTransform.SetParent(UIManager.Instance.ButtonEffect.transform, false);
             text.rectTransform.anchoredPosition = UIManager.Instance.transform.InverseTransformPoint(curPos);
         }
     }

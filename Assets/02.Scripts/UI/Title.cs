@@ -13,8 +13,19 @@ public class Title : MonoBehaviour
 
     private ButtonHover[] childs;
 
+    private Vector3 originPosition;
+    private Quaternion originRotation;
+
+    private void Awake()
+    {
+        originPosition = transform.position;
+        originRotation = transform.rotation;
+    }
     private void Start()
     {
+        transform.position = originPosition;
+        transform.rotation = originRotation;
+
         uIButtonHandler = UIManager.Instance.UIButtonHandler;
         _camera = Camera.main;
         uIButtonHandler.BindButton(uIButtonHandler.SetStartBtn(), GameStart);
