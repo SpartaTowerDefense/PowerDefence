@@ -16,6 +16,7 @@ public class UIManager : Singleton<UIManager>
     [field: SerializeField] public Title Title { get; private set; }
     [field: SerializeField] public ButtonEffect ButtonEffect { get; private set; }
     [field: SerializeField] public Placement Placement { get; set; }
+    [field: SerializeField] public GameObject EndPanel { get; private set; }
 
 
 
@@ -25,7 +26,7 @@ public class UIManager : Singleton<UIManager>
 
     private void Start()
     {
-        ActiveCnavasChild(true, Title.gameObject.transform.parent.gameObject, Shop.gameObject);
+        ActiveCnavasChild(true, Title.gameObject, Shop.gameObject);
         Init();
     }
 
