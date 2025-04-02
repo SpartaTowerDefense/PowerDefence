@@ -5,8 +5,9 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     [SerializeField] private List<GameObject> stageMaps;
-    public List<GameObject> StageMaps => stageMaps;
-    [SerializeField] private List<Placement> placements;
+    private List<GameObject> stageMapInstances = new();
+    private List<Placement> placements = new();
+    private List<EnemySpawner> enemySpawners = new();
 
     private EnemySpawner enemySpawner;
     public EnemySpawner EnemySpawner => enemySpawner;
@@ -19,32 +20,41 @@ public class GameManager : Singleton<GameManager>
     {
         base.Awake();
         AudioManager.Instance.Initinalize();
-        
+        CreateStages();
     }
 
     private void Start()
     {
-        Application.targetFrameRate = 60;
-        ActiveStage(0);
+        UIManager.Instance.EndPanel.GameEnd();
+        SaveGame();
+        //LoadGame();
     }
 
     public void StageClear()
     {
-        currentStage++;
-        ActiveStage(currentStage);
-
-        SaveGame();
+        if (currentStage < stageMaps.Count)
+        {
+            currentStage++;
+            ActiveStage(currentStage);
+            SaveGame();
+        }
+        else
+        {
+            UIManager.Instance.EndPanel.GameEnd();
+        }
+        
     }
-    public void ActiveStage(int stage)
+    private void ActiveStage(int stage)
     {
         for (int i = 0; i < stageMaps.Count; i++)
         {
             stageMaps[i].SetActive(i == stage); //i번째가 해당 stage와 일치하는 것만 SetActive시키기
         }
+        Placement placement = FindObjectOfType<Placement>();
         placements[stage].SetStageIndex(stage); // 타일맵 인덱스 갱신
 
         ((EnemyFactory)FactoryManager.Instance.path[nameof(EnemyFactory)]).SetPathByStage(stage);
-        enemySpawner = FindObjectOfType<EnemySpawner>();    
+        enemySpawner = FindObjectOfType<EnemySpawner>();
     }
 
     public void SaveGame()
@@ -62,4 +72,26 @@ public class GameManager : Singleton<GameManager>
             ActiveStage(currentStage);
         }
     }
+    public void CreateStages()
+    {
+        GameObject[] stagePrefabs = Resources.LoadAll<GameObject>("stageMaps");
+        
+        for(int i = 0; i < stagePrefabs.Length; i++)
+        {
+            GameObject maps = Instantiate(stagePrefabs[i]);
+            maps.name = $"stageMap_{i}";
+            maps.SetActive(false);
+            stageMapInstances.Add(maps);
+            
+            if(placements.Count == 0)
+            {
+                Placement placement = UIManager.Instance.GetComponentInChildren<Placement>(true);
+
+                if(placement != null)
+                {
+                    placements.Add(placement);
+                }
+            }
+        }  
+     }
 }
