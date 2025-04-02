@@ -313,4 +313,13 @@ public class Enemy : MonoBehaviour
     {
         return Mathf.CeilToInt(Reward * Coin);
     }
+
+    private void OnDisable()
+    {
+        if(colorChangeCoroutine != null)
+        {
+            StopCoroutine(colorChangeCoroutine);
+            colorChangeCoroutine = null;
+        }
+    }
 }
