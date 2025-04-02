@@ -33,13 +33,13 @@ public class GameManager : Singleton<GameManager>
         stageMaps.Add(GameObject.Find("Stage1"));
         stageMaps.Add(GameObject.Find("Stage2"));
         Application.targetFrameRate = 60;
-        placement = FindObjectOfType<Placement>();
+        
     }
 
     private void Start()
     {
-       
-        //ActiveStage(0);
+       placement = FindObjectOfType<Placement>();
+       ActiveStage(0);
     }
 
     public void StageClear()
